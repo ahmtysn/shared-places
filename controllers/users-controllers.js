@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 
 const HttpError = require('./../models/http-error');
 const User = require('./../models/User');
-
+// test
 const hashPassword = require('./../util/hashPassword');
 const comparePassword = require('./../util/comparePassword');
 
