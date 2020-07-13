@@ -1,0 +1,8 @@
+{
+  "env": {
+    "DB_USER": "Noer",
+    "DB_PW": "PrDBQHK6j7mShpjF",
+    "DB_NAME": "placesharer-dev",
+    "JWT_SECRET": "supersecretman!"
+  }
+}
