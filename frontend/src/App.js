@@ -25,7 +25,6 @@ import AuthContext from './shared/context/auth-context';
 
 // Hook
 import useAuth from './shared/hooks/auth-hook';
-import UserAccount from './users/pages/UserAccount';
 
 function App() {
   const { token, userId, login, logout } = useAuth();
