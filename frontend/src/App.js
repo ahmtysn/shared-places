@@ -18,12 +18,14 @@ const AuthPage = React.lazy(() => import('./users/pages/AuthPage'));
 const NewPlace = React.lazy(() => import('./places/pages/NewPlace'));
 const EditPlace = React.lazy(() => import('./places/pages/EditPlace'));
 const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
+const UserAccount = React.lazy(() => import('./users/pages/UserAccount'));
 
 // Context
 import AuthContext from './shared/context/auth-context';
 
 // Hook
 import useAuth from './shared/hooks/auth-hook';
+import UserAccount from './users/pages/UserAccount';
 
 function App() {
   const { token, userId, login, logout } = useAuth();
@@ -37,6 +39,7 @@ function App() {
         <Route exact path="/:userId/places" component={UserPlaces} />
         <Route exact path="/places/new" component={NewPlace} />
         <Route exact path="/places/:placeId" component={EditPlace} />
+        <Route exact path="/:userId/account" component={UserAccount} />
         <Redirect to="/" />
       </Switch>
     );

@@ -24,6 +24,13 @@ const NavLinks = () => {
           <NavLink to="/places/new">Add New Place</NavLink>
         </li>
       )}
+      {isLoggedIn && (
+        <li>
+          <NavLink to={`/${userId}/account`}>
+              MY ACCOUNT
+          </NavLink>
+        </li>
+      )}
       {!isLoggedIn && (
         <li>
           <NavLink to="/auth">Authentication</NavLink>
