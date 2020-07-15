@@ -11,7 +11,7 @@ import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner'
 import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
 
 const AuthPage = () => {
-  const { isLoggedIn, login, userId } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const INITIAL_INPUTS = {
     email: {
