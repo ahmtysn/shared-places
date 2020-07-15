@@ -30,7 +30,7 @@ const NewPlace = () => {
       isValid: false,
     },
   };
-  const [formState, inputHandler, setFormData] = useForm(initInputs, false);
+  const [formState, inputHandler] = useForm(initInputs, false);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
   const { token } = useContext(AuthContext);
   const { push } = useHistory();
@@ -57,7 +57,7 @@ const NewPlace = () => {
     };
 
     try {
-      const responseData = await sendRequest(
+      await sendRequest(
         url,
         request.method,
         request.body,

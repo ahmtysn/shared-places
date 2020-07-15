@@ -69,7 +69,7 @@ const EditPlace = () => {
       }
     };
     getPlace();
-  }, [sendRequest, placeId, setFormData]);
+  }, [sendRequest, placeId, setFormData, token]);
 
   const editPlaceSubmitHandler = async (e) => {
     e.preventDefault();
@@ -97,7 +97,7 @@ const EditPlace = () => {
     };
 
     try {
-      const response = await sendRequest(
+      await sendRequest(
         url,
         request.method,
         request.body,
