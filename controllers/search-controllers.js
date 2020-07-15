@@ -6,12 +6,13 @@ const searchUsersPlaces = async (req, res, next) => {
   let users;
   let places;
   try {
-    users = await User.find({
+      users = await User.find({
       $or: [
-        { name: { $regex: req.query.q, $options: 'i' } },
-        { email: { $regex: req.query.q, $options: 'i' } },
+        { name: { $regex: req.query.search, $options: 'i' } },
+        { email: { $regex: req.query.search, $options: 'i' } },
       ],
     });
+    console.log(users)
 
     places = await Place.find({
       $or: [
