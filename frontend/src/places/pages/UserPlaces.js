@@ -44,7 +44,7 @@ const UserPlaces = () => {
       }
     };
     fetchPlaces();
-  }, [sendRequest]);
+  }, [sendRequest, token, userId]);
 
   const onDeletePlace = (deletedPlaceId) => {
     // After deleted place update state again to show all current places

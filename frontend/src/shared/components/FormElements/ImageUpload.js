@@ -61,7 +61,7 @@ const ImageUpload = ({ id, centered, onInputChange }) => {
       <div className={`image-upload ${centered && 'center'}`}>
         <div className="image-upload__preview">
           {previewImageUrl ? (
-            <img src={previewImageUrl} alt="Preview Image" />
+            <img src={previewImageUrl} alt="Preview" />
           ) : (
             'Please upload an image!'
           )}
