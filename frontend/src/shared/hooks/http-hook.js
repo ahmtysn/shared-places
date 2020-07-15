@@ -43,7 +43,7 @@ const useHttpRequest = () => {
         throw error;
       }
     },
-    []
+    [error]
   );
 
   const clearError = () => {
