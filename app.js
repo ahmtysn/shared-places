@@ -10,6 +10,7 @@ const enableCORS = require('./middlewares/enableCORS');
 // Routes
 const placeRouter = require('./routes/placeRouter.js');
 const userRouter = require('./routes/userRouter.js');
+const authSocialRoutes = require('./routes/auth-social-routes.js');
 
 // Middlewares
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 app.use(express.static('./frontend/build'));
 
 // Routes
+app.use('/api/authSocialMedia', authSocialRoutes);
 app.use('/api/places', placeRouter);
 app.use('/api/users', userRouter);
 
