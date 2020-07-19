@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import AuthContext from "./../../context/auth-context";
-
+import NotificationNavBar from '../Navigation/NotificationNavBar'
+import { BsFillPeopleFill } from "react-icons/bs";
 import "./NavLinks.css";
 
 const NavLinks = () => {
@@ -14,9 +15,15 @@ const NavLinks = () => {
           All Users
         </NavLink>
       </li>
+
       {isLoggedIn && (
         <li>
           <NavLink to={`/${userId}/places`}>My Places</NavLink>
+        </li>
+      )}
+      {isLoggedIn && (
+        <li>
+          <NavLink to={`/${userId}/friends`}><BsFillPeopleFill size={27} /></NavLink>
         </li>
       )}
       {isLoggedIn && (
@@ -27,6 +34,11 @@ const NavLinks = () => {
       {!isLoggedIn && (
         <li>
           <NavLink to="/auth">Authentication</NavLink>
+        </li>
+      )}
+      {isLoggedIn && (
+        <li>
+          <NotificationNavBar />
         </li>
       )}
       {isLoggedIn && (

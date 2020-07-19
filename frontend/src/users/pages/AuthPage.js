@@ -56,7 +56,7 @@ const AuthPage = () => {
           request.body,
           request.headers
         );
-
+        window.location.reload(false);
         login(responseData.userId, responseData.token);
       } catch (err) {
         console.log('Error at login!', err);

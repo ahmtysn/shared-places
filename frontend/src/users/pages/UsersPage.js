@@ -1,14 +1,14 @@
 import React, { useState, useEffect, Fragment } from "react";
 import useHttpRequest from "./../../shared/hooks/http-hook";
-
 import UsersList from "./../components/UsersList";
 import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
 
+
+
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
-
   const fetchUsers = async () => {
     const url = "/api/users";
     try {
@@ -27,7 +27,9 @@ const UsersPage = () => {
 
   return (
     <Fragment>
+
       <ErrorModal error={error} onClear={clearError} />
+
       {isLoading && <LoadingSpinner asOverlay />}
       <UsersList users={users} />
     </Fragment>
