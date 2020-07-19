@@ -7,35 +7,35 @@ const Place = require('./../models/Place');
 const User = require('./../models/User');
 
 const getAllPlaces = async (req, res, next) => {
-   let places;
+  let places;
   try {
     const searchValue = req.query.search;
     if (searchValue) {
-      const inputValue = new RegExp(`${searchValue}`, "gi");
-      places = await Place.find({ title: inputValue }, "-password").populate(
-        "creator"
-      );
+      const inputValue = new RegExp(`${searchValue}`, 'gi');
+      places = await Place.find(
+        { $or: [{ title: inputValue }, { address: inputValue }] },
+        '-password'
+      ).populate('creator');
       if (places.length > 0) {
-       return res.status(200).json({
+        return res.status(200).json({
           places: places.map((place) => place.toObject({ getters: true })),
         });
       } else {
         const error = new HttpError('Could not find any places!', 404);
         return next(error);
       }
-    
     } else {
       // get data from DB
-      places = await Place.find({}, "-password").populate("creator");
+      places = await Place.find({}, '-password').populate('creator');
       if (places.length > 0) {
         // Send data to view (frontend)
         return res.json({
           places: places.map((place) => place.toObject({ getters: true })),
         });
-       } else {
-         const error = new HttpError('Could not find any places!', 404);
-         return next(error);
-       }      
+      } else {
+        const error = new HttpError('Could not find any places!', 404);
+        return next(error);
+      }
     }
   } catch (err) {
     const error = new HttpError(
@@ -77,7 +77,7 @@ const getPlacesByUserId = async (req, res, next) => {
   try {
     if (searchValue) {
       const placesList = await (
-        await User.findById(userId).populate("places")
+        await User.findById(userId).populate('places')
       ).toJSON();
       placesOfUser = await placesList.places.filter((place) =>
         place.title.toLowerCase().includes(searchValue)
@@ -86,10 +86,12 @@ const getPlacesByUserId = async (req, res, next) => {
         places: placesOfUser,
       });
     } else {
-      placesOfUser = await (await User.findById(userId).populate("places")).toJSON()
+      placesOfUser = await (
+        await User.findById(userId).populate('places')
+      ).toJSON();
       if (!placesOfUser || placesOfUser.length === 0) {
         return next(
-          new HttpError("Could not find places for the provided user id.", 404)
+          new HttpError('Could not find places for the provided user id.', 404)
         );
       }
       res.status(200).json({
@@ -98,7 +100,7 @@ const getPlacesByUserId = async (req, res, next) => {
     }
   } catch (err) {
     const error = new HttpError(
-      "Fetching places failed, please try again later.",
+      'Fetching places failed, please try again later.',
       500
     );
     return next(error);
@@ -265,7 +267,6 @@ const deletePlace = async (req, res, next) => {
 
   res.status(200).json({ msg: 'Place successfully deleted!' });
 };
-
 
 exports.getAllPlaces = getAllPlaces;
 exports.getPlaceById = getPlaceById;

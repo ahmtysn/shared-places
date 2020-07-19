@@ -13,13 +13,13 @@ import useHttpRequest from './../../shared/hooks/http-hook';
 import PlaceList from '../components/PlaceList';
 
 // material ui
-import SearchBar from "../../shared/components/FormElements/SearchBar";
+import SearchBar from '../../shared/components/FormElements/SearchBar';
 
 const UserPlaces = () => {
   const { userId } = useParams();
   const { token } = useContext(AuthContext);
-  const [userPlaces, setUserPlaces] = useState([]); // const userPlaces = [] // userPlaces = arry of places 
-  const [searchValue, setSearchValue] = useState("");
+  const [userPlaces, setUserPlaces] = useState([]); // const userPlaces = [] // userPlaces = arry of places
+  const [searchValue, setSearchValue] = useState('');
   const [places, setPlaces] = useState();
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
@@ -34,7 +34,7 @@ const UserPlaces = () => {
             Authorization: `Bearer ${token}`,
           },
         };
-        // get the respone 
+        // get the respone
         const response = await sendRequest(
           url,
           request.method,
@@ -80,21 +80,21 @@ const UserPlaces = () => {
         inputSearchHandler={inputSearchHandler}
         onSubmitSearchHandler={onSubmitSearchHandler}
         searchValue={searchValue}
-        placeholder="Search places"
+        placeholder='Search places with title or address'
       />
-        {isLoading && (
-          <div className="center">
-            <LoadingSpinner />
-          </div>
-        )}
-        {!isLoading && places ? (
-          <PlaceList items={places} onDeletePlace={onDeletePlace} />
-        ) : userPlaces ? (
-          <PlaceList items={userPlaces} onDeletePlace={onDeletePlace} />
-        ) : (
-          ""
-        )}
-      </Fragment>
+      {isLoading && (
+        <div className='center'>
+          <LoadingSpinner />
+        </div>
+      )}
+      {!isLoading && places ? (
+        <PlaceList items={places} onDeletePlace={onDeletePlace} />
+      ) : userPlaces ? (
+        <PlaceList items={userPlaces} onDeletePlace={onDeletePlace} />
+      ) : (
+        ''
+      )}
+    </Fragment>
   );
 };
 

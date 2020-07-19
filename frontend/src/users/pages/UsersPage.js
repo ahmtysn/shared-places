@@ -1,25 +1,24 @@
-import React, { useState, useEffect, Fragment } from "react";
-import useHttpRequest from "./../../shared/hooks/http-hook";
+import React, { useState, useEffect, Fragment } from 'react';
+import useHttpRequest from './../../shared/hooks/http-hook';
 
-import UsersList from "./../components/UsersList";
-import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
-import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
-import SearchBar from "../../shared/components/FormElements/SearchBar";
-
+import UsersList from './../components/UsersList';
+import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
+import SearchBar from '../../shared/components/FormElements/SearchBar';
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [searchedUsers, setSearchedUsers] = useState();
 
   const fetchUsers = async () => {
-    const url = "/api/users";
+    const url = '/api/users';
     try {
       const responseData = await sendRequest(url);
       setUsers(responseData);
     } catch (err) {
-      console.log("Error in fetching users!", err);
+      console.log('Error in fetching users!', err);
     }
   };
 
@@ -44,7 +43,6 @@ const UsersPage = () => {
     setSearchValue(e.target.value);
   };
 
-
   return (
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -52,18 +50,17 @@ const UsersPage = () => {
         inputSearchHandler={inputSearchHandler}
         onSubmitSearchHandler={onSubmitSearchHandler}
         searchValue={searchValue}
-        placeholder="Search Users"
+        placeholder='Search users with name or email'
       />
       {isLoading && <LoadingSpinner asOverlay />}
 
-        {!isLoading && searchedUsers ? (
-          <UsersList users={searchedUsers} />
-        ) : users ? (
-          <UsersList users={users} />
-        ) : (
-          ""
-        )}
-
+      {!isLoading && searchedUsers ? (
+        <UsersList users={searchedUsers} />
+      ) : users ? (
+        <UsersList users={users} />
+      ) : (
+        ''
+      )}
     </Fragment>
   );
 };

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import PlaceList from "../components/PlaceList";
-import ErrorModal from "../../shared/components/UIElements/Modal/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import  useHttpRequest  from "../../shared/hooks/http-hook";
-import SearchBar from "../../shared/components/FormElements/SearchBar";
+import PlaceList from '../components/PlaceList';
+import ErrorModal from '../../shared/components/UIElements/Modal/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import useHttpRequest from '../../shared/hooks/http-hook';
+import SearchBar from '../../shared/components/FormElements/SearchBar';
 
 const AllPlaces = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpRequest();
   const [loadedPlaces, setLoadedPlaces] = useState();
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [searchedPlaces, setSearchedPlaces] = useState();
 
   // fetch all places in database
@@ -50,10 +50,10 @@ const AllPlaces = () => {
         inputSearchHandler={inputSearchHandler}
         onSubmitSearchHandler={onSubmitSearchHandler}
         searchValue={searchValue}
-        placeholder="Search all Places"
+        placeholder='Search places with title or address'
       />
       {isLoading && (
-        <div className="center">
+        <div className='center'>
           <LoadingSpinner />
         </div>
       )}
@@ -62,7 +62,7 @@ const AllPlaces = () => {
       ) : loadedPlaces ? (
         <PlaceList items={loadedPlaces} />
       ) : (
-        ""
+        ''
       )}
     </React.Fragment>
   );

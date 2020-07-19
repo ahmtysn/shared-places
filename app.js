@@ -10,8 +10,6 @@ const enableCORS = require('./middlewares/enableCORS');
 // Routes
 const placeRouter = require('./routes/placeRouter');
 const userRouter = require('./routes/userRouter');
-const searchRouter = require('./routes/searchRouter');
-// const searchRouter = require('./routes/searchRouter');
 
 // Middlewares
 app.use(express.json());
@@ -24,8 +22,6 @@ app.use(express.static('./frontend/build'));
 // Routes
 app.use('/api/places', placeRouter);
 app.use('/api/users', userRouter);
-// app.use('/', searchRouter);
-// app.use('/api', searchRouter);
 
 // Any request that enters will be served the React app
 app.use((req, res, next) => {
