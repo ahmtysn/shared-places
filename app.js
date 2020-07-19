@@ -24,7 +24,7 @@ app.use(express.static('./frontend/build'));
 // Routes
 app.use('/api/places', placeRouter);
 app.use('/api/users', userRouter);
-app.use('/api', searchRouter);
+// app.use('/', searchRouter);
 // app.use('/api', searchRouter);
 
 // Any request that enters will be served the React app

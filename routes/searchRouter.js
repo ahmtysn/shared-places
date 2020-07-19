@@ -1,11 +1,12 @@
-const express = require('express');
+// const express = require('express');
 
-const searchRouter = express.Router();
+// const searchRouter = express.Router();
 
-// Controllers
-const { searchUsersPlaces } = require('./../controllers/search-controllers');
+// // Controllers
+// const { searchPlaces } = require('./../controllers/search-controllers');
 
-// Public routes
-searchRouter.get('/search', searchUsersPlaces);
+// // Public routes
 
-module.exports = searchRouter;
+// searchRouter.get('/', searchPlaces);
+
+// module.exports = searchRouter;

@@ -1,4 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react';
+import { Link } from "react-router-dom";
 
 import AuthContext from './../../shared/context/auth-context';
 
@@ -22,10 +23,11 @@ const PlaceItem = ({
   coordinates,
   onDeletePlace,
   creatorId,
+  creatorName,
+  key
 }) => {
   const { isLoggedIn, userId, token } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
-
   const [showMap, setShowMap] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
 
@@ -92,7 +94,7 @@ const PlaceItem = ({
           Do you really want to delete this place? This action is IRREVERSIBLE!
         </p>
       </Modal>
-      <li className="place-item">
+      <li className="place-item" key={creatorId}>
         <Card className="place-item__content">
           {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
@@ -103,6 +105,15 @@ const PlaceItem = ({
             <h3>{address}</h3>
             <p>{description}</p>
           </div>
+          {creatorName ? (
+            <Link to={`/${creatorId}/places`} style={{ color: "gray" }}>
+              <div style={{ margin: "20px" }}>
+                <h6>Created By: {creatorName}</h6>
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
           <div className="place-item__actions">
             <Button onClick={openMapHandler} inverse>
               VIEW ON MAP

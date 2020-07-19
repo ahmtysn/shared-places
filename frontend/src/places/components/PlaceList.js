@@ -19,7 +19,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
   }
   return (
     <ul className="place-list">
-      {items.map(place => (
+      {items && items.map(place => (
         <PlaceItem
           key={place.id}
           placeId={place.id}
@@ -27,7 +27,8 @@ const PlaceList = ({ items, onDeletePlace }) => {
           title={place.title}
           description={place.description}
           address={place.address}
-          creatorId={place.creator}
+          creatorId={place.creator.id}
+          creatorName={place.creator.name}
           coordinates={place.location}
           onDeletePlace={onDeletePlace}
         />

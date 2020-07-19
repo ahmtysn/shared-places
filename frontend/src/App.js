@@ -18,6 +18,7 @@ const AuthPage = React.lazy(() => import('./users/pages/AuthPage'));
 const NewPlace = React.lazy(() => import('./places/pages/NewPlace'));
 const EditPlace = React.lazy(() => import('./places/pages/EditPlace'));
 const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
+const AllPlaces = React.lazy(() => import("./places/pages/AllPlaces"));
 
 // Context
 import AuthContext from './shared/context/auth-context';
@@ -37,6 +38,7 @@ function App() {
         <Route exact path="/:userId/places" component={UserPlaces} />
         <Route exact path="/places/new" component={NewPlace} />
         <Route exact path="/places/:placeId" component={EditPlace} />
+        <Route exact path="/place/all" component={AllPlaces} />
         <Redirect to="/" />
       </Switch>
     );
@@ -46,7 +48,8 @@ function App() {
         <Route exact path="/" component={UsersPage} />
         <Route exact path="/:userId/places" component={UserPlaces} />
         <Route exact path="/auth" component={AuthPage} />
-        <Redirect to="/auth" />
+        <Route exact path="/place/all" component={AllPlaces} />
+       <Redirect to="/auth" />
       </Switch>
     );
   }
