@@ -79,8 +79,10 @@ const getPlacesByUserId = async (req, res, next) => {
       const placesList = await (
         await User.findById(userId).populate('places')
       ).toJSON();
-      placesOfUser = await placesList.places.filter((place) =>
-        place.title.toLowerCase().includes(searchValue)
+      placesOfUser = await placesList.places.filter(
+        (place) =>
+          place.title.toLowerCase().includes(searchValue) ||
+          place.address.toLowerCase().includes(searchValue)
       );
       res.json({
         places: placesOfUser,
