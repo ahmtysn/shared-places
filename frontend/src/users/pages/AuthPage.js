@@ -54,7 +54,7 @@ const AuthPage = () => {
           url,
           request.method,
           request.body,
-          request.headers
+          request.headers,
         );
 
         login(responseData.userId, responseData.token);
@@ -83,9 +83,99 @@ const AuthPage = () => {
           url,
           request.method,
           request.body,
-          request.headers
+          request.headers,
         );
 
+        login(responseData.userId, responseData.token);
+      } catch (err) {
+        console.log('Error at signup!', err);
+      }
+    }
+  };
+
+  //google handler
+  const responseGoogle = async (response) => {
+    if (isLoginMode) {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/login`,
+          'POST',
+          JSON.stringify({
+            email: response.profileObj.email,
+            password: response.profileObj.googleId,
+          }),
+          {
+            'Content-Type': 'application/json',
+          },
+        );
+
+        login(responseData.userId, responseData.token);
+      } catch (err) {
+        console.log('Error at signup!', err);
+      }
+    } else {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/signup`,
+          'POST',
+          JSON.stringify({
+            name: response.profileObj.name,
+            email: response.profileObj.email,
+            password: response.profileObj.googleId,
+            image: response.profileObj.imageUrl,
+          }),
+          {
+            'Content-Type': 'application/json',
+          },
+        );
+        login(responseData.userId, responseData.token);
+      } catch (err) {
+        console.log('Error at signup!', err);
+      }
+    }
+  };
+
+  //facebook handler
+  const responseFacebook = async (response) => {
+    console.log(response);
+    let pic;
+    try {
+      pic = response.picture.data.url;
+    } catch (err) {}
+
+    if (isLoginMode) {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/login`,
+          'POST',
+          JSON.stringify({
+            email: response.email,
+            password: response.userID,
+          }),
+          {
+            'Content-Type': 'application/json',
+          },
+        );
+
+        login(responseData.userId, responseData.token);
+      } catch (err) {
+        console.log('Error at login!', err);
+      }
+    } else {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/signup`,
+          'POST',
+          JSON.stringify({
+            image: pic,
+            name: response.name,
+            email: response.email,
+            password: response.userID,
+          }),
+          {
+            'Content-Type': 'application/json',
+          },
+        );
         login(responseData.userId, responseData.token);
       } catch (err) {
         console.log('Error at signup!', err);
@@ -103,7 +193,7 @@ const AuthPage = () => {
           name: undefined,
           image: undefined,
         },
-        formState.inputs.email.isValid && formState.inputs.password.isValid
+        formState.inputs.email.isValid && formState.inputs.password.isValid,
       );
     } else {
       setFormData(
@@ -118,7 +208,7 @@ const AuthPage = () => {
             isValid: false,
           },
         },
-        false
+        false,
       );
     }
     setIsLoginMode((prevState) => !prevState);
@@ -127,7 +217,7 @@ const AuthPage = () => {
   return (
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      <Card className="authentication">
+      <Card className='authentication'>
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>Authentication Required!</h2>
         <hr />
@@ -136,6 +226,9 @@ const AuthPage = () => {
           inputHandler={inputHandler}
           authSubmitHandler={authSubmitHandler}
           isLoginMode={isLoginMode}
+          responseGoogle={responseGoogle}
+          responseGoogle={responseGoogle}
+          responseFacebook={responseFacebook}
         />
         <Button inverse onClick={switchModeHandler}>
           SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
