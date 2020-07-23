@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const placeSchema = new Schema({
@@ -22,10 +22,14 @@ const placeSchema = new Schema({
 	creator: {
 		type: mongoose.Types.ObjectId, // Id of related model
 		required: true,
-		ref: 'User',
+		ref: "User",
+	},
+	rate: {
+		rating: { type: Number, required: false, default: 0 },
+		isRated: { type: Boolean, required: false, default: false },
 	},
 });
 
-const Place = mongoose.model('Place', placeSchema);
+const Place = mongoose.model("Place", placeSchema);
 
 module.exports = Place;
