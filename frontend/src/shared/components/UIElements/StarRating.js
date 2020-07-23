@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 
 import LoadingSpinner from "../UIElements/LoadingSpinner";
@@ -8,7 +8,6 @@ import useHttpRequest from "../../hooks/http-hook";
 import AuthContext from "../../context/auth-context";
 import ErrorModal from "../UIElements/Modal/ErrorModal";
 import Button from "../../components/FormElements/Button";
-import ConfirmModal from "./Modal/ConfirmModal";
 
 import "./StarRating.css";
 
