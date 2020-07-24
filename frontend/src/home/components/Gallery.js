@@ -29,9 +29,7 @@ const Gallery = () => {
     for (let i = 0; i < neededElements; i++) {
       result.push(sourceArray[Math.floor(Math.random() * sourceArray.length)]);
     }
-    /*  i commit this to make the array length zerro __ Naji pleace don not forget to delet this commit */
-
-    // setGalleryData(result);
+    setGalleryData(result);
   };
 
   useEffect(() => {

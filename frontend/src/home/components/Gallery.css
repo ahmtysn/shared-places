@@ -8,11 +8,11 @@
 }
 
 .gallery-title {
-    text-align: center;
-    text-decoration: underline;
-    margin: 4rem auto;
-    color: #0d0e13;
-  }
+  text-align: center;
+  text-decoration: underline;
+  margin: 4rem auto;
+  color: #0d0e13;
+}
 
 .gallery.columns {
   margin-right: 0;
