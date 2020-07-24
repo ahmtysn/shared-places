@@ -31,7 +31,15 @@ const createFriendRequest = async (req, res, next) => {
         friendReqSender = await User.findById(userId)
         if (friendReqReceiver.requestslist.find(u => u.id === userId)) {
             const error = new HttpError(
-                'You have already sent a friend request before you can not send more than one request to each friend thanks',
+                `You have already sent a friend request before to ${friendReqReceiver.name}  you can not send more than one request to each friend thanks`,
+                500
+            );
+            return next(error);
+
+        }
+        if (friendReqSender.requestslist.find(u => u.id === friendId)) {
+            const error = new HttpError(
+                `You have already a friend request from ${friendReqReceiver.name} please take an anction by clicking accept or reject buttons`,
                 500
             );
             return next(error);
@@ -62,14 +70,19 @@ const createFriendRequest = async (req, res, next) => {
 
 const acceptFriendRequest = async (req, res, next) => {
     const { friendId, userId } = req.body
-    console.log('got a request from the front end')
     let friendReqReceiver, friendReqSender;
-
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
         friendReqReceiver = await User.findById(userId)
         friendReqSender = await User.findById(friendId)
+        if (friendReqReceiver.friends.find(u => u.id === friendId)) {
+            const error = new HttpError(
+                'You have him/her already as friend you can not add it again',
+                500
+            );
+            return next(error);
+        }
         friendReqReceiver.requestslist = friendReqReceiver.requestslist.filter(u => u.id !== friendId);
         friendReqReceiver.friends.push({
             id: friendId,
@@ -85,6 +98,7 @@ const acceptFriendRequest = async (req, res, next) => {
             name: friendReqReceiver.name,
             places: friendReqReceiver.places
         });
+
         await friendReqReceiver.save({ session: sess });
         await friendReqSender.save({ session: sess });
         await sess.commitTransaction();
