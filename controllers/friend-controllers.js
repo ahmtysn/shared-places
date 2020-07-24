@@ -8,7 +8,7 @@ const getfriends = async (req, res, next) => {
     let user;
     try {
         user = await User.findById(userId)
-       
+
     }
 
     catch (err) {
@@ -18,7 +18,7 @@ const getfriends = async (req, res, next) => {
         );
         return next(error);
     }
-    const friendsList= user.friends
+    const friendsList = user.friends
     res.status(200).json(friendsList);
 }
 
@@ -32,6 +32,14 @@ const createFriendRequest = async (req, res, next) => {
         if (friendReqReceiver.requestslist.find(u => u.id === userId)) {
             const error = new HttpError(
                 'You have already sent a friend request before you can not send more than one request to each friend thanks',
+                500
+            );
+            return next(error);
+
+        }
+        if (friendReqReceiver.friends.find(u => u.id === userId)) {
+            const error = new HttpError(
+                'You have him/her already as friend you can not add it again',
                 500
             );
             return next(error);
@@ -68,14 +76,14 @@ const acceptFriendRequest = async (req, res, next) => {
             email: friendReqSender.email,
             image: friendReqSender.image,
             name: friendReqSender.name,
-            places:friendReqSender.places
+            places: friendReqSender.places
         });
         friendReqSender.friends.push({
             id: userId,
             email: friendReqReceiver.email,
             image: friendReqReceiver.image,
             name: friendReqReceiver.name,
-            places:friendReqReceiver.places
+            places: friendReqReceiver.places
         });
         await friendReqReceiver.save({ session: sess });
         await friendReqSender.save({ session: sess });

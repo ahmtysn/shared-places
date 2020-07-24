@@ -11,7 +11,6 @@ const NotificationNavBar = () => {
     const [num, setNum] = useState(0);
     const [loadedUsers, setLoadedUsers] = useState();
     const [reqList, setReqList] = useState([]);
-
     const fetchUsers = async () => {
         try {
             const responseData = await sendRequest('/api/users');
@@ -37,7 +36,6 @@ const NotificationNavBar = () => {
             <div>
                 <ErrorModal error={error} onClear={clearError} />
                 <NotificationBadge count={num} />
-
                 {loadedUsers && <NotificationList items={reqList} count={num} />}
             </div>
         </React.Fragment>

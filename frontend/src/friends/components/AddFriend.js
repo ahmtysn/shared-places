@@ -61,8 +61,7 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
                         {isLoading ? <LoadingSpinner /> : "Add Friend"}
                     </Button>  </Link>
             ) : (
-                    <Link><Button friend >Profile</Button></Link>
-
+                    <Link><Button friend >MY Profile</Button></Link>
                 )}
 
         </React.Fragment>

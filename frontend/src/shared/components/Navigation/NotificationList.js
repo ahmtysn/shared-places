@@ -14,9 +14,9 @@ const NotificationList = props => {
   return <React.Fragment>
 
     <Link onClick={() => setOpen(!open)} >
-      <GoBell size={27} />
+      <GoBell className="bell" size={27} />
     </Link>
-    {open && <div className='dropdown'>{count !== 0 ? <FriendReqList items={friendsList} /> : <Card><h3>No New Notifcations</h3></Card>}</div>}
+    {open && <div className='dropdown'>{count !== 0 ? <FriendReqList items={friendsList} /> : <Card className='notification'><h3>No New Notifcations</h3></Card>}</div>}
 
   </React.Fragment>
 }

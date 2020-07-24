@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import AuthContext from "./../../context/auth-context";
 import NotificationNavBar from '../Navigation/NotificationNavBar'
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -36,11 +36,7 @@ const NavLinks = () => {
           <NavLink to="/auth">Authentication</NavLink>
         </li>
       )}
-      {isLoggedIn && (
-        <li>
-          <NotificationNavBar />
-        </li>
-      )}
+     
       {isLoggedIn && (
         <li>
           <button onClick={logout}>LOGOUT</button>
