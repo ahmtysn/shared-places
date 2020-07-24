@@ -13,7 +13,7 @@ const { getPlacesByUserId } = require("./../controllers/places-controllers");
 const { createPlace } = require("./../controllers/places-controllers");
 const { updatePlace } = require("./../controllers/places-controllers");
 const { deletePlace } = require("./../controllers/places-controllers");
-const { ratePlace } = require("./../controllers/places-controllers");
+const { ratePlace } = require("./../controllers/rate-controller");
 
 // Validators
 const validateCreatePlace = require("./../middlewares/validation/validateCreatePlace");
