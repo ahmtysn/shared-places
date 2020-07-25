@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from "react";
 
 const useHttpRequest = () => {
   // 2 states: loading, and error
@@ -9,7 +9,7 @@ const useHttpRequest = () => {
   const activeHttpRequests = useRef([]);
 
   const sendRequest = useCallback(
-    async (url, method = 'GET', body = null, headers = {}) => {
+    async (url, method = "GET", body = null, headers = {}) => {
       setIsLoading(true);
       // Add signal to ref
       const httpAbortCtrl = new AbortController();
@@ -38,12 +38,12 @@ const useHttpRequest = () => {
         return responseData;
       } catch (err) {
         setIsLoading(false);
-        console.log('err', err);
-        setError(err.message || 'Something went wrong, please try again');
+        console.log(err);
+        setError(err.message || "Something went wrong, please try again");
         throw error;
       }
     },
-    [error]
+    []
   );
 
   const clearError = () => {
