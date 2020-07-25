@@ -1,25 +1,25 @@
-import React, { useState, useContext, Fragment } from 'react';
-import useForm from './../../shared/hooks/form-hook';
-import useHttpRequest from './../../shared/hooks/http-hook';
+import React, { useState, useContext, Fragment } from "react";
+import useForm from "./../../shared/hooks/form-hook";
+import useHttpRequest from "./../../shared/hooks/http-hook";
 
-import AuthContext from './../../shared/context/auth-context';
+import AuthContext from "./../../shared/context/auth-context";
 
-import Card from './../../shared/components/UIElements/Card';
-import AuthForm from './../components/AuthForm';
-import Button from './../../shared/components/FormElements/Button';
-import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
-import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
+import Card from "./../../shared/components/UIElements/Card";
+import AuthForm from "./../components/AuthForm";
+import Button from "./../../shared/components/FormElements/Button";
+import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
 
 const AuthPage = () => {
   const { login } = useContext(AuthContext);
 
   const INITIAL_INPUTS = {
     email: {
-      value: '',
+      value: "",
       isValid: false,
     },
     password: {
-      value: '',
+      value: "",
       isValid: false,
     },
   };
@@ -34,17 +34,20 @@ const AuthPage = () => {
     const { name, email, password, image } = formState.inputs;
 
     if (isLoginMode) {
-      const url = '/api/users/login';
+      const url = "/api/users/login";
 
       const body = {
         email: email.value,
         password: password.value,
       };
+      ///////////////////////////////////////
+      localStorage.setItem("password", password.value);
+      ///////////////////////////////////////////
 
       const request = {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       };
@@ -59,21 +62,21 @@ const AuthPage = () => {
 
         login(responseData.userId, responseData.token);
       } catch (err) {
-        console.log('Error at login!', err);
+        console.log("Error at login!", err);
       }
     } else {
-      const url = '/api/users/signup';
+      const url = "/api/users/signup";
 
       // Create FormData instance to send binary data
       const formData = new FormData();
 
-      formData.append('name', name.value);
-      formData.append('email', email.value);
-      formData.append('password', password.value);
-      formData.append('image', image.value);
+      formData.append("name", name.value);
+      formData.append("email", email.value);
+      formData.append("password", password.value);
+      formData.append("image", image.value);
 
       const request = {
-        method: 'POST',
+        method: "POST",
         headers: {},
         body: formData,
       };
@@ -88,7 +91,7 @@ const AuthPage = () => {
 
         login(responseData.userId, responseData.token);
       } catch (err) {
-        console.log('Error at signup!', err);
+        console.log("Error at signup!", err);
       }
     }
   };
@@ -110,7 +113,7 @@ const AuthPage = () => {
         {
           ...formState.inputs,
           name: {
-            value: '',
+            value: "",
             isValid: false,
           },
           image: {
@@ -138,7 +141,7 @@ const AuthPage = () => {
           isLoginMode={isLoginMode}
         />
         <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
+          SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
         </Button>
       </Card>
     </Fragment>
