@@ -9,17 +9,17 @@ import './PlaceList.css';
 const PlaceList = ({ items, onDeletePlace }) => {
   if (items.length === 0) {
     return (
-      <div className="place-list center">
+      <div className='place-list center'>
         <Card>
           <h2>No places found. Maybe create one?</h2>
-          <Button to="/places/new">Share New Place</Button>
+          <Button to='/places/new'>Share New Place</Button>
         </Card>
       </div>
     );
   }
   return (
-    <ul className="place-list">
-      {items && items.map(place => (
+    <ul className='place-list'>
+      {items.map((place) => (
         <PlaceItem
           key={place.id}
           placeId={place.id}
@@ -27,8 +27,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
           title={place.title}
           description={place.description}
           address={place.address}
-          creatorId={place.creator.id}
-          creatorName={place.creator.name}
+          creatorId={place.creator}
           coordinates={place.location}
           onDeletePlace={onDeletePlace}
         />
