@@ -5,6 +5,7 @@ import './Input.css';
 
 const inputReducer = (state, action) => {
 	// Works just like Redux
+	console.log('action',action)
 	switch (action.type) {
 		case 'CHANGE':
 			return {
@@ -41,6 +42,7 @@ const Input = ({
 		isTouched: false,
 	};
 	const [inputState, dispatch] = useReducer(inputReducer, INITIAL_INPUT);
+	// console.log('inputState',inputState)
 
 	const changeHandler = event => {
 		dispatch({ type: 'CHANGE', value: event.target.value, validators });

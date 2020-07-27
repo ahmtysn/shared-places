@@ -13,6 +13,7 @@ import LoadingSpinner from './shared/components/UIElements/LoadingSpinner';
 
 // Pages
 /* eslint-disable import/first */
+// lazy() upload only the file that need 
 const UsersPage = React.lazy(() => import('./users/pages/UsersPage'));
 const AuthPage = React.lazy(() => import('./users/pages/AuthPage'));
 const NewPlace = React.lazy(() => import('./places/pages/NewPlace'));
