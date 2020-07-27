@@ -8,8 +8,8 @@ const { errorNoRoute } = require('./middlewares/errorHandler');
 const enableCORS = require('./middlewares/enableCORS');
 
 // Routes
-const placeRouter = require('./routes/placeRouter.js');
-const userRouter = require('./routes/userRouter.js');
+const placeRouter = require('./routes/placeRouter');
+const userRouter = require('./routes/userRouter');
 
 // Middlewares
 app.use(express.json());

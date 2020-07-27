@@ -19,7 +19,7 @@ const validateCreatePlace = require('./../middlewares/validation/validateCreateP
 const validateUpdatePlace = require('./../middlewares/validation/validateUpdatePlace');
 
 // Public routes
-placesRouter.get('/', getAllPlaces);
+placesRouter.get('/place/all', getAllPlaces);
 placesRouter.get('/:placeId', getPlaceById);
 placesRouter.route('/user/:userId').get(getPlacesByUserId);
 
