@@ -288,13 +288,21 @@ const deleteAccount = async (req, res, next) => {
   const imagePath = user.image;
 
   try {
-    // delete all places which created by this account
+    // delete all places which created by this user
     if (user.places.length > 0) {
       await user.places.map(async (placeId) => {
         foundPlace = await Place.findById(placeId);
         await foundPlace.remove();
       });
     }
+    // delete this user from his friends list
+    if (user.friends.length > 0) {
+      await user.friends.map(async (friend) => {
+        myFriend = await User.findById(friend.id);
+        await myFriend.friends.pull(user);
+      });
+    }
+    // delete this user account
     await user.remove();
   } catch (err) {
     const error = new HttpError(

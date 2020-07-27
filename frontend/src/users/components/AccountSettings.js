@@ -25,7 +25,9 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
   const [showDelete, setShowDelete] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [confirmEdit, setConfirmEdit] = useState(false);
 
   const openDeleteHandler = () => setShowDelete(true);
   const closeDeleteHandler = () => setShowDelete(false);
@@ -74,7 +76,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
     }
 
     setShowDelete(false);
-    onDeleteAccount();
+    setConfirmDelete(true);
   };
 
   // Enable edit mode
@@ -112,8 +114,19 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
     } catch (err) {
       console.log("Could not edit account!", err);
     }
-    //editSwitchHandler();
-    logout();
+
+    setConfirmEdit(true);
+  };
+
+  // toggle Password Handler
+  const togglePasswordHandler = () => {
+    const password = document.querySelector("#password");
+    const type =
+      password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
+    // toggle the eye slash icon
+    const togglePassword = document.querySelector("#togglePassword");
+    togglePassword.classList.toggle("fa-eye-slash");
   };
 
   return (
@@ -140,6 +153,32 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
           IRREVERSIBLE!
         </p>
       </Modal>
+      <Modal
+        show={confirmDelete}
+        header={"Delete account confirmation!"}
+        footerClass="profile__modal-actions"
+        footer={
+          <React.Fragment>
+            <Button onClick={() => onDeleteAccount()}>OK</Button>
+          </React.Fragment>
+        }
+      >
+        <p>Your account has been deleted successfully.</p>
+      </Modal>
+      <Modal
+        show={confirmEdit}
+        header={"Account edited!"}
+        footerClass="profile__modal-actions"
+        footer={
+          <React.Fragment>
+            <Button onClick={() => logout()} danger>
+              Logout
+            </Button>
+          </React.Fragment>
+        }
+      >
+        <p>You need to login again for changes to take effect</p>
+      </Modal>
       {!isEditMode && (
         <Card className="profile-card">
           {isLoading && <LoadingSpinner asOverlay />}
@@ -150,15 +189,28 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
             />
           </div>
           <div className="profile__info">
-            <span>
-              <h2>Name</h2> <h3>{settings.name}</h3>
-            </span>
-            <span>
-              <h2>Email</h2> <h3>{settings.email}</h3>
-            </span>
-            <span>
-              <h2>Password</h2> <h3>{localStorage.getItem("password")}</h3>
-            </span>
+            <div>
+              <h2>Name</h2>
+              <input type="text" value={settings.name} disabled />
+            </div>
+            <div>
+              <h2>Email</h2>
+              <input type="text" value={settings.email} disabled />
+            </div>
+            <div>
+              <h2>Password</h2>
+              <input
+                type="password"
+                id="password"
+                value={localStorage.getItem("password")}
+                disabled
+              />
+              <i
+                class="far fa-eye"
+                id="togglePassword"
+                onClick={togglePasswordHandler}
+              ></i>
+            </div>
           </div>
           <div className="profile__actions">
             {isLoggedIn && (
@@ -206,18 +258,26 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
               initValue={settings.email}
               initIsValid={true}
             />
-            <Input
-              id="password"
-              element="input"
-              type="password"
-              placeholder="Your Password"
-              label="Password"
-              errorText="Please enter a valid password, at least 5 characters!"
-              validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
-              onInputChange={inputHandler}
-              initValue={localStorage.getItem("password")}
-              initIsValid={true}
-            />
+            <div>
+              <Input
+                id="password"
+                element="input"
+                type="password"
+                placeholder="Your Password"
+                label="Password"
+                errorText="Please enter a valid password, at least 5 characters!"
+                validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
+                onInputChange={inputHandler}
+                initValue={localStorage.getItem("password")}
+                initIsValid={true}
+              />
+              <i
+                class="far fa-eye"
+                style={{ float: "right", margin: "-2.3rem 0.3rem 0px 0px" }}
+                id="togglePassword"
+                onClick={togglePasswordHandler}
+              ></i>
+            </div>
 
             <Button onClick={editSwitchHandler}>CANCEL</Button>
             <Button type="submit" danger>
