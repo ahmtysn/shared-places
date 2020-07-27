@@ -2,11 +2,11 @@ const axios = require('axios');
 const HttpError = require('./../models/http-error');
 
 async function getCoordsForAddress(address) {
-	return {
-		lat: 23.34324,
-		lng: 53.33234,
-	};
-	/*
+  return {
+    lat: 23.34324,
+    lng: 53.33234,
+  };
+  /*
   USE IF CREDIT CARD
   const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${API_KEY}`);
 

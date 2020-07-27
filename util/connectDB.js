@@ -11,6 +11,8 @@ const connectDB = (server) => {
     .connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
     })
     .then(() => server())
     .catch((err) => console.log("err happened in db connection!", err));
