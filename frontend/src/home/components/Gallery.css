@@ -14,6 +14,7 @@
   color: #0d0e13;
 }
 
-.gallery.columns {
-  margin-right: 0;
+.carousel {
+  width : 60%;
+  margin : 0 auto;
 }
