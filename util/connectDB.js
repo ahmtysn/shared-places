@@ -12,6 +12,8 @@ const connectDB = (server) => {
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
       }
     )
     .then(() => server())
