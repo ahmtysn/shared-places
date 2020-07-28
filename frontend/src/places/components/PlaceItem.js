@@ -105,7 +105,7 @@ const PlaceItem = ({
             <p>{description}</p>
           </div>
           {creatorName !== null && creatorName.name ? (
-            <Link to={`/${creatorId}/places`} style={{ color: 'gray' }}>
+            <Link to={`/${creatorName.id}/places`} style={{ color: 'gray' }}>
               <div style={{ margin: '20px' }}>
                 <h6>Created By: {creatorName.name}</h6>
               </div>
