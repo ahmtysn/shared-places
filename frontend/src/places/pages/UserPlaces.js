@@ -69,8 +69,6 @@ const UserPlaces = () => {
     const fetchUserData = async () => {
       const bucketList = await fetchBucketList();
       const places = await fetchPlaces();
-      console.log({ bucketList }); // item.id.id
-      console.log({ places }); // place.id
       setBucketPlaces(bucketList);
       setUserPlaces(
         places.map((place) => {
@@ -84,7 +82,7 @@ const UserPlaces = () => {
       );
     };
     fetchUserData();
-  }, [sendRequest, userId, token]);
+  }, [sendRequest, userId, token, loggedInUserId]);
 
   const onDeletePlace = (deletedPlaceId) => {
     // After deleted place update state again to show all current places
@@ -118,15 +116,15 @@ const UserPlaces = () => {
         inputSearchHandler={inputSearchHandler}
         onSubmitSearchHandler={onSubmitSearchHandler}
         searchValue={searchValue}
-        placeholder='Search places with title or address'
+        placeholder="Search places with title or address"
       />
       {isLoading && (
-        <div className='center'>
+        <div className="center">
           <LoadingSpinner />
         </div>
       )}
       {!isLoading && (
-        <PlaceList items={places || userPlaces} onDeletePlace={onDeletePlace} />
+        <PlaceList items={userPlaces || places} onDeletePlace={onDeletePlace} />
       )}
     </Fragment>
   );
