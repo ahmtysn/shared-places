@@ -22,6 +22,7 @@ const PlaceItem = ({
   coordinates,
   onDeletePlace,
   creatorId,
+  isAddedToBucketList = false
 }) => {
   const { isLoggedIn, userId, token } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
@@ -29,7 +30,7 @@ const PlaceItem = ({
   const [showMap, setShowMap] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [showBucketModal, setShowBucketModal] = useState(false);
-  const [bucketItemAdded, setBucketItemAdded] = useState(false);
+  const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
 
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
@@ -150,7 +151,7 @@ const PlaceItem = ({
                 </Button>
               )
             ) : (
-              <h3>Added</h3>
+              <h3>In your Bucket List</h3>
             )}
             <Modal
               show={showBucketModal}

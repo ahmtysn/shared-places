@@ -29,7 +29,7 @@ const UsersPage = () => {
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
-      <UsersList users={users} />
+      {!isLoading && <UsersList users={users} />}
     </Fragment>
   );
 };

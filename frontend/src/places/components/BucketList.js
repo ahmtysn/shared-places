@@ -28,6 +28,7 @@ const BucketList = () => {
             Authorization: 'Bearer ' + token,
           }
         );
+        console.log(responseData);
         setPlaces(responseData.bucketListUser);
       } catch (err) {
         console.log('Could not get all user places!', err);
@@ -46,15 +47,14 @@ const BucketList = () => {
     <React.Fragment>
       {isLoading && <LoadingSpinner asOverlay />}
       {error && <ErrorModal error={error} onClear={clearError} />}
-      {!places ||
-        (places.length === 0 && (
+      {(!places || places.length === 0) && !isLoading && (
           <div className="place-list center">
             <Card>
               <h2>No places found. Do you want to add some?</h2>
               <Button to="/">Go Home Page</Button>
             </Card>
           </div>
-        ))}
+        )}
 
       <ul className="bucket-list">
         {!isLoading &&
