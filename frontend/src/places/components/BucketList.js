@@ -28,7 +28,6 @@ const BucketList = () => {
             Authorization: 'Bearer ' + token,
           }
         );
-        console.log(responseData);
         setPlaces(responseData.bucketListUser);
       } catch (err) {
         console.log('Could not get all user places!', err);
