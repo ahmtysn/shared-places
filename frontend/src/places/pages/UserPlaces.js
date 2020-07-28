@@ -23,7 +23,7 @@ const UserPlaces = () => {
   const [searchValue, setSearchValue] = useState('');
   const [places, setPlaces] = useState();
   const [bucketPlaces, setBucketPlaces] = useState([]);
-  
+
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
   useEffect(() => {
@@ -46,11 +46,7 @@ const UserPlaces = () => {
     const fetchPlaces = async () => {
       // send http request
       try {
-<<<<<<< HEAD
         const url = `/api/places/user/${userId}`; // http req
-=======
-        const url = `/api/places/user/${userId}`;
->>>>>>> bucket-list
         const request = {
           method: 'GET',
           headers: {
@@ -64,11 +60,7 @@ const UserPlaces = () => {
           null,
           request.headers
         );
-<<<<<<< HEAD
-        setUserPlaces(response);
-=======
         return response;
->>>>>>> bucket-list
       } catch (err) {
         console.log('Could not get all user places!', err);
         return [];
@@ -77,18 +69,20 @@ const UserPlaces = () => {
     const fetchUserData = async () => {
       const bucketList = await fetchBucketList();
       const places = await fetchPlaces();
-      console.log({bucketList}) // item.id.id
-      console.log({places}) // place.id
+      console.log({ bucketList }); // item.id.id
+      console.log({ places }); // place.id
       setBucketPlaces(bucketList);
-      setUserPlaces(places.map(place => {
-        const found = bucketList.find(item => item.id.id === place.id);
-        if (found) {
-          return {...place, isAddedToBucketList: true}
-        } else {
-          return place
-        }
-      }));
-    }
+      setUserPlaces(
+        places.map((place) => {
+          const found = bucketList.find((item) => item.id.id === place.id);
+          if (found) {
+            return { ...place, isAddedToBucketList: true };
+          } else {
+            return place;
+          }
+        })
+      );
+    };
     fetchUserData();
   }, [sendRequest, userId, token]);
 
@@ -119,7 +113,7 @@ const UserPlaces = () => {
   return (
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />
-<<<<<<< HEAD
+
       <SearchBar
         inputSearchHandler={inputSearchHandler}
         onSubmitSearchHandler={onSubmitSearchHandler}
@@ -131,17 +125,9 @@ const UserPlaces = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && places ? (
-        <PlaceList items={places} onDeletePlace={onDeletePlace} />
-      ) : userPlaces ? (
-        <PlaceList items={userPlaces} onDeletePlace={onDeletePlace} />
-      ) : (
-        ''
+      {!isLoading && (
+        <PlaceList items={places || userPlaces} onDeletePlace={onDeletePlace} />
       )}
-=======
-      {isLoading && <LoadingSpinner asOverlay />}
-      {!isLoading && <PlaceList items={userPlaces} onDeletePlace={onDeletePlace} />}
->>>>>>> bucket-list
     </Fragment>
   );
 };
