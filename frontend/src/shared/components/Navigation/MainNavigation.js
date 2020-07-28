@@ -11,7 +11,7 @@ import './NavLinks.css'
 const MainNavigation = () => {
 	const { isLoggedIn } = useContext(AuthContext);
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-
+    
 	const openDrawer = () => {
 		setDrawerIsOpen(true);
 	};
@@ -34,15 +34,19 @@ const MainNavigation = () => {
 					<span></span>
 					<span></span>
 				</button>
-				<h1 className="main-navigation__title" >
+				
+				<h1 className="main-navigation__title">
 					<Link to="/">YourPlaces</Link>
 				</h1>
+				
 				<nav className="main-navigation__header-nav">
 					<NavLinks />
 				</nav>
-				{isLoggedIn && <NotificationNavBar/>}
+				
+				{isLoggedIn && <NotificationNavBar />}
+				
 			</MainHeader>
-			
+
 		</>
 	);
 };

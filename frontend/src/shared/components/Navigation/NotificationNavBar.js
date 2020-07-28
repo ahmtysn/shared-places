@@ -5,6 +5,7 @@ import NotificationBadge from 'react-notification-badge';
 import useHttpClient from '../../hooks/http-hook'
 import AuthContext from '../../context/auth-context';
 import NotificationList from '../Navigation/NotificationList'
+import { Link } from 'react-router-dom';
 const NotificationNavBar = () => {
     const auth = useContext(AuthContext);
     const { error, sendRequest, clearError } = useHttpClient()
@@ -25,19 +26,17 @@ const NotificationNavBar = () => {
 
 
     useEffect(() => {
-         setInterval(() => {
             fetchUsers();
-         }, 1000);
     }, [sendRequest]);
 
 
     return (
         <React.Fragment>
-            <div>
+           <div>
                 <ErrorModal error={error} onClear={clearError} />
                 <NotificationBadge count={num} />
                 {loadedUsers && <NotificationList items={reqList} count={num} />}
-            </div>
+                </div> 
         </React.Fragment>
 
 
