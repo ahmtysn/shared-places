@@ -7,6 +7,7 @@ import Button from './../../shared/components/FormElements/Button';
 import './PlaceList.css';
 
 const PlaceList = ({ items, onDeletePlace }) => {
+  console.log(items.map(item => item.creator))
   if (items.length === 0) {
     return (
       <div className='place-list center'>
@@ -30,6 +31,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
           creatorId={place.creator}
           coordinates={place.location}
           onDeletePlace={onDeletePlace}
+          creatorName = {place.creator}
         />
       ))}
     </ul>

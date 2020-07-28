@@ -104,10 +104,10 @@ const PlaceItem = ({
             <h3>{address}</h3>
             <p>{description}</p>
           </div>
-          {creatorName ? (
+          {creatorName !== null && creatorName.name ? (
             <Link to={`/${creatorId}/places`} style={{ color: 'gray' }}>
               <div style={{ margin: '20px' }}>
-                <h6>Created By: {creatorName}</h6>
+                <h6>Created By: {creatorName.name}</h6>
               </div>
             </Link>
           ) : (
