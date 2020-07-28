@@ -1,5 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 import AuthContext from './../../shared/context/auth-context';
 
@@ -24,7 +24,6 @@ const PlaceItem = ({
   onDeletePlace,
   creatorId,
   creatorName,
-  key
 }) => {
   const { isLoggedIn, userId, token } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
@@ -66,11 +65,11 @@ const PlaceItem = ({
         show={showMap}
         onCancel={closeMapHandler}
         header={address}
-        contentClass="place-item__modal-content"
-        footerClass="place-item__modal-actions"
+        contentClass='place-item__modal-content'
+        footerClass='place-item__modal-actions'
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
-        <div className="map-container">
+        <div className='map-container'>
           <Map center={coordinates} zoom={16} />
         </div>
       </Modal>
@@ -78,7 +77,7 @@ const PlaceItem = ({
         show={showDelete}
         onCancel={closeDeleteHandler}
         header={'Are you sure?'}
-        footerClass="place-item__modal-actions"
+        footerClass='place-item__modal-actions'
         footer={
           <React.Fragment>
             <Button onClick={closeDeleteHandler} inverse>
@@ -94,27 +93,27 @@ const PlaceItem = ({
           Do you really want to delete this place? This action is IRREVERSIBLE!
         </p>
       </Modal>
-      <li className="place-item" key={creatorId}>
-        <Card className="place-item__content">
+      <li className='place-item' key={creatorId}>
+        <Card className='place-item__content'>
           {isLoading && <LoadingSpinner asOverlay />}
-          <div className="place-item__image">
+          <div className='place-item__image'>
             <img src={`http://localhost:5000/${image}`} alt={title} />
           </div>
-          <div className="place-item__info">
+          <div className='place-item__info'>
             <h2>{title}</h2>
             <h3>{address}</h3>
             <p>{description}</p>
           </div>
           {creatorName ? (
-            <Link to={`/${creatorId}/places`} style={{ color: "gray" }}>
-              <div style={{ margin: "20px" }}>
+            <Link to={`/${creatorId}/places`} style={{ color: 'gray' }}>
+              <div style={{ margin: '20px' }}>
                 <h6>Created By: {creatorName}</h6>
               </div>
             </Link>
           ) : (
-            ""
+            ''
           )}
-          <div className="place-item__actions">
+          <div className='place-item__actions'>
             <Button onClick={openMapHandler} inverse>
               VIEW ON MAP
             </Button>

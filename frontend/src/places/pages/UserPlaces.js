@@ -41,7 +41,7 @@ const UserPlaces = () => {
           null,
           request.headers
         );
-        setUserPlaces(response.places);
+        setUserPlaces(response);
       } catch (err) {
         console.log('Could not get all user places!', err);
       }
@@ -61,7 +61,7 @@ const UserPlaces = () => {
       const data = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}/?search=${searchValue}`
       );
-      setPlaces(data.places);
+      setPlaces(data);
     } catch (error) {}
   };
 
