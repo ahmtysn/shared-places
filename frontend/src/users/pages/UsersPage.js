@@ -53,6 +53,7 @@ const UsersPage = () => {
         placeholder='Search users with name or email'
       />
       {isLoading && <LoadingSpinner asOverlay />}
+<<<<<<< HEAD
 
       {!isLoading && searchedUsers ? (
         <UsersList users={searchedUsers} />
@@ -61,6 +62,9 @@ const UsersPage = () => {
       ) : (
         ''
       )}
+=======
+      {!isLoading && <UsersList users={users} />}
+>>>>>>> bucket-list
     </Fragment>
   );
 };

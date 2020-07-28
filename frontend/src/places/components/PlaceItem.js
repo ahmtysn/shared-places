@@ -24,16 +24,22 @@ const PlaceItem = ({
   onDeletePlace,
   creatorId,
   creatorName,
+  isAddedToBucketList = false,
 }) => {
   const { isLoggedIn, userId, token } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
   const [showMap, setShowMap] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showBucketModal, setShowBucketModal] = useState(false);
+  const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
 
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
   const openDeleteHandler = () => setShowDelete(true);
   const closeDeleteHandler = () => setShowDelete(false);
+  const openModalHandler = () => setShowBucketModal(true);
+  const closeBucketModalHandler = () => setShowBucketModal(false);
+
   const deletePlaceHandler = async (placeId) => {
     const url = `/api/places/${placeId}`;
 
@@ -58,6 +64,24 @@ const PlaceItem = ({
     onDeletePlace(placeId);
   };
 
+  const addBucketList = async () => {
+    try {
+      await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/users/bucketlist/${placeId}`,
+        'PATCH',
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      setShowBucketModal(false);
+      setBucketItemAdded(true);
+    } catch (error) {
+      setShowBucketModal(false);
+      console.log('error');
+    }
+  };
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -65,11 +89,11 @@ const PlaceItem = ({
         show={showMap}
         onCancel={closeMapHandler}
         header={address}
-        contentClass='place-item__modal-content'
-        footerClass='place-item__modal-actions'
+        contentClass="place-item__modal-content"
+        footerClass="place-item__modal-actions"
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
-        <div className='map-container'>
+        <div className="map-container">
           <Map center={coordinates} zoom={16} />
         </div>
       </Modal>
@@ -77,7 +101,7 @@ const PlaceItem = ({
         show={showDelete}
         onCancel={closeDeleteHandler}
         header={'Are you sure?'}
-        footerClass='place-item__modal-actions'
+        footerClass="place-item__modal-actions"
         footer={
           <React.Fragment>
             <Button onClick={closeDeleteHandler} inverse>
@@ -93,13 +117,13 @@ const PlaceItem = ({
           Do you really want to delete this place? This action is IRREVERSIBLE!
         </p>
       </Modal>
-      <li className='place-item' key={creatorId}>
-        <Card className='place-item__content'>
+      <li className="place-item" key={creatorId}>
+        <Card className="place-item__content">
           {isLoading && <LoadingSpinner asOverlay />}
-          <div className='place-item__image'>
+          <div className="place-item__image">
             <img src={`http://localhost:5000/${image}`} alt={title} />
           </div>
-          <div className='place-item__info'>
+          <div className="place-item__info">
             <h2>{title}</h2>
             <h3>{address}</h3>
             <p>{description}</p>
@@ -113,7 +137,7 @@ const PlaceItem = ({
           ) : (
             ''
           )}
-          <div className='place-item__actions'>
+          <div className="place-item__actions">
             <Button onClick={openMapHandler} inverse>
               VIEW ON MAP
             </Button>
@@ -129,6 +153,34 @@ const PlaceItem = ({
                 )}
               </Fragment>
             )}
+            {!bucketItemAdded ? (
+              userId !== creatorId &&
+              isLoggedIn && (
+                <Button onClick={openModalHandler}>
+                  ADD TO YOUR BUCKET LIST
+                </Button>
+              )
+            ) : (
+              <h3>In your Bucket List</h3>
+            )}
+            <Modal
+              show={showBucketModal}
+              onCancel={closeBucketModalHandler}
+              header={'Bucket List'}
+              footerClass="bucket-item__modal-actions"
+              footer={
+                <React.Fragment>
+                  <Button onClick={closeBucketModalHandler} inverse>
+                    CANCEL
+                  </Button>
+                  <Button onClick={addBucketList} danger>
+                    ADD
+                  </Button>
+                </React.Fragment>
+              }
+            >
+              <p>Do you want to add {title} to your Bucket List?</p>
+            </Modal>
           </div>
         </Card>
       </li>

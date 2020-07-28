@@ -31,6 +31,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
           coordinates={place.location}
           onDeletePlace={onDeletePlace}
           creatorName = {place.creator}
+          isAddedToBucketList={place.isAddedToBucketList || false}
         />
       ))}
     </ul>
