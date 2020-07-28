@@ -5,8 +5,13 @@
 }
 
 .ratings {
-	margin: 0 0 0 0.5rem;
 	font-size: 1rem;
 	color: #a5a298;
 	font-style: italic;
+}
+.StarRating {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
 }

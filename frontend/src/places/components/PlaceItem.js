@@ -27,7 +27,6 @@ const PlaceItem = ({
 }) => {
 	const { isLoggedIn, userId, token } = useContext(AuthContext);
 	const { isLoading, error, clearError, sendRequest } = useHttpRequest();
-	const { rating, isRated } = rate;
 
 	const [showMap, setShowMap] = useState(false);
 	const [showDelete, setShowDelete] = useState(false);
@@ -100,7 +99,14 @@ const PlaceItem = ({
 						<img src={`http://localhost:5000/${image}`} alt={title} />
 					</div>
 					<div className='place-item__info'>
-						<StarRating placeId={placeId} creatorId={creatorId} rate={rating} isRated={isRated} />
+						<StarRating
+							placeId={placeId}
+							raterIds={rate.raterIds}
+							raterRates={rate.raterRates}
+							averageRating={rate.averageRating}
+							creatorRate={rate.creatorRate}
+							creatorId={creatorId}
+						/>
 						<h2>{title}</h2>
 						<h3>{address}</h3>
 						<p>{description}</p>

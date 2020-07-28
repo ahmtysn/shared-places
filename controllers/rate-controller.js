@@ -3,15 +3,24 @@ const HttpError = require("./../models/http-error");
 
 const ratePlace = async (req, res, next) => {
 	const placeId = req.params.pid;
-	const { rating, isRated } = req.body;
+	const { raterId, raterRating, creatorRate } = req.body;
 
 	let place;
 	try {
 		place = await Place.findById(placeId);
 	} catch (err) {}
 
-	place.rate.rating = rating;
-	place.rate.isRated = isRated;
+	if (place.rate.raterIds.includes(raterId)) {
+		let indexNumber = place.rate.raterIds.indexOf(raterId);
+		place.rate.raterRates[indexNumber] = raterRating;
+	} else {
+		place.rate.raterIds.push(raterId);
+		place.rate.raterRates.push(raterRating);
+	}
+	place.rate.averageRating =
+		place.rate.raterRates.reduce((a, b) => a + b) / place.rate.raterRates.length;
+
+	place.rate.creatorRate = creatorRate;
 
 	try {
 		await place.save();

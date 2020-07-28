@@ -25,8 +25,16 @@ const placeSchema = new Schema({
 		ref: "User",
 	},
 	rate: {
-		rating: { type: Number, required: false, default: 0 },
-		isRated: { type: Boolean, required: false, default: false },
+		averageRating: { type: Number, required: false, default: 0 },
+		raterIds: [
+			{
+				type: mongoose.Types.ObjectId,
+				required: false,
+				default: null,
+			},
+		],
+		raterRates: [{ type: Number, required: false, default: null }],
+		creatorRate: { type: Number, required: false, default: 0 },
 	},
 });
 
