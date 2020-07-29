@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useContext } from 'react';
+import React, { Fragment, useEffect, useState, useContext, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 // Context
@@ -18,11 +18,10 @@ import SearchBar from '../../shared/components/FormElements/SearchBar';
 const UserPlaces = () => {
   const { userId } = useParams();
 
-  const { token, userId: loggedInUserId } = useContext(AuthContext);
+  const { token, userId: loggedInUserId, isLoggedIn } = useContext(AuthContext);
   const [userPlaces, setUserPlaces] = useState([]); // const userPlaces = [] // userPlaces = arry of places
   const [searchValue, setSearchValue] = useState('');
   const [places, setPlaces] = useState();
-  const [bucketPlaces, setBucketPlaces] = useState([]);
 
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
@@ -67,9 +66,8 @@ const UserPlaces = () => {
       }
     };
     const fetchUserData = async () => {
-      const bucketList = await fetchBucketList();
+      const bucketList = isLoggedIn ? await fetchBucketList() : [];
       const places = await fetchPlaces();
-      setBucketPlaces(bucketList);
       setUserPlaces(
         places.map((place) => {
           const found = bucketList.find((item) => item.id.id === place.id);

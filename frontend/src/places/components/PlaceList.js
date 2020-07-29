@@ -7,7 +7,7 @@ import Button from './../../shared/components/FormElements/Button';
 import './PlaceList.css';
 
 const PlaceList = ({ items, onDeletePlace }) => {
-  if (items.length === 0 && !items) {
+  if (!items || items.length === 0) {
     return (
       <div className="place-list center">
         <Card>

@@ -113,8 +113,8 @@ const getPlacesByUserId = async (req, res, next) => {
   const searchValue = await req.query.search;
 
   let places;
-  let modifiedPlaces;
-  let searchedPlaces;
+  let modifiedPlaces = [];
+  let searchedPlaces = [];
   try {
     places = await Place.find({ creator: userId });
   } catch (err) {
@@ -124,33 +124,25 @@ const getPlacesByUserId = async (req, res, next) => {
     );
     return next(error);
   }
-  try {
-    if (places.length > 0) {
-      // Make "id" property available by activating getters
-      if (searchValue) {
-        searchedPlaces = places.filter(
-          (place) =>
-            place.title.toLowerCase().includes(searchValue) ||
-            place.address.toLowerCase().includes(searchValue)
-        );
+  if (places.length > 0) {
+    // Make "id" property available by activating getters
+    if (searchValue) {
+      searchedPlaces = places.filter(
+        (place) =>
+          place.title.toLowerCase().includes(searchValue) ||
+          place.address.toLowerCase().includes(searchValue)
+      );
 
-        modifiedPlaces = searchedPlaces.map((place) =>
-          place.toObject({ getters: true })
-        );
-      } else {
-        modifiedPlaces = places.map((place) =>
-          place.toObject({ getters: true })
-        );
-      }
-      return res.status(200).json(modifiedPlaces);
+      modifiedPlaces = searchedPlaces.map((place) =>
+        place.toObject({ getters: true })
+      );
+    } else {
+      modifiedPlaces = places.map((place) =>
+        place.toObject({ getters: true })
+      );
     }
-  } catch (err) {
-    const error = new HttpError(
-      'Something went wrong, could not find places.',
-      500
-    );
-    return next(error);
   }
+  return res.status(200).json(modifiedPlaces);
 };
 
 const createPlace = async (req, res, next) => {
