@@ -17,13 +17,32 @@ import SearchBar from '../../shared/components/FormElements/SearchBar';
 
 const UserPlaces = () => {
   const { userId } = useParams();
-  const { token } = useContext(AuthContext);
+
+  const { token, userId: loggedInUserId } = useContext(AuthContext);
   const [userPlaces, setUserPlaces] = useState([]); // const userPlaces = [] // userPlaces = arry of places
   const [searchValue, setSearchValue] = useState('');
   const [places, setPlaces] = useState();
+  const [bucketPlaces, setBucketPlaces] = useState([]);
+
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
   useEffect(() => {
+    const fetchBucketList = async () => {
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/users/bucketlist/${loggedInUserId}`,
+          'GET',
+          null,
+          {
+            Authorization: 'Bearer ' + token,
+          }
+        );
+        return responseData.bucketListUser;
+      } catch (err) {
+        console.log('Could not get all user places!', err);
+        return [];
+      }
+    };
     const fetchPlaces = async () => {
       // send http request
       try {
@@ -41,13 +60,31 @@ const UserPlaces = () => {
           null,
           request.headers
         );
-        setUserPlaces(response.places);
+        return response;
       } catch (err) {
         console.log('Could not get all user places!', err);
+        return [];
       }
     };
-    fetchPlaces();
-  }, [sendRequest, token, userId]);
+    const fetchUserData = async () => {
+      const bucketList = await fetchBucketList();
+      const places = await fetchPlaces();
+      console.log({ bucketList }); // item.id.id
+      console.log({ places }); // place.id
+      setBucketPlaces(bucketList);
+      setUserPlaces(
+        places.map((place) => {
+          const found = bucketList.find((item) => item.id.id === place.id);
+          if (found) {
+            return { ...place, isAddedToBucketList: true };
+          } else {
+            return place;
+          }
+        })
+      );
+    };
+    fetchUserData();
+  }, [sendRequest, userId, token]);
 
   const onDeletePlace = (deletedPlaceId) => {
     // After deleted place update state again to show all current places
@@ -61,7 +98,7 @@ const UserPlaces = () => {
       const data = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}/?search=${searchValue}`
       );
-      setPlaces(data.places);
+      setPlaces(data);
     } catch (error) {}
   };
 
@@ -76,6 +113,7 @@ const UserPlaces = () => {
   return (
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />
+
       <SearchBar
         inputSearchHandler={inputSearchHandler}
         onSubmitSearchHandler={onSubmitSearchHandler}
@@ -87,12 +125,8 @@ const UserPlaces = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && places ? (
-        <PlaceList items={places} onDeletePlace={onDeletePlace} />
-      ) : userPlaces ? (
-        <PlaceList items={userPlaces} onDeletePlace={onDeletePlace} />
-      ) : (
-        ''
+      {!isLoading && (
+        <PlaceList items={places || userPlaces} onDeletePlace={onDeletePlace} />
       )}
     </Fragment>
   );

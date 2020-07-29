@@ -70,39 +70,83 @@ const getPlaceById = async (req, res, next) => {
   return res.status(200).json(modifiedPlace);
 };
 
+// const getPlacesByUserId = async (req, res, next) => {
+//   const userId = req.params.userId;
+//   const searchValue = await req.query.search;
+//   let placesOfUser;
+//   try {
+//     if (searchValue) {
+//       const placesList = await (
+//         await User.findById(userId).populate('places')
+//       ).toJSON();
+//       placesOfUser = await placesList.places.filter(
+//         (place) =>
+//           place.title.toLowerCase().includes(searchValue) ||
+//           place.address.toLowerCase().includes(searchValue)
+//       );
+//       res.json({
+//         places: placesOfUser,
+//       });
+//     } else {
+//       placesOfUser = await (
+//         await User.findById(userId).populate('places')
+//       ).toJSON();
+//       if (!placesOfUser || placesOfUser.length === 0) {
+//         return next(
+//           new HttpError('Could not find places for the provided user id.', 404)
+//         );
+//       }
+//       res.status(200).json({
+//         places: placesOfUser.places,
+//       });
+//     }
+//   } catch (err) {
+//     const error = new HttpError(
+//       'Fetching places failed, please try again later.',
+//       500
+//     );
+//     return next(error);
+//   }
+// };
 const getPlacesByUserId = async (req, res, next) => {
-  const userId = req.params.userId;
+  const { userId } = req.params;
   const searchValue = await req.query.search;
-  let placesOfUser;
+
+  let places;
+  let modifiedPlaces;
+  let searchedPlaces;
   try {
-    if (searchValue) {
-      const placesList = await (
-        await User.findById(userId).populate('places')
-      ).toJSON();
-      placesOfUser = await placesList.places.filter(
-        (place) =>
-          place.title.toLowerCase().includes(searchValue) ||
-          place.address.toLowerCase().includes(searchValue)
-      );
-      res.json({
-        places: placesOfUser,
-      });
-    } else {
-      placesOfUser = await (
-        await User.findById(userId).populate('places')
-      ).toJSON();
-      if (!placesOfUser || placesOfUser.length === 0) {
-        return next(
-          new HttpError('Could not find places for the provided user id.', 404)
+    places = await Place.find({ creator: userId });
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not find places.',
+      500
+    );
+    return next(error);
+  }
+  try {
+    if (places.length > 0) {
+      // Make "id" property available by activating getters
+      if (searchValue) {
+        searchedPlaces = places.filter(
+          (place) =>
+            place.title.toLowerCase().includes(searchValue) ||
+            place.address.toLowerCase().includes(searchValue)
+        );
+
+        modifiedPlaces = searchedPlaces.map((place) =>
+          place.toObject({ getters: true })
+        );
+      } else {
+        modifiedPlaces = places.map((place) =>
+          place.toObject({ getters: true })
         );
       }
-      res.status(200).json({
-        places: placesOfUser.places,
-      });
+      return res.status(200).json(modifiedPlaces);
     }
   } catch (err) {
     const error = new HttpError(
-      'Fetching places failed, please try again later.',
+      'Something went wrong, could not find places.',
       500
     );
     return next(error);

@@ -13,12 +13,14 @@ import LoadingSpinner from './shared/components/UIElements/LoadingSpinner';
 
 // Pages
 /* eslint-disable import/first */
+// lazy() upload only the file that need
 const UsersPage = React.lazy(() => import('./users/pages/UsersPage'));
 const AuthPage = React.lazy(() => import('./users/pages/AuthPage'));
 const NewPlace = React.lazy(() => import('./places/pages/NewPlace'));
 const EditPlace = React.lazy(() => import('./places/pages/EditPlace'));
 const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
-const AllPlaces = React.lazy(() => import("./places/pages/AllPlaces"));
+const AllPlaces = React.lazy(() => import('./places/pages/AllPlaces'));
+const BucketList = React.lazy(() => import('./places/components/BucketList'));
 
 // Context
 import AuthContext from './shared/context/auth-context';
@@ -39,6 +41,7 @@ function App() {
         <Route exact path="/places/new" component={NewPlace} />
         <Route exact path="/places/:placeId" component={EditPlace} />
         <Route exact path="/place/all" component={AllPlaces} />
+        <Route exact path="/:userId/bucketlist" component={BucketList} />
         <Redirect to="/" />
       </Switch>
     );
@@ -49,7 +52,7 @@ function App() {
         <Route exact path="/:userId/places" component={UserPlaces} />
         <Route exact path="/auth" component={AuthPage} />
         <Route exact path="/place/all" component={AllPlaces} />
-       <Redirect to="/auth" />
+        <Redirect to="/auth" />
       </Switch>
     );
   }
