@@ -66,15 +66,15 @@ const AuthForm = ({
       {isLoginMode ? (
         <div>
           <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_Id}
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             buttonText='LOGIN WITH GOOGLE'
             className='social-media-button-class google'
             onSuccess={responseGoogle}
-            onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
           />
           <FacebookLogin
-            appId={process.env.REACT_APP_FACEBOOK_Id}
+            appId={process.env.REACT_APP_FACEBOOK_ID}
+            autoload={false}
             fields='name,email,picture'
             callback={responseFacebook}
             cssClass='social-media-button-class facebook'

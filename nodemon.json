@@ -3,6 +3,7 @@
     "DB_USER": "Noer",
     "DB_PW": "PrDBQHK6j7mShpjF",
     "DB_NAME": "placesharer-dev",
-    "JWT_SECRET": "supersecretman!"
+    "JWT_SECRET": "supersecretman!",
+    "GOOGLE_OATH": "426240820005-8mk3iab4cpplfo85ufiadj6a2cimvj14.apps.googleusercontent.com"
   }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useContext, Fragment } from 'react';
 import useForm from './../../shared/hooks/form-hook';
 import useHttpRequest from './../../shared/hooks/http-hook';
-
+import axios from 'axios';
 import AuthContext from './../../shared/context/auth-context';
 
 import Card from './../../shared/components/UIElements/Card';
@@ -93,93 +93,36 @@ const AuthPage = () => {
     }
   };
 
-  //google handler
-  const responseGoogle = async (response) => {
-    if (isLoginMode) {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/login`,
-          'POST',
-          JSON.stringify({
-            email: response.profileObj.email,
-            password: response.profileObj.googleId,
-          }),
-          {
-            'Content-Type': 'application/json',
-          },
-        );
-
-        login(responseData.userId, responseData.token);
-      } catch (err) {
-        console.log('Error at signup!', err);
-      }
-    } else {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/signup`,
-          'POST',
-          JSON.stringify({
-            name: response.profileObj.name,
-            email: response.profileObj.email,
-            password: response.profileObj.googleId,
-            image: response.profileObj.imageUrl,
-          }),
-          {
-            'Content-Type': 'application/json',
-          },
-        );
-        login(responseData.userId, responseData.token);
-      } catch (err) {
-        console.log('Error at signup!', err);
-      }
+  // google handler
+  const responseGoogle = (response) => {
+    console.log(response);
+    if (isLoginMode || !isLoginMode) {
+      axios({
+        method: 'POST',
+        url: `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/googlelogin`,
+        data: {
+          tokenId: response.tokenId,
+        },
+      }).then((response) => {
+        login(response.user, response.data.token);
+      });
     }
   };
 
   //facebook handler
-  const responseFacebook = async (response) => {
+  const responseFacebook = (response) => {
     console.log(response);
-    let pic;
-    try {
-      pic = response.picture.data.url;
-    } catch (err) {}
-
-    if (isLoginMode) {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/login`,
-          'POST',
-          JSON.stringify({
-            email: response.email,
-            password: response.userID,
-          }),
-          {
-            'Content-Type': 'application/json',
-          },
-        );
-
-        login(responseData.userId, responseData.token);
-      } catch (err) {
-        console.log('Error at login!', err);
-      }
-    } else {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/signup`,
-          'POST',
-          JSON.stringify({
-            image: pic,
-            name: response.name,
-            email: response.email,
-            password: response.userID,
-          }),
-          {
-            'Content-Type': 'application/json',
-          },
-        );
-        login(responseData.userId, responseData.token);
-      } catch (err) {
-        console.log('Error at signup!', err);
-      }
+    if (isLoginMode || !isLoginMode) {
+      axios({
+        method: 'POST',
+        url: `${process.env.REACT_APP_BACKEND_URL}/authSocialMedia/facebooklogin`,
+        data: {
+          accessToken: response.accessToken,
+          id: response.id,
+        },
+      }).then((response) => {
+        login(response.data, response.data.token);
+      });
     }
   };
 
@@ -226,7 +169,6 @@ const AuthPage = () => {
           inputHandler={inputHandler}
           authSubmitHandler={authSubmitHandler}
           isLoginMode={isLoginMode}
-          responseGoogle={responseGoogle}
           responseGoogle={responseGoogle}
           responseFacebook={responseFacebook}
         />
