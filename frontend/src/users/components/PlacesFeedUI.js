@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Feed, Icon, Image } from 'semantic-ui-react'
 import useHttpRequest from "./../../shared/hooks/http-hook";
-import Card from './../../shared/components/UIElements/Card';
+import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal"; 
 import '../../places/components/PlaceItem.css'
-import CreatorPlaceFeedCard from '../components/CreatorPlaceFeedCard'
 import { Link } from 'react-router-dom';
 const PlacesFeedUI = ({ news }) => {
   // console.log(news)
@@ -23,17 +23,21 @@ const PlacesFeedUI = ({ news }) => {
     fetchUsers();
   }, [sendRequest]);
   return (<React.Fragment>
-    {p && <Feed>
+    <ErrorModal error={error} onClear={clearError} />
+    {isLoading && <LoadingSpinner asOverlay />}
+    {!isLoading && p && <Feed>
       <Feed.Event>
-        <Feed.Label image={`http://localhost:5000/${p.creator.image}`} />
+        <Feed.Label>
+          <Image
+            src={`http://localhost:5000/${p.creator.image}`}
+          />
+        </Feed.Label>
         <Feed.Content>
           <Feed.Summary>
             <Link>{p.creator.name}</Link> added a new place <Link> {p.title}</Link>
             <Feed.Date>{news.date}</Feed.Date>
           </Feed.Summary>
           <Feed.Extra images>
-
-
             <div>
               <Image
                 src={`http://localhost:5000/${p.image}`}
@@ -43,14 +47,13 @@ const PlacesFeedUI = ({ news }) => {
                 target='HELLO'
               />
             </div>
-
           </Feed.Extra>
         </Feed.Content>
       </Feed.Event>
       <Feed.Meta>
         <Feed.Like>
-          <Icon name='like' />1 Likes
-          </Feed.Like>
+          <Link> <Icon name='like' color="red" />1 Likes</Link>
+        </Feed.Like>
       </Feed.Meta>
     </Feed>}
   </React.Fragment>)
