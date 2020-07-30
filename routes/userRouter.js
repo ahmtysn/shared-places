@@ -7,6 +7,7 @@ const userRouter = express.Router();
 const { getAllUsers } = require('./../controllers/users-controllers');
 const { createUser } = require('./../controllers/users-controllers');
 const { logUserIn } = require('./../controllers/users-controllers');
+const { getUserById } = require('./../controllers/users-controllers');
 const {
   getBucketList,
   addToBucketList,
@@ -17,6 +18,7 @@ const {
 const validateSignup = require('./../middlewares/validation/validateSignup');
 
 userRouter.route('/').get(getAllUsers);
+userRouter.route('/:userId').get(getUserById);
 userRouter
   .route('/signup')
   .get((req, res) => res.json({ msg: 'GET signup route found!' }))

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import AuthContext from "./../../context/auth-context";
 import NotificationNavBar from "../Navigation/NotificationNavBar";
+import { AiFillHome } from 'react-icons/ai'
 import { BsFillPeopleFill } from "react-icons/bs";
 import "./NavLinks.css";
 
@@ -10,6 +11,13 @@ const NavLinks = () => {
 
   return (
     <ul className="nav-links">
+    {isLoggedIn && (
+        <li>
+          <NavLink to={`/${userId}/newsfeed`}>
+            <AiFillHome size={27}/>
+          </NavLink>
+        </li>
+      )}
       <li>
         <NavLink to="/" exact>
           All Users
