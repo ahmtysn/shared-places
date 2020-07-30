@@ -52,7 +52,6 @@ const PlacesFeedUI = ({ news }) => {
           <Feed.Summary>
             <Link to={`/${p.creator.id}/places`}>{p.creator.id === userId ? "You" : p.creator.name}</Link > added a new place <Link to={`/${p.creator.id}/places`}> {p.title}</Link>
             <Feed.Date>{news.date}</Feed.Date>
-            <Link>{p.creator.id === userId ? "You" : p.creator.name}</Link> added a new place <Link> {p.title}</Link>
             <Feed.Date>{
               year === 0 && month === 0 && day === 0 && hours === 0 && minutes === 0 ? `Few seconds Ago`
                 :
