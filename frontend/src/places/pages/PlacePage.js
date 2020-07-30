@@ -1,5 +1,7 @@
 import React,{useEffect,useState } from 'react';
 
+import './placePage.css';
+
 import { useParams } from 'react-router-dom';
 import ErrorModal from "../../shared/components/UIElements/Modal/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -28,7 +30,7 @@ const PlacePage = () => {
       }, [sendRequest]);
     
     return (
-        <div>
+        <div className="place-page">
         <ErrorModal error={error} onClear={clearError} />
 
         {isLoading && <LoadingSpinner asOverlay />}
