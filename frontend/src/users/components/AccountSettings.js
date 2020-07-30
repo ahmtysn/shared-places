@@ -206,7 +206,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                 disabled
               />
               <i
-                class="far fa-eye"
+                className="far fa-eye"
                 id="togglePassword"
                 onClick={togglePasswordHandler}
               ></i>
@@ -272,7 +272,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                 initIsValid={true}
               />
               <i
-                class="far fa-eye"
+                className="far fa-eye"
                 style={{ float: "right", margin: "-2.3rem 0.3rem 0px 0px" }}
                 id="togglePassword"
                 onClick={togglePasswordHandler}
