@@ -9,6 +9,14 @@ import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
 
 
 const FriendFeedUI = ({ news }) => {
+  let today = new Date();
+  let splittingDate = news.date.split('-');
+  let splittingTime = news.time.split(':');
+  let year = today.getFullYear() - splittingDate[0]
+  let month = today.getMonth() + 1 - splittingDate[1]
+  let day = today.getDate() - splittingDate[2]
+  let hours = Math.abs(today.getHours() - splittingTime[0])
+  let minutes = Math.abs(today.getMinutes() - splittingTime[1])
   const { userId } = useAuth();
   const [u1, setU1] = useState();
   const [u2, setU2] = useState();
@@ -60,7 +68,28 @@ const FriendFeedUI = ({ news }) => {
                   </>
               }
                  are friends now
-                  <Feed.Date>1 Hour Ago</Feed.Date>
+                  <Feed.Date>
+                { year === 0 && month === 0 && day === 0 && hours === 0 && minutes === 0 ? `Few seconds Ago`
+                :
+                year === 0 && month === 0 && day === 0 && hours === 0 && minutes < 1 ? `${minutes} minute Ago`
+                  :
+                  year === 0 && month === 0 && day === 0 && hours === 0 ? `${minutes} minutes Ago`
+                    :
+                    hours === 1 && day === 0 ? `${hours} Hour Ago`
+                      :
+                      hours < 24 && day === 0 ? `${hours} Hours Ago`
+                        :
+                        month === 0 && day === 1 ? `${day} day Ago`
+                          :
+                          month === 0 && day > 1 ? `${day} days Ago`
+                            :
+                            month < 12 ? `${month} Months Ago`
+                              :
+                              'Over than Year ago'
+
+
+                }
+              </Feed.Date>
             </Feed.Summary>
           </Feed.Content>
           <Feed.Meta>
