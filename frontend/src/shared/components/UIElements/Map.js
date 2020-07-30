@@ -1,33 +1,33 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import mapboxgl from 'mapbox-gl';
 
 import './Map.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
-const Map = (props) => {
-  const mapRef = useRef();
+const Map = ({ center, zoom, style, className }) => {
+  const mapContainerRef = useRef(null);
 
-  const { center, zoom } = props;
+  mapboxgl.accessToken =
+    'pk.eyJ1IjoiaHlmY2xhc3MyNiIsImEiOiJja2QzNG5hMzQxanhnMnNwdnJ0ZmN1YzB0In0.9wpXECjySi4MS-oOpxwWYQ';
 
   useEffect(() => {
-    new window.ol.Map({
-      target: mapRef.current.id,
-      layers: [
-        new window.ol.layer.Tile({
-          source: new window.ol.source.OSM(),
-        }),
-      ],
-      view: new window.ol.View({
-        center: window.ol.proj.fromLonLat([center.lng, center.lat]),
-        zoom: zoom,
-      }),
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [center.lng, center.lat],
+      zoom,
     });
+
+    new mapboxgl.Marker().setLngLat(center).addTo(map);
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    map.addControl(new mapboxgl.FullscreenControl(), 'top-right');
   }, [center, zoom]);
 
   return (
     <div
-      ref={mapRef}
-      className={`map ${props.className}`}
-      style={props.style}
-      id='map'
+      className={`map ${className}`}
+      ref={mapContainerRef}
+      style={style}
     ></div>
   );
 };
