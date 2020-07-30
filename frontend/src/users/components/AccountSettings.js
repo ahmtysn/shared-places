@@ -16,6 +16,8 @@ import {
   VALIDATOR_EMAIL,
 } from "./../../shared/utils/validators";
 
+import ProfilePlaceItem from "./ProfilePlaceItem";
+import ProfileFriendsItem from "./ProfileFriendsItem";
 import useHttpRequest from "../../shared/hooks/http-hook";
 
 import "./../components/AccountSettings.css";
@@ -191,13 +193,61 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
           <div className="profile__info">
             <div>
               <h2>Your Name</h2>
-
               <h3>{settings.name}</h3>
             </div>
             <div>
               <h2>Email</h2>
 
               <h3>{settings.email}</h3>
+            </div>
+            <div>
+              <h2>Places</h2>
+              {settings.places && settings.places.length > 0 ? (
+                <ul className="profile__place-list">
+                  {settings.places.map((place) => (
+                    <ProfilePlaceItem
+                      key={`place-${place.id || place._id}`}
+                      id={place.id || place._id}
+                      image={place.image}
+                      title={place.title}
+                      address={place.address}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <Card>
+                  <p>
+                    No places found, you can share a place, just click the
+                    button...
+                  </p>
+                  <Button to="/places/new">SHARE PLACE</Button>
+                </Card>
+              )}
+            </div>
+
+            <div>
+              <h2>Friends</h2>
+              {settings.friends && settings.friends.length > 0 ? (
+                <ul className="profile__place-list">
+                  {settings.friends.map((friend) => (
+                    <ProfileFriendsItem
+                      key={`place-${friend.id || friend._id}`}
+                      id={friend.id || friend._id}
+                      image={friend.image}
+                      email={friend.email}
+                      name={friend.name}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <Card>
+                  <p>
+                    No friends found, you can find a friend, just click the
+                    button...
+                  </p>
+                  <Button to="/">FIND FRIEND</Button>
+                </Card>
+              )}
             </div>
             <div>
               <h2>Password</h2>
