@@ -13,6 +13,8 @@ const PlacesFeedUI = ({ news }) => {
 
     try {
       const place = await sendRequest(`http://localhost:5000/api/places/${news.place}`)
+  console.log('creator.id',place.creator.id)
+
       setP(place);
     } catch (err) {
       console.log("Error in fetching users!", err);
@@ -28,25 +30,29 @@ const PlacesFeedUI = ({ news }) => {
     {!isLoading && p && <Feed>
       <Feed.Event>
         <Feed.Label>
-          <Image
-            src={`http://localhost:5000/${p.creator.image}`}
-          />
+          <Link to={`/${p.creator.id}/places`}>
+            <Image
+              src={`http://localhost:5000/${p.creator.image}`}
+            />
+          </Link>
         </Feed.Label>
         <Feed.Content>
           <Feed.Summary>
-            <Link>{p.creator.name}</Link> added a new place <Link> {p.title}</Link>
+            <Link to={`/${p.creator.id}/places`}>{p.creator.name}</Link> added a new place <Link to={`/${p.creator.id}/places`}> {p.title}</Link>
             <Feed.Date>{news.date}</Feed.Date>
           </Feed.Summary>
           <Feed.Extra images>
-            <div>
-              <Image
-                src={`http://localhost:5000/${p.image}`}
-                as='a'
-                size='massive'
-                href='http://google.com'
-                target='HELLO'
-              />
-            </div>
+          <Link to={`/${p.creator.id}/places`}>
+              <div>
+                <Image
+                  src={`http://localhost:5000/${p.image}`}
+                  as='a'
+                  size='massive'
+                  href='http://google.com'
+                  target='HELLO'
+                />
+              </div>
+          </Link>
           </Feed.Extra>
         </Feed.Content>
       </Feed.Event>

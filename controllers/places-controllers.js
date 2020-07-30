@@ -147,7 +147,7 @@ const createPlace = async (req, res, next) => {
     const error = new HttpError('Could not find user with provided id.', 404);
     return next(error);
   }
-
+  let today = new Date();
   try {
     // Save new place + save place id into user
     const session = await mongoose.startSession();

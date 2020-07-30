@@ -33,6 +33,7 @@ const FriendFeedUI = ({ news }) => {
   useEffect(() => {
     fetchUsers();
   }, [sendRequest]);
+
   return (
     <React.Fragment>
       {u1 && u2 && <Feed>
@@ -44,16 +45,16 @@ const FriendFeedUI = ({ news }) => {
             <Feed.Summary>
               {userId === news.user1 ?
                 <>
-                  <Link> You </Link> and <Link> {u2.name} </Link>
+                  <Link to={`/${userId}/places`}> You </Link> and <Link to={`/${news.user2}/places`}> {u2.name} </Link>
                 </>
                 :
                 userId === news.user2 ?
                   <>
-                    <Link> You </Link> and <Link> {u1.name} </Link>
+                    <Link to={`/${userId}/places`}> You </Link> and <Link to={`/${news.user1}/places`}> {u1.name} </Link>
                   </>
                   :
                   <>
-                    <Link> {u1.name} </Link> and <Link> {u2.name} </Link>
+                    <Link to={`/${news.user1}/places`}> {u1.name} </Link> and <Link to={`/${news.user2}/places`}> {u2.name} </Link>
                   </>
               }
                  are friends now
