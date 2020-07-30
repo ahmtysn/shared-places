@@ -159,6 +159,7 @@ const logUserIn = async (req, res, next) => {
         expiresIn: "1h",
       }
     );
+    
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, check your credentials and try again!",

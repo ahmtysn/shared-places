@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-
+import AuthContext from "./../../context/auth-context";
 import './MainNavigation.css';
 import MainHeader from './MainHeader';
 import SideDrawer from './SideDrawer';
 import BackDrop from './../UIElements/Backdrop';
 import NavLinks from './NavLinks';
-
+import NotificationNavBar from './NotificationNavBar'
+import './NavLinks.css'
 const MainNavigation = () => {
+	const { isLoggedIn } = useContext(AuthContext);
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-
+    
 	const openDrawer = () => {
 		setDrawerIsOpen(true);
 	};
@@ -32,13 +34,19 @@ const MainNavigation = () => {
 					<span></span>
 					<span></span>
 				</button>
+				
 				<h1 className="main-navigation__title">
 					<Link to="/">YourPlaces</Link>
 				</h1>
+				
 				<nav className="main-navigation__header-nav">
 					<NavLinks />
 				</nav>
+				
+				{isLoggedIn && <NotificationNavBar />}
+				
 			</MainHeader>
+
 		</>
 	);
 };
