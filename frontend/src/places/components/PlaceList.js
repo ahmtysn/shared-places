@@ -7,18 +7,18 @@ import Button from './../../shared/components/FormElements/Button';
 import './PlaceList.css';
 
 const PlaceList = ({ items, onDeletePlace }) => {
-  if (items.length === 0) {
+  if (!items || items.length === 0) {
     return (
-      <div className='place-list center'>
+      <div className="place-list center">
         <Card>
           <h2>No places found. Maybe create one?</h2>
-          <Button to='/places/new'>Share New Place</Button>
+          <Button to="/places/new">Share New Place</Button>
         </Card>
       </div>
     );
   }
   return (
-    <ul className='place-list'>
+    <ul className="place-list">
       {items.map((place) => (
         <PlaceItem
           key={place.id}
@@ -30,7 +30,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
           creatorId={place.creator}
           coordinates={place.location}
           onDeletePlace={onDeletePlace}
-          creatorName = {place.creator}
+          creatorName={place.creator}
           isAddedToBucketList={place.isAddedToBucketList || false}
         />
       ))}
