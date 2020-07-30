@@ -1,32 +1,34 @@
-const path = require('path');
-const express = require('express');
+const path = require("path");
+const express = require("express");
 const app = express();
-const connectDB = require('./util/connectDB');
+const connectDB = require("./util/connectDB");
 
-const { errorHandler } = require('./middlewares/errorHandler');
-const { errorNoRoute } = require('./middlewares/errorHandler');
-const enableCORS = require('./middlewares/enableCORS');
+const { errorHandler } = require("./middlewares/errorHandler");
+const { errorNoRoute } = require("./middlewares/errorHandler");
+const enableCORS = require("./middlewares/enableCORS");
 
 // Routes
-const placeRouter = require('./routes/placeRouter');
-const userRouter = require('./routes/userRouter');
-
+const placeRouter = require("./routes/placeRouter.js");
+const userRouter = require("./routes/userRouter.js");
+const friendRouter = require("./routes/friends-routes");
 // Middlewares
 app.use(express.json());
 app.use(enableCORS); // Only necessary if API is separate from client
 
 // Whenever request hits this path, return static files
-app.use('/uploads/images', express.static(path.join('uploads', 'images')));
-// this line means that if you request something which doesn't start with(/uploads/images) then we will serve 
-app.use(express.static('./frontend/build'));
+
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
+app.use(express.static("./frontend/build"));
+
+
 
 // Routes
-app.use('/api/places', placeRouter);
-app.use('/api/users', userRouter);
-
+app.use("/api/places", placeRouter);
+app.use("/api/users", userRouter);
+app.use("/api/friends", friendRouter);
 // Any request that enters will be served the React app
 app.use((req, res, next) => {
-  res.sendFile(path.resolve(__dirname, './frontend/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
 });
 // middleware placed after routes to catch the error of not existing route
 // app.use((req, res, next) => {

@@ -58,8 +58,12 @@ const AuthPage = () => {
           request.body,
           request.headers
         );
+
+        window.location.reload(false);
+
           // signup: we send http request when we click the button then we trigger the function
          // login : we send http request when we render the Users page(Users component)
+
 
         login(responseData.userId, responseData.token);
       } catch (err) {
