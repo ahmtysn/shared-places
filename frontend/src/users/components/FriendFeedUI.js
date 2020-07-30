@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { Feed, Icon,Image } from 'semantic-ui-react'
+import { Feed, Icon, Image } from 'semantic-ui-react'
 import useHttpRequest from "./../../shared/hooks/http-hook";
 import useAuth from "../../shared/hooks/auth-hook";
 import { Link } from 'react-router-dom';
-//import 'semantic-ui-css/semantic.min.css'
+import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
+
 
 
 const FriendFeedUI = ({ news }) => {
   const { userId } = useAuth();
-  console.log('userId', userId)
-
   const [u1, setU1] = useState();
   const [u2, setU2] = useState();
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
@@ -35,6 +35,8 @@ const FriendFeedUI = ({ news }) => {
   }, [sendRequest]);
   return (
     <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && <LoadingSpinner asOverlay />}
       {u1 && u2 && <Feed>
         <Feed.Event>
           <Feed.Label >
