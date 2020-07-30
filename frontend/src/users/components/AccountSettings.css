@@ -46,9 +46,10 @@
   font-size: 1rem;
 }
 
-.profile__info input {
+.profile__info h3 {
   margin: 0.2rem auto 0 auto;
   width: 100%;
+  text-align: left;
   font: inherit;
   border: 1px solid #ccc;
   background: #f8f8f8;
@@ -60,9 +61,10 @@
 }
 
 #togglePassword {
-  margin-left: -1.5rem;
   cursor: pointer;
   opacity: 0.5;
+  float: right;
+  margin: -2.3rem 0.3rem 0px 0px;
 }
 
 @media (min-width: 768px) {

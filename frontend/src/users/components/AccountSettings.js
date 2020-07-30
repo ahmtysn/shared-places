@@ -190,20 +190,24 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
           </div>
           <div className="profile__info">
             <div>
-              <h2>Name</h2>
-              <input type="text" value={settings.name} disabled />
+              <h2>Your Name</h2>
+
+              <h3>{settings.name}</h3>
             </div>
             <div>
               <h2>Email</h2>
-              <input type="text" value={settings.email} disabled />
+
+              <h3>{settings.email}</h3>
             </div>
             <div>
               <h2>Password</h2>
-              <input
-                type="password"
+              <Input
                 id="password"
-                value={localStorage.getItem("password")}
-                disabled
+                element="input"
+                type="password"
+                initValue={localStorage.getItem("password")}
+                disabled={true}
+                onInputChange={inputHandler}
               />
               <i
                 className="far fa-eye"
@@ -273,7 +277,6 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
               />
               <i
                 className="far fa-eye"
-                style={{ float: "right", margin: "-2.3rem 0.3rem 0px 0px" }}
                 id="togglePassword"
                 onClick={togglePasswordHandler}
               ></i>
