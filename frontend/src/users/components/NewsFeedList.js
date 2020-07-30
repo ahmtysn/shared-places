@@ -1,7 +1,5 @@
-import React, { Fragment } from "react";
-
+import React from "react";
 import '../../places/components/PlaceList.css'
-
 import 'semantic-ui-css/semantic.min.css'
 import FriendFeedUI from  './FriendFeedUI'
 import PlacesFeedUI from './PlacesFeedUI'

@@ -108,6 +108,7 @@ const getPlacesByUserId = async (req, res, next) => {
 };
 
 const createPlace = async (req, res, next) => {
+ 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
@@ -133,7 +134,7 @@ const createPlace = async (req, res, next) => {
     address: address,
     creator: userId,
   });
-
+  let today = new Date();
   let user;
   // Store place in User
   try {
@@ -147,7 +148,7 @@ const createPlace = async (req, res, next) => {
     const error = new HttpError('Could not find user with provided id.', 404);
     return next(error);
   }
-  let today = new Date();
+
   try {
     // Save new place + save place id into user
     const session = await mongoose.startSession();
@@ -256,6 +257,7 @@ const deletePlace = async (req, res, next) => {
     session.startTransaction();
     await place.remove({ session });
     place.creator.places.pull(place); // Mongoose method that removes objectId
+    place.creator.newsfeed=place.creator.newsfeed.filter(u=> (u.type==="Add New Place" && u.place!==placeId) || u.type==="Friends" )
     await place.creator.save({ session });
     await session.commitTransaction();
   } catch (err) {

@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Feed, Icon, Image } from 'semantic-ui-react'
 import useHttpRequest from "./../../shared/hooks/http-hook";
 import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
-import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal"; 
+import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
+import useAuth from "../../shared/hooks/auth-hook";
 import '../../places/components/PlaceItem.css'
 import { Link } from 'react-router-dom';
 const PlacesFeedUI = ({ news }) => {
-  // console.log(news)
+  const { userId } = useAuth();
   const [p, setP] = useState();
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
   const fetchUsers = async () => {
@@ -38,7 +39,7 @@ const PlacesFeedUI = ({ news }) => {
         </Feed.Label>
         <Feed.Content>
           <Feed.Summary>
-            <Link to={`/${p.creator.id}/places`}>{p.creator.name}</Link> added a new place <Link to={`/${p.creator.id}/places`}> {p.title}</Link>
+            <Link to={`/${p.creator.id}/places`}>{p.creator.id === userId ? "You" : p.creator.name}</Link > added a new place <Link to={`/${p.creator.id}/places`}> {p.title}</Link>
             <Feed.Date>{news.date}</Feed.Date>
           </Feed.Summary>
           <Feed.Extra images>
