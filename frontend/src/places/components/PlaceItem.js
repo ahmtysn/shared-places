@@ -1,18 +1,29 @@
-import React, { useState, useContext, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext, Fragment } from "react";
+import { Link } from "react-router-dom";
 
-import AuthContext from './../../shared/context/auth-context';
+import AuthContext from "./../../shared/context/auth-context";
 
-import Card from './../../shared/components/UIElements/Card';
-import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
-import Button from './../../shared/components/FormElements/Button';
-import Modal from './../../shared/components/UIElements/Modal/Modal';
-import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
-import Map from './../../shared/components/UIElements/Map';
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  LinkedinIcon,
+  TwitterIcon,
+} from "react-share";
 
-import useHttpRequest from './../../shared/hooks/http-hook';
+import ShareIcon from "@material-ui/icons/Share";
 
-import './PlaceItem.css';
+import Card from "./../../shared/components/UIElements/Card";
+import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
+import Button from "./../../shared/components/FormElements/Button";
+import Modal from "./../../shared/components/UIElements/Modal/Modal";
+import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
+import Map from "./../../shared/components/UIElements/Map";
+
+import useHttpRequest from "./../../shared/hooks/http-hook";
+
+import "./PlaceItem.css";
 
 const PlaceItem = ({
   image,
@@ -32,6 +43,7 @@ const PlaceItem = ({
   const [showDelete, setShowDelete] = useState(false);
   const [showBucketModal, setShowBucketModal] = useState(false);
   const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
+  const [icons, setIcons] = useState(false);
 
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
@@ -49,7 +61,7 @@ const PlaceItem = ({
     };
 
     const request = {
-      method: 'DELETE',
+      method: "DELETE",
       body,
       headers,
     };
@@ -57,7 +69,7 @@ const PlaceItem = ({
     try {
       await sendRequest(url, request.method, request.body, request.headers);
     } catch (err) {
-      console.log('Error while deleting place!', err);
+      console.log("Error while deleting place!", err);
     }
 
     setShowDelete(false);
@@ -68,7 +80,7 @@ const PlaceItem = ({
     try {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/bucketlist/${placeId}`,
-        'PATCH',
+        "PATCH",
         null,
         {
           Authorization: `Bearer ${token}`,
@@ -78,8 +90,12 @@ const PlaceItem = ({
       setBucketItemAdded(true);
     } catch (error) {
       setShowBucketModal(false);
-      console.log('error');
+      console.log("error");
     }
+  };
+
+  const showShareIcons = () => {
+    setIcons(true);
   };
 
   return (
@@ -100,7 +116,7 @@ const PlaceItem = ({
       <Modal
         show={showDelete}
         onCancel={closeDeleteHandler}
-        header={'Are you sure?'}
+        header={"Are you sure?"}
         footerClass="place-item__modal-actions"
         footer={
           <React.Fragment>
@@ -121,7 +137,10 @@ const PlaceItem = ({
         <Card className="place-item__content">
           {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
-            <img src={`http://localhost:5000/${image}`} alt={title} />
+            <Link to={`/places/${placeId}/details`}>
+              {" "}
+              <img src={`http://localhost:5000/${image}`} alt={title} />
+            </Link>
           </div>
           <div className="place-item__info">
             <h2>{title}</h2>
@@ -129,13 +148,13 @@ const PlaceItem = ({
             <p>{description}</p>
           </div>
           {creatorName !== null && creatorName.name ? (
-            <Link to={`/${creatorName.id}/places`} style={{ color: 'gray' }}>
-              <div style={{ margin: '20px' }}>
+            <Link to={`/${creatorName.id}/places`} style={{ color: "gray" }}>
+              <div style={{ margin: "20px" }}>
                 <h6>Created By: {creatorName.name}</h6>
               </div>
             </Link>
           ) : (
-            ''
+            ""
           )}
           <div className="place-item__actions">
             <Button onClick={openMapHandler} inverse>
@@ -163,10 +182,39 @@ const PlaceItem = ({
             ) : (
               <h3>In your Bucket List</h3>
             )}
+            <div className="place-share">
+              {!icons ? (
+                <ShareIcon onClick={showShareIcons} fontSize="medium"></ShareIcon>
+              ) : (
+                <div>
+                  <FacebookShareButton
+                    url={`https://placesbook.herokuapp.com/places/${placeId}/details`}
+                    imageURL={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
+                    quote={title}
+                  >
+                    <FacebookIcon round size={32} />
+                  </FacebookShareButton>
+                  <LinkedinShareButton
+                    url={`https://placesbook.herokuapp.com/places/${placeId}/details`}
+                    media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
+                    title={title}
+                  >
+                    <LinkedinIcon round size={32} />
+                  </LinkedinShareButton>
+                  <TwitterShareButton
+                    url={`https://placesbook.herokuapp.com/places/${placeId}/details`}
+                    media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
+                    title={title}
+                  >
+                    <TwitterIcon round size={32} />
+                  </TwitterShareButton>
+                </div>
+              )}
+            </div>
             <Modal
               show={showBucketModal}
               onCancel={closeBucketModalHandler}
-              header={'Bucket List'}
+              header={"Bucket List"}
               footerClass="bucket-item__modal-actions"
               footer={
                 <React.Fragment>

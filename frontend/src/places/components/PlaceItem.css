@@ -54,6 +54,10 @@
 	width: 100%;
 }
 
+.place-share {
+	margin-top: 0.5rem;
+}
+
 @media (min-width: 768px) {
 	.place-item__image {
 		height: 20rem;
