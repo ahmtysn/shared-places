@@ -1,5 +1,5 @@
 import React, { useState, useContext, Fragment } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 import AuthContext from './../../shared/context/auth-context';
 
@@ -24,17 +24,22 @@ const PlaceItem = ({
   onDeletePlace,
   creatorId,
   creatorName,
-  key
+  isAddedToBucketList = false,
 }) => {
   const { isLoggedIn, userId, token } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
   const [showMap, setShowMap] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [showBucketModal, setShowBucketModal] = useState(false);
+  const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
 
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
   const openDeleteHandler = () => setShowDelete(true);
   const closeDeleteHandler = () => setShowDelete(false);
+  const openModalHandler = () => setShowBucketModal(true);
+  const closeBucketModalHandler = () => setShowBucketModal(false);
+
   const deletePlaceHandler = async (placeId) => {
     const url = `/api/places/${placeId}`;
 
@@ -57,6 +62,24 @@ const PlaceItem = ({
 
     setShowDelete(false);
     onDeletePlace(placeId);
+  };
+
+  const addBucketList = async () => {
+    try {
+      await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/users/bucketlist/${placeId}`,
+        'PATCH',
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      setShowBucketModal(false);
+      setBucketItemAdded(true);
+    } catch (error) {
+      setShowBucketModal(false);
+      console.log('error');
+    }
   };
 
   return (
@@ -105,14 +128,14 @@ const PlaceItem = ({
             <h3>{address}</h3>
             <p>{description}</p>
           </div>
-          {creatorName ? (
-            <Link to={`/${creatorId}/places`} style={{ color: "gray" }}>
-              <div style={{ margin: "20px" }}>
-                <h6>Created By: {creatorName}</h6>
+          {creatorName !== null && creatorName.name ? (
+            <Link to={`/${creatorName.id}/places`} style={{ color: 'gray' }}>
+              <div style={{ margin: '20px' }}>
+                <h6>Created By: {creatorName.name}</h6>
               </div>
             </Link>
           ) : (
-            ""
+            ''
           )}
           <div className="place-item__actions">
             <Button onClick={openMapHandler} inverse>
@@ -130,6 +153,34 @@ const PlaceItem = ({
                 )}
               </Fragment>
             )}
+            {!bucketItemAdded ? (
+              userId !== creatorId &&
+              isLoggedIn && (
+                <Button onClick={openModalHandler}>
+                  ADD TO YOUR BUCKET LIST
+                </Button>
+              )
+            ) : (
+              <h3>In your Bucket List</h3>
+            )}
+            <Modal
+              show={showBucketModal}
+              onCancel={closeBucketModalHandler}
+              header={'Bucket List'}
+              footerClass="bucket-item__modal-actions"
+              footer={
+                <React.Fragment>
+                  <Button onClick={closeBucketModalHandler} inverse>
+                    CANCEL
+                  </Button>
+                  <Button onClick={addBucketList} danger>
+                    ADD
+                  </Button>
+                </React.Fragment>
+              }
+            >
+              <p>Do you want to add {title} to your Bucket List?</p>
+            </Modal>
           </div>
         </Card>
       </li>

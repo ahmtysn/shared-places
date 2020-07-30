@@ -30,12 +30,14 @@ const AuthPage = () => {
 
   const authSubmitHandler = async (e) => {
     e.preventDefault();
-
+//we need all data from AuthForm page
     const { name, email, password, image } = formState.inputs;
-
+//  we don't need this anymore because it will be managed in our customs hook (useHttpClient)
+    // here we will get to this page in signup & login modes
+    // so we need to check if it is login mode otherwise we need to fetch for signup
     if (isLoginMode) {
       const url = '/api/users/login';
-
+      //sent request
       const body = {
         email: email.value,
         password: password.value,
@@ -56,15 +58,26 @@ const AuthPage = () => {
           request.body,
           request.headers
         );
+
         window.location.reload(false);
+
+          // signup: we send http request when we click the button then we trigger the function
+         // login : we send http request when we render the Users page(Users component)
+
+
         login(responseData.userId, responseData.token);
       } catch (err) {
         console.log('Error at login!', err);
+          // we handled error in custom hook (useHttpClient)
+        // so can stay empty
       }
     } else {
       const url = '/api/users/signup';
 
       // Create FormData instance to send binary data
+
+      // to send images we need to send form data (binary data not text)
+        // we can use FormData() to append both (text & image)
       const formData = new FormData();
 
       formData.append('name', name.value);

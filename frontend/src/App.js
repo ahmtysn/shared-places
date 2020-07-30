@@ -13,6 +13,7 @@ import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 
 // Pages
 /* eslint-disable import/first */
+
 const UsersPage = React.lazy(() => import("./users/pages/UsersPage"));
 const AuthPage = React.lazy(() => import("./users/pages/AuthPage"));
 const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
@@ -20,6 +21,8 @@ const EditPlace = React.lazy(() => import("./places/pages/EditPlace"));
 const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
 const UserFriends = React.lazy(() => import("./friends/pages/UserFriends.js"));
 const AllPlaces = React.lazy(() => import("./places/pages/AllPlaces"));
+const BucketList = React.lazy(() => import('./places/components/BucketList'));
+
 
 // Context
 import AuthContext from "./shared/context/auth-context";
@@ -41,6 +44,7 @@ function App() {
         <Route exact path="/places/new" component={NewPlace} />
         <Route exact path="/places/:placeId" component={EditPlace} />
         <Route exact path="/place/all" component={AllPlaces} />
+        <Route exact path="/:userId/bucketlist" component={BucketList} />
         <Redirect to="/" />
       </Switch>
     );

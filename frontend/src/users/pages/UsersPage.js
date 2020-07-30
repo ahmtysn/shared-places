@@ -54,13 +54,7 @@ const UsersPage = () => {
       />
       {isLoading && <LoadingSpinner asOverlay />}
 
-      {!isLoading && searchedUsers ? (
-        <UsersList users={searchedUsers} />
-      ) : users ? (
-        <UsersList users={users} />
-      ) : (
-        ""
-      )}
+      {!isLoading && <UsersList users={searchedUsers || users} />}
     </Fragment>
   );
 };

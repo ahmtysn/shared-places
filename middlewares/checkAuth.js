@@ -3,6 +3,7 @@ const HttpError = require('./../models/http-error');
 
 // Custom middleware for Express to check authentication
 const checkAuth = (req, res, next) => {
+  if (req.method === 'OPTIONS') return next();
   try {
     // Only keep token
     const token = req.headers.authorization.split(' ')[1];
