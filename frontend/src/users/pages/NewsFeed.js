@@ -7,6 +7,7 @@ import AuthContext from '../../shared/context/auth-context';
 const NewsFeed = () => {
     const auth = useContext(AuthContext);
     const [newsfeed, setNewsFeed] = useState([]);
+    const [user, setUser] = useState('');
     const { isLoading, error, clearError, sendRequest } = useHttpRequest();
     const removeDuplicates = (arr) => {
         let jsonObject = arr.map(JSON.stringify);
@@ -27,6 +28,8 @@ const NewsFeed = () => {
         const url = "http://localhost:5000/api/users";
         try {
             const responseData = await sendRequest(url);
+            const currentuser = responseData.filter(u => u.id === auth.userId);
+            setUser(currentuser[0].name);
             const currentUserNewsFeed = responseData.filter(u => u.id === auth.userId)[0].newsfeed;
             const currentUserFriends = responseData.filter(u => u.id === auth.userId)[0].friends;
             const newsHomePage = getNewsFeed(currentUserFriends, responseData, currentUserNewsFeed);
@@ -35,7 +38,7 @@ const NewsFeed = () => {
             console.log("Error in fetching users!", err);
         }
     };
-    
+
     // Fetch users before page loads, with empty [] only runs once
     useEffect(() => {
         fetchUsers();
@@ -46,7 +49,7 @@ const NewsFeed = () => {
 
             <ErrorModal error={error} onClear={clearError} />
 
-            {isLoading ? <LoadingSpinner asOverlay /> : <NewsFeedList newsfeed={newsfeed} />}
+            {isLoading && newsfeed ? <LoadingSpinner asOverlay /> : <NewsFeedList newsfeed={newsfeed} name={user} />}
         </Fragment>
     );
 

@@ -63,7 +63,6 @@ const PlacesFeedUI = ({ news }) => {
         <Feed.Content>
           <Feed.Summary>
             <Link to={`/${p.creator.id}/places`}>{p.creator.id === userId ? "You" : p.creator.name}</Link > added a new place <Link to={`/${p.creator.id}/places`}> {p.title}</Link>
-            <Feed.Date>{news.date}</Feed.Date>
             <Feed.Date>{
               newsDate === 0 ? 'Few seconds Ago'
                 :
@@ -85,7 +84,7 @@ const PlacesFeedUI = ({ news }) => {
                   src={`http://localhost:5000/${p.image}`}
                   as='a'
                   size='massive'
-                  href='http://google.com'
+                  href='#'
                   target='HELLO'
                 />
               </div>
