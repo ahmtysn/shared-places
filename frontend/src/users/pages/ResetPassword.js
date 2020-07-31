@@ -1,22 +1,21 @@
-import React, { useState, Fragment } from "react";
+import React, { useContext, Fragment } from 'react';
 
-import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
-import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
-import FormPassword from "../components/ResetPasswordForm/FormResetPassword";
+import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
+import FormPassword from '../components/ResetPasswordForm/FormResetPassword';
+import AuthContext from './../../shared/context/auth-context';
 
-import useForm from "./../../shared/hooks/form-hook";
-import useHttpRequest from "../../shared/hooks/http-hook";
+import useForm from './../../shared/hooks/form-hook';
+import useHttpRequest from '../../shared/hooks/http-hook';
 
-const ResetPassword = () => {
+const ResetPassword = ({ match }) => {
+  const { login } = useContext(AuthContext);
+
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
   const initInputs = {
-    resetLink: {
-      value: "",
-      isValid: true,
-    },
     newPassword: {
-      value: "",
+      value: '',
       isValid: true,
     },
   };
@@ -25,32 +24,38 @@ const ResetPassword = () => {
   const resetHandler = async (e) => {
     e.preventDefault();
 
-    const { resetLink, newPassword } = formState.inputs;
-    const url = "/api/users/reset-password";
+    const { newPassword } = formState.inputs;
+    const url = `/api/users/reset-password`;
 
     const body = {
-      resetLink: resetLink.value,
+      resetLink: match.params.resetLink,
       newPassword: newPassword.value,
     };
 
     const headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     };
 
     const request = {
-      method: "PUT",
+      method: 'PUT',
       body: JSON.stringify(body),
       headers,
     };
 
     try {
-      await sendRequest(url, request.method, request.body, request.headers);
+      const responseData = await sendRequest(
+        url,
+        request.method,
+        request.body,
+        request.headers,
+      );
+      login(responseData.userId, responseData.token);
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log("formState", formState);
+  console.log('formState', formState);
   return (
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />

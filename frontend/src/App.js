@@ -18,6 +18,8 @@ const AuthPage = React.lazy(() => import('./users/pages/AuthPage'));
 const NewPlace = React.lazy(() => import('./places/pages/NewPlace'));
 const EditPlace = React.lazy(() => import('./places/pages/EditPlace'));
 const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
+const ForgetPassword = React.lazy(() => import('./users/pages/ForgotPassword'));
+const ResetPassword = React.lazy(() => import('./users/pages/ResetPassword'));
 
 // Context
 import AuthContext from './shared/context/auth-context';
@@ -33,20 +35,27 @@ function App() {
   if (token) {
     routes = (
       <Switch>
-        <Route exact path="/" component={UsersPage} />
-        <Route exact path="/:userId/places" component={UserPlaces} />
-        <Route exact path="/places/new" component={NewPlace} />
-        <Route exact path="/places/:placeId" component={EditPlace} />
-        <Redirect to="/" />
+        <Route exact path='/' component={UsersPage} />
+        <Route exact path='/:userId/places' component={UserPlaces} />
+        <Route exact path='/places/new' component={NewPlace} />
+        <Route exact path='/places/:placeId' component={EditPlace} />
+        <Redirect to='/' />
       </Switch>
     );
   } else {
     routes = (
       <Switch>
-        <Route exact path="/" component={UsersPage} />
-        <Route exact path="/:userId/places" component={UserPlaces} />
-        <Route exact path="/auth" component={AuthPage} />
-        <Redirect to="/auth" />
+        4
+        <Route exact path='/' component={UsersPage} />
+        <Route exact path='/:userId/places' component={UserPlaces} />
+        <Route exact path='/forget-password' component={ForgetPassword} />
+        <Route
+          exact
+          path='/reset-password/:resetLink'
+          component={ResetPassword}
+        />
+        <Route exact path='/auth' component={AuthPage} />
+        <Redirect to='/auth' />
       </Switch>
     );
   }
