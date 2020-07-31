@@ -2,144 +2,180 @@ const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
 const User = require('./../models/User');
 const fetch = require('node-fetch');
+const HttpError = require('./../models/http-error');
 
 //google login controller
-const client = new OAuth2Client(process.env.GOOGLE_OATH);
+const googleLogin = async (req, res, next) => {
+  const client = new OAuth2Client(process.env.GOOGLE_OATH);
 
-const googleLogin = (req, res) => {
   const { tokenId } = req.body;
-  client
-    .verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_OATH })
-    .then((response) => {
-      // console.log('GOOGLE LOGIN RESPONSE',response)
-      const { email_verified, name, email } = response.payload;
-      console.log(response.payload);
-      if (email_verified) {
-        User.findOne({ email }).exec((err, user) => {
-          //if user already in database , generate token
-          if (user) {
-            const token = jwt.sign(
-              { userId: user.id },
-              process.env.JWT_SECRET,
-              {
-                expiresIn: '1h',
-              },
-            );
-            const { _id, email, name, role } = user;
-            return res.json({
-              token,
-              user: { _id, email, name, role },
-            });
-          } else {
-            //create user and random password and get user data from payload
-            let password = email + process.env.JWT_SECRET;
-            user = new User({
-              name: response.payload.name,
-              email: response.payload.email,
-              image: response.payload.picture,
-              password,
-              places: [],
-            });
-            //save the new user in databases
-            user.save((err, data) => {
-              if (err) {
-                console.log('ERROR GOOGLE LOGIN ON USER SAVE', err);
-                return res.status(400).json({
-                  error: 'User signup failed with google',
-                });
-              }
-              //generate token to the new user
-              const token = jwt.sign(
-                { _id: data._id },
-                process.env.JWT_SECRET,
-                { expiresIn: '1h' },
-              );
-              const modifiedUser = data.toObject({ getters: true });
-              res.status(200).json({
-                userId: modifiedUser.id,
-                email: modifiedUser.email,
-                token,
-              });
-            });
-          }
-        });
-      } else {
-        return res.status(400).json({
-          error: 'Google login failed. Try again',
-        });
-      }
+
+  let response;
+  try {
+    //get google data
+    response = await client.verifyIdToken({
+      idToken: tokenId,
+      audience: process.env.GOOGLE_OATH,
     });
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, can not get google data!',
+      500,
+    );
+    return next(error);
+  }
+
+  const { email_verified, name, email } = await response.payload;
+  console.log(response.payload);
+  //get email_verified from payload
+  if (!email_verified) {
+    const error = new HttpError(
+      'Something went wrong, can not get user data!',
+      500,
+    );
+    return next(error);
+  }
+
+  let user;
+  try {
+    user = await User.findOne({ email }).exec({ email });
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, not right credentials !',
+      500,
+    );
+    return next(error);
+  }
+  // Create an authentication token
+  if (user) {
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+    const { email, name } = user;
+    //send back user info and token
+    return res.json({
+      token,
+      user: { email, name },
+    });
+  } else {
+    //if no user create user
+    user = new User({
+      name: response.payload.name,
+      email: response.payload.email,
+      image: response.payload.picture,
+      password: response.payload.at_hash,
+      places: [],
+    });
+    let userData;
+    let token;
+    try {
+      // Save user
+      userData = await user.save();
+
+      // Create an authentication token
+      token = jwt.sign({ userId: userData.id }, process.env.JWT_SECRET, {
+        expiresIn: '1h',
+      });
+    } catch (err) {
+      const error = new HttpError(
+        'Something went wrong,authentication not complit !',
+        500,
+      );
+      return next(error);
+    }
+    //convert document into a plain javascript object, ready for storage in MongoDB
+    const modifiedUser = userData.toObject({ getters: true });
+    //send back token and user data
+    res.status(200).json({
+      userId: modifiedUser.id,
+      email: modifiedUser.email,
+      token,
+    });
+  }
 };
 
 //facebook login controller
-const facebookLogin = (req, res) => {
+const facebookLogin = async (req, res, next) => {
   const { id, accessToken } = req.body;
-
   const graphFbUrl = `https://graph.facebook.com/v2.11/${id}/?fields=id,name,email,picture&access_token=${accessToken}`;
 
-  fetch(graphFbUrl, {
-    method: 'GET',
-  })
-    .then((response) => response.json())
-    .then((response) => {
-      console.log(response);
-      let { name, email, picture } = response;
-      User.findOne({ email }).exec((err, user) => {
-        if (err) {
-          return res.status(400).json({
-            error: 'Facebook login failed. Try again',
-          });
-        } else {
-          if (user) {
-            const token = jwt.sign(
-              { userId: user.id },
-              process.env.JWT_SECRET,
-              {
-                expiresIn: '1h',
-              },
-            );
-            const { _id, email, name, role } = user;
-            return res.json({
-              token,
-              user: { _id, email, name, role },
-            });
-          } else {
-            //create user and random password and get user data from payload
-            let password = email + process.env.JWT_SECRET;
-            let newUser = new User({
-              name,
-              email,
-              image: picture.data.url,
-              password,
-              places: [],
-            });
-            //save the new user in databases
-            newUser.save((err, newUser) => {
-              if (err) {
-                console.log('ERROR FACEBOOK LOGIN ON USER SAVE', err);
-                return res.status(400).json({
-                  error: 'User signup failed with ffacebook',
-                });
-              }
-              //generate token to the new user
-              const token = jwt.sign(
-                { _id: newUser._id },
-                process.env.JWT_SECRET,
-                {
-                  expiresIn: '1h',
-                },
-              );
-              const modifiedUser = newUser.toObject({ getters: true });
-              res.status(200).json({
-                userId: modifiedUser.id,
-                email: modifiedUser.email,
-                token,
-              });
-            });
-          }
-        }
-      });
+  let Json;
+  try {
+    //get facebook data
+    const response = await fetch(graphFbUrl, {
+      method: 'GET',
     });
+    Json = await response.json();
+    console.log(Json);
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, can not get google data!',
+      500,
+    );
+    return next(error);
+  }
+
+  let { name, email, picture } = Json;
+  console.log(name, email, picture);
+
+  let user;
+  try {
+    user = await User.findOne({ email }).exec({ email });
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, not right credentials !',
+      500,
+    );
+    return next(error);
+  }
+  // Create an authentication token
+  if (user) {
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+    const { email, name } = user;
+    //send back user info and token
+    return res.json({
+      token,
+      user: { email, name },
+    });
+  } else {
+    let password = email + process.env.JWT_SECRET;
+    console.log(picture);
+    //if no user create user
+    user = new User({
+      name,
+      email,
+      image: picture.data.url,
+      password,
+      places: [],
+    });
+    let newUser;
+    let token;
+    try {
+      // Save user
+      newUser = await user.save();
+
+      // Create an authentication token
+      token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
+        expiresIn: '1h',
+      });
+    } catch (err) {
+      const error = new HttpError(
+        'Something went wrong,authentication not complit !',
+        500,
+      );
+      return next(error);
+    }
+    //convert document into a plain javascript object, ready for storage in MongoDB
+    const modifiedUser = newUser.toObject({ getters: true });
+    //send back token and user data
+    res.status(200).json({
+      userId: modifiedUser.id,
+      email: modifiedUser.email,
+      token,
+    });
+  }
 };
 
 exports.googleLogin = googleLogin;
