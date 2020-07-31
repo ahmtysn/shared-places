@@ -17,7 +17,7 @@ main {
 }
 
 @media (min-width: 768px) {
-	.main-header {
+	.main-header  {
 		justify-content: space-between;
 	}
 }

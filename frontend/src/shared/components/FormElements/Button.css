@@ -36,6 +36,15 @@
   background: #830000;
   border-color: #830000;
 }
+.button--friend {
+  text-transform: uppercase;
+  margin: 10px 0px;
+  width: 100%;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
+  background: #0C8676;
+  border-color: #909596;
+}
 
 .button--danger:hover,
 .button--danger:active {

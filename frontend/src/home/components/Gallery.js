@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from 'react-responsive-carousel';
+import { Carousel } from "react-responsive-carousel";
 
 import "./Gallery.css";
 
@@ -15,10 +15,10 @@ const Gallery = () => {
 
   const fetchPlaces = async () => {
     setGalleryData([]);
-    const url = "/api/places";
+    const url = "/api/places/place/all";
     try {
       const responseData = await sendRequest(url);
-      setGalleryData(responseData);
+      setGalleryData(responseData.places);
     } catch (err) {
       console.log("Error in fetching places!", err);
     }
@@ -36,15 +36,24 @@ const Gallery = () => {
 
       {isLoading && <LoadingSpinner asOverlay />}
 
-      <Carousel showArrows={true} infiniteLoop={true} showStatus={false} showThumbs={false} autoPlay={true} className='carousel' >
-      {!isLoading && galleryData.length > 0 &&
-        galleryData.map((place, i) => (
-          <div key={i}>
-          <img src={place.image} />
-          <p className="legend">{place.title}</p>
-      </div>
-        ))}
-          </Carousel>
+      <Carousel
+        showArrows={true}
+        infiniteLoop={true}
+        showStatus={false}
+        showThumbs={false}
+        showIndicators={false}
+        autoPlay={true}
+        className="carousel"
+      >
+        {!isLoading &&
+          galleryData.length > 0 &&
+          galleryData.map((place, i) => (
+            <div key={i}>
+              <img src={place.image} />
+              <p className="legend">{place.title}</p>
+            </div>
+          ))}
+      </Carousel>
     </div>
   );
 };

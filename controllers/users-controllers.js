@@ -4,27 +4,38 @@ const { validationResult } = require('express-validator');
 
 const HttpError = require('./../models/http-error');
 const User = require('./../models/User');
-
+// test
 const hashPassword = require('./../util/hashPassword');
 const comparePassword = require('./../util/comparePassword');
 
 const getAllUsers = async (req, res, next) => {
   let users;
-
   try {
-    // Find all users, return without password
-    users = await User.find({}, '-password');
+    const searchValue = req.query.search;
+    if (searchValue) {
+      const inputValue = new RegExp(`${searchValue}`, 'gi');
+      users = await User.find(
+        { $or: [{ name: inputValue }, { email: inputValue }] },
+        '-password'
+      );
+      res.status(200).json({
+        users: users.map((user) => user.toObject({ getters: true })),
+      });
+    } else {
+      users = await User.find({}, '-password');
+      // Respond with users in JS format
+      const modifiedUsers = users.map((user) =>
+        user.toObject({ getters: true })
+      );
+      res.status(200).json(modifiedUsers);
+    }
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, could not find users.',
+      'Fetching users failed, please try again later.',
       500
     );
     return next(error);
   }
-
-  // Respond with users in JS format
-  const modifiedUsers = users.map((user) => user.toObject({ getters: true }));
-  res.status(200).json(modifiedUsers);
 };
 
 const createUser = async (req, res, next) => {
@@ -145,6 +156,7 @@ const logUserIn = async (req, res, next) => {
         expiresIn: '1h',
       }
     );
+    
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, check your credentials and try again!',

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+
+import AuthContext from "./../../context/auth-context";
 
 import "./MainNavigation.css";
 import logo from "../../../images/Logo.png";
@@ -7,8 +9,11 @@ import MainHeader from "./MainHeader";
 import SideDrawer from "./SideDrawer";
 import BackDrop from "./../UIElements/Backdrop";
 import NavLinks from "./NavLinks";
+import NotificationNavBar from "./NotificationNavBar";
+import "./NavLinks.css";
 
 const MainNavigation = () => {
+  const { isLoggedIn } = useContext(AuthContext);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   const openDrawer = () => {
@@ -40,6 +45,7 @@ const MainNavigation = () => {
         <nav className="main-navigation__header-nav">
           <NavLinks />
         </nav>
+        {isLoggedIn && <NotificationNavBar />}
       </MainHeader>
     </>
   );
