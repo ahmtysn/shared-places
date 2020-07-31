@@ -39,7 +39,7 @@ const Gallery = () => {
       <Carousel showArrows={true} infiniteLoop={true} showStatus={false} showThumbs={false} autoPlay={true} className='carousel' >
       {!isLoading && galleryData.length > 0 &&
         galleryData.map((place, i) => (
-          <div>
+          <div key={i}>
           <img src={place.image} />
           <p className="legend">{place.title}</p>
       </div>
