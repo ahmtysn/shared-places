@@ -192,23 +192,25 @@ const PlaceItem = ({
               ) : (
                 <div>
                   <FacebookShareButton
-                    url={`/places/${placeId}/details`}
+                    url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
                     imageURL={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
                     quote={title}
+                    hashtag ={"Shareplace"}
                   >
                     <FacebookIcon round size={32} />
                   </FacebookShareButton>
                   <LinkedinShareButton
-                    url={`/places/${placeId}/details`}
+                    url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
                     media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
                     title={title}
                   >
                     <LinkedinIcon round size={32} />
                   </LinkedinShareButton>
                   <TwitterShareButton
-                    url={`/places/${placeId}/details`}
+                    url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
                     media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
                     title={title}
+                    hashtags={["Shareplace"]}
                   >
                     <TwitterIcon round size={32} />
                   </TwitterShareButton>
