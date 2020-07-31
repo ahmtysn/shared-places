@@ -10,13 +10,26 @@ import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
 
 const FriendFeedUI = ({ news }) => {
   let today = new Date();
-  let splittingDate = news.date.split('-');
-  let splittingTime = news.time.split(':');
-  let year = today.getFullYear() - splittingDate[0]
-  let month = today.getMonth() + 1 - splittingDate[1]
-  let day = today.getDate() - splittingDate[2]
-  let hours = Math.abs(today.getHours() - splittingTime[0])
-  let minutes = Math.abs(today.getMinutes() - splittingTime[1])
+  const timeAndDate = () => {
+    let today = new Date();
+    let splittingDate = news.date.split('-');
+    let splittingTime = news.time.split(':');
+    let dt2, dt1;
+    const leadingZero = value => {
+      if (value < 10) {
+        return "0" + value.toString();
+      }
+      return value.toString();
+    }
+    dt2 = new Date(`${today.getFullYear() + '-' + (leadingZero(today.getMonth() + 1)) + '-' + leadingZero(today.getDate())}T${leadingZero(today.getHours()) + ":" + leadingZero(today.getMinutes()) + ":" + leadingZero(today.getSeconds())}Z`)
+    dt1 = new Date(`${splittingDate[0] + '-' + leadingZero(splittingDate[1]) + '-' + leadingZero(splittingDate[2])}T${leadingZero(splittingTime[0]) + ":" + leadingZero(splittingTime[1]) + ":" + leadingZero(splittingTime[2])}Z`)
+    let diff = (dt2 - dt1) / 1000;
+    diff /= 60;
+    return Math.abs(Math.round(diff));
+  }
+
+  const newsDate = timeAndDate();
+
   const { userId } = useAuth();
   const [u1, setU1] = useState();
   const [u2, setU2] = useState();
@@ -68,26 +81,18 @@ const FriendFeedUI = ({ news }) => {
                   </>
               }
                  are friends now
-                  <Feed.Date>
-                { year === 0 && month === 0 && day === 0 && hours === 0 && minutes === 0 ? `Few seconds Ago`
-                :
-                year === 0 && month === 0 && day === 0 && hours === 0 && minutes < 1 ? `${minutes} minute Ago`
-                  :
-                  year === 0 && month === 0 && day === 0 && hours === 0 ? `${minutes} minutes Ago`
+                  <Feed.Date> {
+                  newsDate === 0 ? 'Few seconds Ago'
                     :
-                    hours === 1 && day === 0 ? `${hours} Hour Ago`
+                    newsDate < 60 ? newsDate + ' Minutes Ago'
                       :
-                      hours < 24 && day === 0 ? `${hours} Hours Ago`
+                      newsDate < 1440 ? (parseInt(newsDate / 60)) + ' Hours Ago'
                         :
-                        month === 0 && day === 1 ? `${day} day Ago`
+                        newsDate < 43200 ? (parseInt((newsDate * 30) / 43200)) + ' Days Ago'
                           :
-                          month === 0 && day > 1 ? `${day} days Ago`
+                          newsDate < 518400 ? (parseInt((newsDate * 12) / 518400)) + ' Months Ago'
                             :
-                            month < 12 ? `${month} Months Ago`
-                              :
-                              'Over than Year ago'
-
-
+                            'Over than a year ago'
                 }
               </Feed.Date>
             </Feed.Summary>

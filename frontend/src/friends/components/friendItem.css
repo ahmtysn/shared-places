@@ -22,6 +22,7 @@
     width: 120px;
     height: 4rem;
     margin-right: 1rem;
+  
   }
   .friend-item__info h2 {
     font-size: 0.9rem;
@@ -29,12 +30,14 @@
     margin: 0 0 0.5rem 0;
     font-weight: normal;
     color: #FFD900;
+  
   }
   .friend-item:hover h2,
   .friend-item:active h2,
   .friend-item:hover h3,
   .friend-item:active h3 {
     color: black;
+    
   }
   .friend-item__info h3 {
     margin: 0;

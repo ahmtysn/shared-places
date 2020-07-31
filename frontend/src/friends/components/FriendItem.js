@@ -11,6 +11,7 @@ const FriendItem = props => {
     const auth = useContext(AuthContext);
     return (
         <React.Fragment>
+       
             <li className="friend-item">
                 <Card className="friend-item__content">
                     <Link>
@@ -24,11 +25,11 @@ const FriendItem = props => {
                     {auth.isLoggedIn &&
                         <div className="btns">
                             <div className="btn">
-                            <AcceptFriendReq receivedRequestId={props.id} userId={auth.userId} token={auth.token}/>
+                                <AcceptFriendReq receivedRequestId={props.id} userId={auth.userId} token={auth.token} />
                             </div>
                             <div className="btn">
-                            <RejectFriendReq receivedRequestId={props.id} userId={auth.userId} token={auth.token}/>
-                           </div>
+                                <RejectFriendReq receivedRequestId={props.id} userId={auth.userId} token={auth.token} />
+                            </div>
                         </div>
                     }
 

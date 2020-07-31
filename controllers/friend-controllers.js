@@ -156,11 +156,8 @@ const rejectFriendRequest = async (req, res, next) => {
 }
 
 const deleteFriend = async (req, res, next) => {
-    console.log('got Delete Request')
-
     const { friendId, userId } = req.body
     let friendReqReceiver, friendReqSender;
-    console.log(userId, friendId)
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
