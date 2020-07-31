@@ -49,7 +49,7 @@ const Gallery = () => {
           galleryData.length > 0 &&
           galleryData.map((place, i) => (
             <div key={i}>
-              <img src={place.image} />
+              <img src={place.image} alt={place.title}/>
               <p className="legend">{place.title}</p>
             </div>
           ))}
