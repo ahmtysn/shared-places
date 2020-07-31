@@ -68,9 +68,10 @@ const UserPlaces = () => {
     const fetchUserData = async () => {
       const bucketList = isLoggedIn ? await fetchBucketList() : [];
       const places = await fetchPlaces();
+      console.log(places)
       setUserPlaces(
         places.map((place) => {
-          const found = bucketList.find((item) => item.id.id === place.id);
+          const found = bucketList.find((item) => item.id === place.id);
           if (found) {
             return { ...place, isAddedToBucketList: true };
           } else {

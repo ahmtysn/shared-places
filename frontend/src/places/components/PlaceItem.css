@@ -58,6 +58,12 @@
 	margin-top: 0.5rem;
 }
 
+.ShareIcon:hover {
+	cursor: pointer;
+	background-color: gray;
+	border-radius: 0.5rem;
+}
+
 @media (min-width: 768px) {
 	.place-item__image {
 		height: 20rem;

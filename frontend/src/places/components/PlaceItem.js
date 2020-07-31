@@ -184,7 +184,11 @@ const PlaceItem = ({
             )}
             <div className="place-share">
               {!icons ? (
-                <ShareIcon onClick={showShareIcons} fontSize="medium"></ShareIcon>
+                <ShareIcon
+                  onClick={showShareIcons}
+                  fontSize="medium"
+                  className="ShareIcon"
+                ></ShareIcon>
               ) : (
                 <div>
                   <FacebookShareButton
