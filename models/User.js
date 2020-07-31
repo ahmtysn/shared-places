@@ -6,14 +6,15 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 5 },
+  resetLink: { data: String, default: '' },
   image: { type: String, required: true },
   places: [
     {
       type: mongoose.Types.ObjectId, // Id of related model
       required: true,
-      ref: 'Place'
-    }
-  ]
+      ref: 'Place',
+    },
+  ],
 });
 
 userSchema.plugin(uniqueValidator);

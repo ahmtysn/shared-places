@@ -10,6 +10,7 @@ const enableCORS = require('./middlewares/enableCORS');
 // Routes
 const placeRouter = require('./routes/placeRouter.js');
 const userRouter = require('./routes/userRouter.js');
+const passwordRouter = require('./routes/passwordRouter');
 
 // Middlewares
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use(express.static('./frontend/build'));
 // Routes
 app.use('/api/places', placeRouter);
 app.use('/api/users', userRouter);
+app.use('/api/users', passwordRouter);
 
 // Any request that enters will be served the React app
 app.use((req, res, next) => {
