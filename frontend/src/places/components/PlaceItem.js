@@ -188,21 +188,21 @@ const PlaceItem = ({
               ) : (
                 <div>
                   <FacebookShareButton
-                    url={`https://placesbook.herokuapp.com/places/${placeId}/details`}
+                    url={`/places/${placeId}/details`}
                     imageURL={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
                     quote={title}
                   >
                     <FacebookIcon round size={32} />
                   </FacebookShareButton>
                   <LinkedinShareButton
-                    url={`https://placesbook.herokuapp.com/places/${placeId}/details`}
+                    url={`/places/${placeId}/details`}
                     media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
                     title={title}
                   >
                     <LinkedinIcon round size={32} />
                   </LinkedinShareButton>
                   <TwitterShareButton
-                    url={`https://placesbook.herokuapp.com/places/${placeId}/details`}
+                    url={`/places/${placeId}/details`}
                     media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
                     title={title}
                   >
