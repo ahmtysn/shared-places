@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Feed, Icon, Image, Card } from 'semantic-ui-react'
+import { Feed, Icon, Image } from 'semantic-ui-react'
 import useHttpRequest from "./../../shared/hooks/http-hook";
 import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
