@@ -36,7 +36,7 @@
 .commentBody,
 .editInput {
 	background-color: white;
-	width: 95%;
+	width: 99%;
 	border: 1px solid;
 	border-radius: 8px;
 	padding: 5px;
@@ -47,6 +47,7 @@
 	font-size: 1em;
 	line-height: normal;
 }
+
 .editInput {
 	height: 9vh;
 	font-size: 1em;
@@ -139,6 +140,8 @@
 
 	.buttons {
 		display: flex;
+		justify-content: space-between;
+		width: 25vw;
 	}
 
 	.comment {
@@ -150,9 +153,7 @@
 		bottom: 0;
 		justify-content: center;
 	}
-	.dropList {
-		margin-right: 40%;
-	}
+
 	.userDiv {
 		display: flex;
 		flex-direction: row;
