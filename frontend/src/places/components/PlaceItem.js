@@ -34,6 +34,7 @@ const PlaceItem = ({
 	const [showDelete, setShowDelete] = useState(false);
 	const [showBucketModal, setShowBucketModal] = useState(false);
 	const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
+	const [showComments, setShowComments] = useState(false);
 
 	const openMapHandler = () => setShowMap(true);
 	const closeMapHandler = () => setShowMap(false);
