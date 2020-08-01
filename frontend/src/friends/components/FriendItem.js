@@ -25,10 +25,10 @@ const FriendItem = props => {
                     {auth.isLoggedIn &&
                         <div className="btns">
                             <div className="btn">
-                                <AcceptFriendReq receivedRequestId={props.id} userId={auth.userId} token={auth.token} />
+                                <AcceptFriendReq bell={props.bell} receivedRequestId={props.id} userId={auth.userId} token={auth.token} />
                             </div>
                             <div className="btn">
-                                <RejectFriendReq receivedRequestId={props.id} userId={auth.userId} token={auth.token} />
+                                <RejectFriendReq bell={props.bell} receivedRequestId={props.id} userId={auth.userId} token={auth.token} />
                             </div>
                         </div>
                     }

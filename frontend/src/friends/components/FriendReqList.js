@@ -14,6 +14,7 @@ const FriendReqList = (props) => {
                             id={friend.id}
                             name={friend.name}
                             image={friend.image}
+                            bell={props.bell}
                         />
                     );
                 })}
