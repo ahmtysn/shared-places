@@ -11,6 +11,8 @@ const enableCORS = require("./middlewares/enableCORS");
 const placeRouter = require("./routes/placeRouter.js");
 const userRouter = require("./routes/userRouter.js");
 const friendRouter = require("./routes/friends-routes");
+const commentsRoutes = require("./routes/comments-routes");
+
 // Middlewares
 app.use(express.json());
 app.use(enableCORS); // Only necessary if API is separate from client
@@ -20,15 +22,15 @@ app.use(enableCORS); // Only necessary if API is separate from client
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 app.use(express.static("./frontend/build"));
 
-
-
 // Routes
 app.use("/api/places", placeRouter);
 app.use("/api/users", userRouter);
 app.use("/api/friends", friendRouter);
+app.use("/api/comments", commentsRoutes);
+
 // Any request that enters will be served the React app
 app.use((req, res, next) => {
-  res.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
+	res.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
 });
 // middleware placed after routes to catch the error of not existing route
 // app.use((req, res, next) => {
@@ -47,9 +49,9 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 const server = () => {
-  app.listen(PORT, () => {
-    console.log(`Listening to port ${PORT}!`);
-  });
+	app.listen(PORT, () => {
+		console.log(`Listening to port ${PORT}!`);
+	});
 };
 
 connectDB(server);
