@@ -1,7 +1,7 @@
 {
   "env": {
-    "DB_USER": "Doom",
-    "DB_PW": "Doomy101",
+    "DB_USER": "Noer",
+    "DB_PW": "PrDBQHK6j7mShpjF",
     "DB_NAME": "placesharer-dev",
     "JWT_SECRET": "supersecretman!",
     "JWT_REST_PASSWORD": "passwordTochange",
