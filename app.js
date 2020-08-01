@@ -22,9 +22,9 @@ app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 app.use(express.static('./frontend/build'));
 
 // Routes
+app.use('/api/users', passwordRouter);
 app.use('/api/places', placeRouter);
 app.use('/api/users', userRouter);
-app.use('/api/users', passwordRouter);
 app.use('/api/friends', friendRouter);
 // Any request that enters will be served the React app
 app.use((req, res, next) => {

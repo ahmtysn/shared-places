@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   VALIDATOR_REQUIRE,
@@ -22,41 +23,44 @@ const AuthForm = ({
     <form onSubmit={authSubmitHandler}>
       {!isLoginMode && (
         <Input
-          element="input"
-          id="name"
-          type="text"
-          placeholder="Your Name"
-          label="Your Name"
-          errorText="Your name is required!"
+          element='input'
+          id='name'
+          type='text'
+          placeholder='Your Name'
+          label='Your Name'
+          errorText='Your name is required!'
           validators={[VALIDATOR_REQUIRE()]}
           onInputChange={inputHandler}
         />
       )}
 
       <Input
-        id="email"
-        element="input"
-        type="email"
-        placeholder="Your Email"
-        label="Email"
-        errorText="Please enter a valid email!"
+        id='email'
+        element='input'
+        type='email'
+        placeholder='Your Email'
+        label='Email'
+        errorText='Please enter a valid email!'
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
         onInputChange={inputHandler}
       />
       <Input
-        id="password"
-        element="input"
-        type="password"
-        placeholder="Your Password"
-        label="Password"
-        errorText="Please enter a valid password, at least 5 characters!"
+        id='password'
+        element='input'
+        type='password'
+        placeholder='Your Password'
+        label='Password'
+        errorText='Please enter a valid password, at least 5 characters!'
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         onInputChange={inputHandler}
       />
+      <div style={{ marginBottom: '20px' }}>
+        {isLoginMode && <Link to='/forgot-password'>forgot password??</Link>}
+      </div>
       {!isLoginMode && (
-        <ImageUpload id="image" centered="true" onInputChange={inputHandler} />
+        <ImageUpload id='image' centered='true' onInputChange={inputHandler} />
       )}
-      <Button type="submit" disabled={!formState.isValid}>
+      <Button type='submit' disabled={!formState.isValid}>
         {isLoginMode ? 'Login' : 'Signup'}
       </Button>
     </form>
