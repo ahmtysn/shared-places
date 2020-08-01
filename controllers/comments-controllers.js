@@ -33,6 +33,16 @@ const createComment = async (req, res, next) => {
 	try {
 		const sess = await mongoose.startSession();
 		sess.startTransaction();
+
+		// to push new comments into the newsfeed
+		// user.newsfeed.push({
+		// 	type: "comment",
+		// 	userId,
+		// 	placeId,
+		// 	comment,
+		// 	date,
+		// });
+
 		await newComment.save({ session: sess });
 		await sess.commitTransaction();
 	} catch (err) {
