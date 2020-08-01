@@ -46,12 +46,12 @@ function Comment(props) {
 	return (
 		<React.Fragment>
 			<div className='container'>
-				<Moment className='date' format='YYYY/MM/DD HH:mm'>
-					{date}
-				</Moment>
 				<div className='userDiv'>
 					<img className='userImage' src={imageToRender || "https://bit.ly/3f7YYNi"} alt={"user"} />
 					<p className='userName'> {props.creator ? props.creator.name : null}</p>
+					<Moment className='date' format='YYYY/MM/DD HH:mm'>
+						{date}
+					</Moment>
 				</div>
 				<div className='comment'>
 					<div className='commentContent'>
