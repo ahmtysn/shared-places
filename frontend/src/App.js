@@ -13,7 +13,7 @@ import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 
 // Pages
 /* eslint-disable import/first */
-
+const HomePage = React.lazy(() => import('./home/HomePage'));
 const UsersPage = React.lazy(() => import("./users/pages/UsersPage"));
 const AuthPage = React.lazy(() => import("./users/pages/AuthPage"));
 const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
@@ -51,7 +51,7 @@ function App() {
   } else {
     routes = (
       <Switch>
-        <Route exact path="/" component={UsersPage} />
+        <Route exact path="/" component={HomePage} />
         <Route exact path="/:userId/places" component={UserPlaces} />
         <Route exact path="/auth" component={AuthPage} />
         <Route exact path="/place/all" component={AllPlaces} />
