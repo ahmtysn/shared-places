@@ -26,7 +26,7 @@ const AuthForm = ({
           id="name"
           type="text"
           placeholder="Your Name"
-          label="Your Name"
+          label="Name"
           errorText="Your name is required!"
           validators={[VALIDATOR_REQUIRE()]}
           onInputChange={inputHandler}
@@ -57,7 +57,7 @@ const AuthForm = ({
         <ImageUpload id="image" centered="true" onInputChange={inputHandler} />
       )}
       <Button type="submit" disabled={!formState.isValid}>
-        {isLoginMode ? 'Login' : 'Signup'}
+        {isLoginMode ? 'Log in' : 'Sign up'}
       </Button>
     </form>
   );
