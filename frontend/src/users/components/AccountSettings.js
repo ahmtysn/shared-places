@@ -224,7 +224,9 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                     No places found, you can share a place, just click the
                     button...
                   </p>
-                  <Button to="/places/new">SHARE PLACE</Button>
+                  {UserIdOfLoggedIn === userIdOfCurrentPage && (
+                    <Button to="/places/new">SHARE PLACE</Button>
+                  )}
                 </Card>
               )}
             </div>
@@ -249,7 +251,9 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                     No friends found, you can find a friend, just click the
                     button...
                   </p>
-                  <Button to="/">FIND FRIEND</Button>
+                  {UserIdOfLoggedIn === UserIdOfLoggedIn && (
+                    <Button to="/">FIND FRIEND</Button>
+                  )}
                 </Card>
               )}
             </div>
