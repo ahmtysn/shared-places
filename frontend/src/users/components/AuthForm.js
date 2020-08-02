@@ -55,7 +55,7 @@ const AuthForm = ({
         onInputChange={inputHandler}
       />
       <div style={{ marginBottom: '20px' }}>
-        {isLoginMode && <Link to='/forgot-password'>forgot password??</Link>}
+        {isLoginMode && <Link to='/forgot-password'>forget password?</Link>}
       </div>
       {!isLoginMode && (
         <ImageUpload id='image' centered='true' onInputChange={inputHandler} />
