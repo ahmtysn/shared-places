@@ -1,13 +1,10 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 
 import LoadingSpinner from "../UIElements/LoadingSpinner";
-import Modal from "../../../shared/components/UIElements/Modal/Modal";
 import useHttpRequest from "../../hooks/http-hook";
 import AuthContext from "../../context/auth-context";
 import ErrorModal from "../UIElements/Modal/ErrorModal";
-import Button from "../../components/FormElements/Button";
 
 import "./StarRating.css";
 
@@ -16,20 +13,12 @@ function StarRating(props) {
 
 	const { isLoading, error, sendRequest, clearError } = useHttpRequest();
 	const [ratingAverage, setRatingAverage] = useState(props.averageRating);
-	const [showLoginModal, setShowLoginModal] = useState(false);
 	const [creatorRating, setCreatorRating] = useState(props.creatorRate);
 	const [starsKey, setStarsKey] = useState(Math.random());
 	const [raterNumb, setRaterNumb] = useState(props.raterRates.length);
-	const history = useHistory();
-
-	//Login modal to show if user not logged in
-	const showWarningHandler = () => setShowLoginModal(true);
-	const closeWarningHandler = () => setShowLoginModal(false);
 
 	const rateHandler = ratingValue => {
-		if (!auth.token) {
-			showWarningHandler();
-		} else {
+		if (auth.token) {
 			setCreatorRating(ratingValue);
 			patchRates(ratingValue);
 		}
@@ -80,26 +69,9 @@ function StarRating(props) {
 		<>
 			{isLoading && <LoadingSpinner asOverlay />}
 			<ErrorModal error={error} onClear={clearError} />
-			<Modal
-				show={showLoginModal}
-				onCancel={closeWarningHandler}
-				footerClass='place-item__modal-actions'
-				footer={
-					<Button
-						inverse
-						onClick={() => {
-							history.push("/auth");
-						}}
-					>
-						Log In
-					</Button>
-				}
-			>
-				<p>You must log in to rate a place.</p>
-			</Modal>
-
 			<div className='StarRating'>
 				<ReactStars
+					edit={auth.isLoggedIn}
 					key={starsKey}
 					className='star'
 					value={ratingAverage}
