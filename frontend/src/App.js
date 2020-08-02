@@ -13,12 +13,15 @@ import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 
 // Pages
 /* eslint-disable import/first */
+
 const HomePage = React.lazy(() => import('./home/HomePage'));
 const UsersPage = React.lazy(() => import("./users/pages/UsersPage"));
 const AuthPage = React.lazy(() => import("./users/pages/AuthPage"));
 const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
 const EditPlace = React.lazy(() => import("./places/pages/EditPlace"));
 const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
+
+const UserProfile = React.lazy(() => import("./users/pages/UserProfile"));
 const UserFriends = React.lazy(() => import("./friends/pages/UserFriends.js"));
 const AllPlaces = React.lazy(() => import("./places/pages/AllPlaces"));
 const BucketList = React.lazy(() => import('./places/components/BucketList'));
@@ -43,6 +46,7 @@ function App() {
         <Route exact path="/:userId/friends" component={UserFriends} />
         <Route exact path="/places/new" component={NewPlace} />
         <Route exact path="/places/:placeId" component={EditPlace} />
+        <Route exact path="/account/:userId" component={UserProfile} />
         <Route exact path="/place/all" component={AllPlaces} />
         <Route exact path="/:userId/bucketlist" component={BucketList} />
         <Redirect to="/" />

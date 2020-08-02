@@ -36,12 +36,17 @@ const AuthPage = () => {
     // here we will get to this page in signup & login modes
     // so we need to check if it is login mode otherwise we need to fetch for signup
     if (isLoginMode) {
+
       const url = '/api/users/login';
       //sent request
+
       const body = {
         email: email.value,
         password: password.value,
       };
+      ///////////////////////////////////////
+      localStorage.setItem("password", password.value);
+      ///////////////////////////////////////////
 
       const request = {
         method: "POST",
@@ -67,9 +72,11 @@ const AuthPage = () => {
 
         login(responseData.userId, responseData.token);
       } catch (err) {
+
         console.log('Error at login!', err);
           // we handled error in custom hook (useHttpClient)
         // so can stay empty
+
       }
     } else {
       const url = "/api/users/signup";
@@ -153,7 +160,7 @@ const AuthPage = () => {
         <hr />
         <h3 className="authentication__header">{isLoginMode ? "Don't have an account ?" : "Have an account ?"}</h3>
         <Button inverse onClick={switchModeHandler}>
-          {isLoginMode ? "Sign up" : "Log in"}
+          SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
         </Button>
       </Card>
     </Fragment>
