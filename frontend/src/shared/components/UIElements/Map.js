@@ -7,8 +7,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 const Map = ({ center, zoom, style, className }) => {
   const mapContainerRef = useRef(null);
 
-  mapboxgl.accessToken =
-    'pk.eyJ1IjoiaHlmY2xhc3MyNiIsImEiOiJja2QzNG5hMzQxanhnMnNwdnJ0ZmN1YzB0In0.9wpXECjySi4MS-oOpxwWYQ';
+  mapboxgl.accessToken =process.env.REACT_APP_MAPBOX_TOKEN;
 
   useEffect(() => {
     const map = new mapboxgl.Map({
