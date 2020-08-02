@@ -22,7 +22,7 @@ const placeSchema = new Schema({
 	creator: {
 		type: mongoose.Types.ObjectId, // Id of related model
 		required: true,
-		ref: 'User',
+		ref: 'User', // with ref we can use populate method to get all the data from related schema (in this case User schema)
 	},
 });
 

@@ -9,19 +9,39 @@ const User = require('./../models/User');
 const getAllPlaces = async (req, res, next) => {
   let places;
   try {
-    places = await Place.find();
+    const searchValue = req.query.search;
+    if (searchValue) {
+      const inputValue = new RegExp(`${searchValue}`, 'gi');
+      places = await Place.find(
+        { $or: [{ title: inputValue }, { address: inputValue }] },
+        '-password'
+      ).populate('creator');
+      if (places.length > 0) {
+        return res.status(200).json({
+          places: places.map((place) => place.toObject({ getters: true })),
+        });
+      } else {
+        const error = new HttpError('Could not find any places!', 404);
+        return next(error);
+      }
+    } else {
+      // get data from DB
+      places = await Place.find({}, '-password').populate('creator');
+      if (places.length > 0) {
+        // Send data to view (frontend)
+        return res.json({
+          places: places.map((place) => place.toObject({ getters: true })),
+        });
+      } else {
+        const error = new HttpError('Could not find any places!', 404);
+        return next(error);
+      }
+    }
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not find places!',
       500
     );
-    return next(error);
-  }
-
-  if (places.length > 0) {
-    return res.status(200).json(places);
-  } else {
-    const error = new HttpError('Could not find any places!', 404);
     return next(error);
   }
 };
@@ -50,10 +70,51 @@ const getPlaceById = async (req, res, next) => {
   return res.status(200).json(modifiedPlace);
 };
 
+// const getPlacesByUserId = async (req, res, next) => {
+//   const userId = req.params.userId;
+//   const searchValue = await req.query.search;
+//   let placesOfUser;
+//   try {
+//     if (searchValue) {
+//       const placesList = await (
+//         await User.findById(userId).populate('places')
+//       ).toJSON();
+//       placesOfUser = await placesList.places.filter(
+//         (place) =>
+//           place.title.toLowerCase().includes(searchValue) ||
+//           place.address.toLowerCase().includes(searchValue)
+//       );
+//       res.json({
+//         places: placesOfUser,
+//       });
+//     } else {
+//       placesOfUser = await (
+//         await User.findById(userId).populate('places')
+//       ).toJSON();
+//       if (!placesOfUser || placesOfUser.length === 0) {
+//         return next(
+//           new HttpError('Could not find places for the provided user id.', 404)
+//         );
+//       }
+//       res.status(200).json({
+//         places: placesOfUser.places,
+//       });
+//     }
+//   } catch (err) {
+//     const error = new HttpError(
+//       'Fetching places failed, please try again later.',
+//       500
+//     );
+//     return next(error);
+//   }
+// };
 const getPlacesByUserId = async (req, res, next) => {
   const { userId } = req.params;
+  const searchValue = await req.query.search;
 
   let places;
+  let modifiedPlaces = [];
+  let searchedPlaces = [];
   try {
     places = await Place.find({ creator: userId });
   } catch (err) {
@@ -63,20 +124,25 @@ const getPlacesByUserId = async (req, res, next) => {
     );
     return next(error);
   }
-
   if (places.length > 0) {
     // Make "id" property available by activating getters
-    const modifiedPlaces = places.map((place) =>
-      place.toObject({ getters: true })
-    );
-    return res.status(200).json(modifiedPlaces);
-  } else {
-    const error = new HttpError(
-      'Could not find places with the provided user ID!',
-      404
-    );
-    return next(error);
+    if (searchValue) {
+      searchedPlaces = places.filter(
+        (place) =>
+          place.title.toLowerCase().includes(searchValue) ||
+          place.address.toLowerCase().includes(searchValue)
+      );
+
+      modifiedPlaces = searchedPlaces.map((place) =>
+        place.toObject({ getters: true })
+      );
+    } else {
+      modifiedPlaces = places.map((place) =>
+        place.toObject({ getters: true })
+      );
+    }
   }
+  return res.status(200).json(modifiedPlaces);
 };
 
 const createPlace = async (req, res, next) => {
@@ -86,7 +152,7 @@ const createPlace = async (req, res, next) => {
     next(new HttpError('The input is incorrect!'));
   }
 
-  const { title, description, address } = req.body;
+  const { title, description, address } = req.body; //destructured the title, description and address from the body of request
   const { userId } = req.userData;
   const { path } = req.file;
 
@@ -246,3 +312,4 @@ exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
 exports.deletePlace = deletePlace;
+// exports.getPlaces = getPlaces;

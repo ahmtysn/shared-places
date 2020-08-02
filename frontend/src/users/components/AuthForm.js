@@ -60,7 +60,7 @@ const AuthForm = ({
         <ImageUpload id='image' centered='true' onInputChange={inputHandler} />
       )}
       <Button type='submit' disabled={!formState.isValid}>
-        {isLoginMode ? 'Login' : 'Signup'}
+        {isLoginMode ? 'Log in' : 'Sign up'}
       </Button>
 
       {isLoginMode ? (
