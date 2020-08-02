@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, Fragment } from "react";
+import React, { useState, useContext, Fragment } from "react";
 
 import AuthContext from "../../shared/context/auth-context";
 import useForm from "./../../shared/hooks/form-hook";
@@ -33,6 +33,10 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
 
   const openDeleteHandler = () => setShowDelete(true);
   const closeDeleteHandler = () => setShowDelete(false);
+
+  const UserIdOfLoggedIn = JSON.parse(localStorage.getItem("userSession"))
+    .userId;
+  const userIdOfCurrentPage = settings.id;
 
   const [formState, inputHandler] = useForm(
     {
@@ -249,25 +253,27 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                 </Card>
               )}
             </div>
-            <div>
-              <h2>Password</h2>
-              <Input
-                id="password"
-                element="input"
-                type="password"
-                initValue={localStorage.getItem("password")}
-                disabled={true}
-                onInputChange={inputHandler}
-              />
-              <i
-                className="far fa-eye"
-                id="togglePassword"
-                onClick={togglePasswordHandler}
-              ></i>
-            </div>
+            {UserIdOfLoggedIn === userIdOfCurrentPage && (
+              <div>
+                <h2>Password</h2>
+                <Input
+                  id="password"
+                  element="input"
+                  type="password"
+                  initValue={localStorage.getItem("password")}
+                  disabled={true}
+                  onInputChange={inputHandler}
+                />
+                <i
+                  className="far fa-eye"
+                  id="togglePassword"
+                  onClick={togglePasswordHandler}
+                ></i>
+              </div>
+            )}
           </div>
           <div className="profile__actions">
-            {isLoggedIn && (
+            {isLoggedIn && UserIdOfLoggedIn === userIdOfCurrentPage && (
               <Fragment>
                 <Button onClick={editSwitchHandler}>EDIT</Button>
                 <Button onClick={openDeleteHandler} danger>
