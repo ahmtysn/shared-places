@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 
 import LoadingSpinner from "../UIElements/LoadingSpinner";
@@ -10,12 +10,13 @@ import "./StarRating.css";
 
 function StarRating(props) {
 	const auth = useContext(AuthContext);
-
+	const { isLoggedIn } = auth;
 	const { isLoading, error, sendRequest, clearError } = useHttpRequest();
 	const [ratingAverage, setRatingAverage] = useState(props.averageRating);
 	const [creatorRating, setCreatorRating] = useState(props.creatorRate);
 	const [starsKey, setStarsKey] = useState(Math.random());
 	const [raterNumb, setRaterNumb] = useState(props.raterRates.length);
+	const [canEdit, setCanEdit] = useState(isLoggedIn);
 
 	const rateHandler = ratingValue => {
 		if (auth.token) {
@@ -23,6 +24,12 @@ function StarRating(props) {
 			patchRates(ratingValue);
 		}
 	};
+
+	//to re-render the star-rating component after logout
+	useEffect(() => {
+		setStarsKey(Math.random());
+		setCanEdit(isLoggedIn);
+	}, [isLoggedIn]);
 
 	const patchRates = async ratingValue => {
 		try {
@@ -71,7 +78,7 @@ function StarRating(props) {
 			<ErrorModal error={error} onClear={clearError} />
 			<div className='StarRating'>
 				<ReactStars
-					edit={auth.isLoggedIn}
+					edit={canEdit}
 					key={starsKey}
 					className='star'
 					value={ratingAverage}
