@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from "react";
 
 let logoutTimer;
 
@@ -23,7 +23,7 @@ const useAuth = () => {
       token,
       expirationTime: tokenExpires.toISOString(),
     });
-    localStorage.setItem('userSession', cookies);
+    localStorage.setItem("userSession", cookies);
   }, []);
 
   const logout = useCallback(() => {
@@ -31,7 +31,9 @@ const useAuth = () => {
     setTokenExpirationTime(null);
     setUserId(null);
     // Removes userSession
-    localStorage.removeItem('userSession');
+    localStorage.removeItem("userSession");
+    // Remove password from local storage
+    localStorage.removeItem("password");
   }, []);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const useAuth = () => {
 
   useEffect(() => {
     // Check localStorage for userSession
-    const storedSession = JSON.parse(localStorage.getItem('userSession'));
+    const storedSession = JSON.parse(localStorage.getItem("userSession"));
 
     // If token and expiration time hasn't passed yet then auto-login
     if (
