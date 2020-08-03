@@ -27,7 +27,6 @@ const PlaceItem = ({
 	creatorId,
 	creatorName,
 	isAddedToBucketList = false,
-	comments,
 }) => {
 	const { isLoggedIn, userId, token } = useContext(AuthContext);
 	const { isLoading, error, clearError, sendRequest } = useHttpRequest();
@@ -37,7 +36,7 @@ const PlaceItem = ({
 	const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
 	const [showComments, setShowComments] = useState(false);
 	const [buttonKey, setButtonKey] = useState(Math.random());
-	const [updatedComments, setUpdatedComments] = useState(comments);
+	const [updatedComments, setUpdatedComments] = useState([]);
 
 	const openMapHandler = () => setShowMap(true);
 	const closeMapHandler = () => setShowMap(false);

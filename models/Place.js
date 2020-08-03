@@ -24,15 +24,6 @@ const placeSchema = new Schema({
 		required: true,
 		ref: "User", // with ref we can use populate method to get all the data from related schema (in this case User schema)
 	},
-	comments: [
-		{
-			date: { type: Date, required: true },
-			userId: { type: String, required: true },
-			comment: { type: String, required: true, minlength: 5 },
-			placeId: { type: String, required: true },
-			creator: { name: String, image: String },
-		},
-	],
 });
 
 const Place = mongoose.model("Place", placeSchema);

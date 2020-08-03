@@ -33,7 +33,6 @@ const PlaceList = ({ items, onDeletePlace }) => {
 					onDeletePlace={onDeletePlace}
 					creatorName={place.creator}
 					isAddedToBucketList={place.isAddedToBucketList || false}
-					comments={place.comments}
 				/>
 			))}
 		</ul>

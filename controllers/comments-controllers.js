@@ -33,22 +33,6 @@ const createComment = async (req, res, next) => {
 		commentId,
 	});
 
-	let place;
-
-	try {
-		place = await Place.findById(placeId);
-	} catch (err) {
-		const error = new HttpError("Creating comment failed, please try again.", 500);
-		return next(error);
-	}
-	place.comments.push(newComment);
-	try {
-		await place.save();
-	} catch (err) {
-		const error = new HttpError("Something went wrong, could not update place.", 500);
-
-		return next(error);
-	}
 	try {
 		const sess = await mongoose.startSession();
 		sess.startTransaction();
