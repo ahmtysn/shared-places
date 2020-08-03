@@ -15,6 +15,7 @@ function Comment(props) {
 	const [comment, setComment] = useState("");
 	const [edited, setEdited] = useState(false);
 	const [maxLength, setMaxLength] = useState(false);
+	const [changedText, setChangedText] = useState(false);
 	const date = props.date;
 	const imageToRender =
 		props.image[0] === "h" ? props.image : `http://localhost:5000/${props.image}`;
@@ -25,6 +26,7 @@ function Comment(props) {
 		setComment(value);
 		if ([props.commentBody !== value]) {
 			setEdited(true);
+			setChangedText(true)
 		} else {
 			setEdited(false);
 		}
@@ -80,6 +82,7 @@ function Comment(props) {
 											setEditOpen(false);
 											setEdited(false);
 											setOpen(!open);
+											setChangedText(false)
 										}}
 									>
 										<GiCancel size={25} />
@@ -99,18 +102,22 @@ function Comment(props) {
 							</div>
 
 							<div className='dropList2'>
-								{editOpen ? (
+
+							    {editOpen ? (
+									changedText ? (	
 									<button
 										className={"btn-active"}
-										disabled={!edited}
 										onClick={() => {
 											props.updateComment(props.id, comment);
 											setOpen(!open);
 											setEditOpen(false);
+											setChangedText(false)
+
 										}}
 									>
 										<AiTwotoneSave size={25} />
 									</button>
+									): null
 								) : (
 									<button
 										className={"btn-active"}
