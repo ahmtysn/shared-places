@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const DB_USER = process.env.DB_USER;
 const DB_PW = process.env.DB_PW;
@@ -17,7 +17,7 @@ const connectDB = (server) => {
       }
     )
     .then(() => server())
-    .catch((err) => console.log('err happened in db connection!', err));
+    .catch((err) => console.log("err happened in db connection!", err));
 };
 // the logic of connecting the backend to mongoose is like:
 // 1- Establish the connecting to database

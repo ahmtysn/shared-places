@@ -1,18 +1,18 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect } from "react";
 
-import { validate } from '../../utils/validators';
-import './Input.css';
+import { validate } from "../../utils/validators";
+import "./Input.css";
 
 const inputReducer = (state, action) => {
   // Works just like Redux
   switch (action.type) {
-    case 'CHANGE':
+    case "CHANGE":
       return {
         ...state,
         value: action.value,
         isValid: validate(action.value, action.validators),
       };
-    case 'TOUCH':
+    case "TOUCH":
       return {
         ...state,
         isTouched: true,
@@ -34,20 +34,21 @@ const Input = ({
   onInputChange,
   initValue,
   initIsValid,
+  disabled,
 }) => {
   const INITIAL_INPUT = {
-    value: initValue || '',
+    value: initValue || "",
     isValid: initIsValid || false,
     isTouched: false,
   };
   const [inputState, dispatch] = useReducer(inputReducer, INITIAL_INPUT);
 
   const changeHandler = (event) => {
-    dispatch({ type: 'CHANGE', value: event.target.value, validators });
+    dispatch({ type: "CHANGE", value: event.target.value, validators });
   };
 
   const touchHandler = () => {
-    dispatch({ type: 'TOUCH' });
+    dispatch({ type: "TOUCH" });
   };
 
   useEffect(() => {
@@ -55,7 +56,7 @@ const Input = ({
   }, [id, onInputChange, inputState.value, inputState.isValid]);
 
   const inputEl =
-    element === 'input' ? (
+    element === "input" ? (
       <input
         id={id}
         type={type}
@@ -63,6 +64,7 @@ const Input = ({
         onBlur={touchHandler}
         onChange={changeHandler}
         value={inputState.value}
+        disabled={disabled}
       />
     ) : (
       <textarea
@@ -77,7 +79,7 @@ const Input = ({
   return (
     <div
       className={`form-control ${
-        !inputState.isValid && inputState.isTouched && 'form-control--invalid'
+        !inputState.isValid && inputState.isTouched && "form-control--invalid"
       }`}
     >
       <label htmlFor={id}>{label}</label>
