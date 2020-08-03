@@ -105,17 +105,17 @@ const acceptFriendRequest = async (req, res, next) => {
         });
         friendReqReceiver.newsfeed.push({
             type: "Friends",
-            user1: userId,
-            user2: friendId,
-            date:today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
-            time:today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+            userId: userId,
+            friendId: friendId,
+            date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+            time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
         })
         friendReqSender.newsfeed.push({
             type: "Friends",
-            user1: userId,
-            user2: friendId,
-            date:today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
-            time:today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+            userId: friendId,
+            friendId: userId,
+            date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+            time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
         })
         await friendReqReceiver.save({ session: sess });
         await friendReqSender.save({ session: sess });
@@ -165,6 +165,16 @@ const deleteFriend = async (req, res, next) => {
         friendReqSender = await User.findById(friendId)
         friendReqReceiver.friends = friendReqReceiver.friends.filter(u => u.id !== friendId);
         friendReqSender.friends = friendReqSender.friends.filter(u => u.id !== userId);
+        friendReqReceiver.newsfeed = friendReqReceiver.newsfeed.filter(u => {
+            if (u.type === "Friends" && u.userId === userId && u.friendId === friendId)
+                return false;
+            return true;
+        });
+        friendReqSender.newsfeed = friendReqSender.newsfeed.filter(u => {
+            if (u.type === "Friends" && u.userId === friendId && u.friendId === userId)
+                return false;
+            return true;
+        });
         await friendReqReceiver.save({ session: sess });
         await friendReqSender.save({ session: sess });
         await sess.commitTransaction();

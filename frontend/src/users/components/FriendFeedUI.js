@@ -9,7 +9,6 @@ import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
 
 
 const FriendFeedUI = ({ news }) => {
-  let today = new Date();
   const timeAndDate = () => {
     let today = new Date();
     let splittingDate = news.date.split('-');
@@ -37,12 +36,12 @@ const FriendFeedUI = ({ news }) => {
   const fetchUsers = async () => {
 
     try {
-      const user1 = await sendRequest(`http://localhost:5000/api/users/${news.user1}`);
-      const user2 = await sendRequest(`http://localhost:5000/api/users/${news.user2}`);
+      const user1 = await sendRequest(`http://localhost:5000/api/users/${news.userId}`);
+      const user2 = await sendRequest(`http://localhost:5000/api/users/${news.friendId}`);
 
       setU1(user1);
       setU2(user2);
-      console.log(news)
+    
 
     } catch (err) {
       console.log("Error in fetching users!", err);
@@ -66,18 +65,18 @@ const FriendFeedUI = ({ news }) => {
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>
-              {userId === news.user1 ?
+              {userId === news.userId ?
                 <>
                   <Link to={`/${userId}/places`}> You </Link> and <Link to={`/${news.user2}/places`}> {u2.name} </Link>
                 </>
                 :
-                userId === news.user2 ?
+                userId === news.friendId ?
                   <>
-                    <Link to={`/${userId}/places`}> You </Link> and <Link to={`/${news.user1}/places`}> {u1.name} </Link>
+                    <Link to={`/${userId}/places`}> You </Link> and <Link to={`/${news.userId}/places`}> {u1.name} </Link>
                   </>
                   :
                   <>
-                    <Link to={`/${news.user1}/places`}> {u1.name} </Link> and <Link to={`/${news.user2}/places`}> {u2.name} </Link>
+                    <Link to={`/${news.userId}/places`}> {u1.name} </Link> and <Link to={`/${news.friendId}/places`}> {u2.name} </Link>
                   </>
               }
                  are friends now

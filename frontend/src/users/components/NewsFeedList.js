@@ -8,7 +8,7 @@ import { Icon } from "semantic-ui-react";
 import './newsfeedlist.css'
 const NewsFeedList = (props) => {
     const { newsfeed,name } = props
-    console.log(name)
+   
     const sortedNewsByDate = newsfeed.sort((a, b) => (new Date(b.date + "," + b.time) - new Date(a.date + "," + a.time)))
      
     return (
