@@ -1,6 +1,8 @@
 const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
+
 const User = require("../models/User");
+const Place = require("../models/Place");
 
 const HttpError = require("../models/http-error");
 const Comment = require("../models/Comment");
@@ -12,7 +14,7 @@ const createComment = async (req, res, next) => {
 		return next(new HttpError(".", 422));
 	}
 
-	const { date, comment, userId, placeId } = req.body;
+	const { date, comment, userId, placeId, commentId } = req.body;
 
 	let user;
 	try {
@@ -28,12 +30,28 @@ const createComment = async (req, res, next) => {
 		comment,
 		placeId,
 		creator: user,
+		commentId,
 	});
 
+	let place;
+
+	try {
+		place = await Place.findById(placeId);
+	} catch (err) {
+		const error = new HttpError("Creating comment failed, please try again.", 500);
+		return next(error);
+	}
+	place.comments.push(newComment);
+	try {
+		await place.save();
+	} catch (err) {
+		const error = new HttpError("Something went wrong, could not update place.", 500);
+
+		return next(error);
+	}
 	try {
 		const sess = await mongoose.startSession();
 		sess.startTransaction();
-
 		// to push new comments into the newsfeed
 		// user.newsfeed.push({
 		// 	type: "comment",
@@ -110,6 +128,7 @@ const deleteComment = async (req, res, next) => {
 	const userId = req.params.userId;
 
 	let commentToDelete;
+
 	try {
 		commentToDelete = await Comment.findById(commentId);
 	} catch (err) {

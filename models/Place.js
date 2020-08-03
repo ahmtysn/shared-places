@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const placeSchema = new Schema({
@@ -22,10 +22,19 @@ const placeSchema = new Schema({
 	creator: {
 		type: mongoose.Types.ObjectId, // Id of related model
 		required: true,
-		ref: 'User', // with ref we can use populate method to get all the data from related schema (in this case User schema)
+		ref: "User", // with ref we can use populate method to get all the data from related schema (in this case User schema)
 	},
+	comments: [
+		{
+			date: { type: Date, required: true },
+			userId: { type: String, required: true },
+			comment: { type: String, required: true, minlength: 5 },
+			placeId: { type: String, required: true },
+			creator: { name: String, image: String },
+		},
+	],
 });
 
-const Place = mongoose.model('Place', placeSchema);
+const Place = mongoose.model("Place", placeSchema);
 
 module.exports = Place;

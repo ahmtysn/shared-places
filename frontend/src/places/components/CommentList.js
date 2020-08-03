@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import Comment from "./Comment";
 import ErrorModal from "../../shared/components/UIElements/Modal/ErrorModal";
@@ -50,6 +51,7 @@ function CommentList(props) {
 		setMaxLength(false);
 		commentInput ? setValidInput(true) : setValidInput(false);
 		if (validInput) {
+			const commentId = uuidv4();
 			const commentDate = new Date();
 			try {
 				await sendRequest(
@@ -60,12 +62,14 @@ function CommentList(props) {
 						userId: userId,
 						placeId: placeId,
 						comment: commentInput,
+						commentId: commentId,
 					}),
 					{
 						Authorization: "Bearer " + auth.token,
 						"Content-Type": "application/json",
 					}
 				).then(() => setCommentInput(""));
+				props.setButtonKey(Math.random());
 			} catch (err) {}
 			setUpdateComments(prevState => {
 				return prevState + 1;
@@ -84,6 +88,7 @@ function CommentList(props) {
 					Authorization: "Bearer " + auth.token,
 				}
 			);
+			props.setButtonKey(Math.random());
 		} catch (err) {}
 	};
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useContext, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import AuthContext from "./../../shared/context/auth-context";
@@ -27,6 +27,7 @@ const PlaceItem = ({
 	creatorId,
 	creatorName,
 	isAddedToBucketList = false,
+	comments,
 }) => {
 	const { isLoggedIn, userId, token } = useContext(AuthContext);
 	const { isLoading, error, clearError, sendRequest } = useHttpRequest();
@@ -35,6 +36,8 @@ const PlaceItem = ({
 	const [showBucketModal, setShowBucketModal] = useState(false);
 	const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
 	const [showComments, setShowComments] = useState(false);
+	const [buttonKey, setButtonKey] = useState(Math.random());
+	const [updatedComments, setUpdatedComments] = useState(comments);
 
 	const openMapHandler = () => setShowMap(true);
 	const closeMapHandler = () => setShowMap(false);
@@ -42,7 +45,6 @@ const PlaceItem = ({
 	const closeDeleteHandler = () => setShowDelete(false);
 	const openModalHandler = () => setShowBucketModal(true);
 	const closeBucketModalHandler = () => setShowBucketModal(false);
-
 	const openComments = () => setShowComments(true);
 	const closeComments = () => setShowComments(false);
 
@@ -88,6 +90,17 @@ const PlaceItem = ({
 		}
 	};
 
+	// gets all of the comments of a place
+	useEffect(() => {
+		const fetchComments = async () => {
+			try {
+				const responseData = await sendRequest(`http://localhost:5000/api/comments/${placeId}`);
+				setUpdatedComments(responseData.comments);
+			} catch (err) {}
+		};
+		fetchComments();
+	}, [sendRequest, placeId, buttonKey]);
+
 	return (
 		<React.Fragment>
 			<ErrorModal error={error} onClear={clearError} />
@@ -112,6 +125,7 @@ const PlaceItem = ({
 			>
 				<div>
 					<CommentList
+						setButtonKey={setButtonKey}
 						placeUrl={`http://localhost:5000/${image}`}
 						placeId={placeId}
 						className='comment-list'
@@ -136,7 +150,7 @@ const PlaceItem = ({
 			>
 				<p>Do you really want to delete this place? This action is IRREVERSIBLE!</p>
 			</Modal>
-			<li className='place-item' key={creatorId}>
+			<li className='place-item'>
 				<Card className='place-item__content'>
 					{isLoading && <LoadingSpinner asOverlay />}
 					<div className='place-item__image'>
@@ -160,7 +174,10 @@ const PlaceItem = ({
 						<Button onClick={openMapHandler} inverse>
 							VIEW ON MAP
 						</Button>
-						<Button onClick={openComments}>COMMENTS</Button>
+						<Button
+							onClick={openComments}
+							key={buttonKey}
+						>{`COMMENTS (${updatedComments.length})`}</Button>
 						{isLoggedIn && (
 							<Fragment>
 								{creatorId === userId && <Button to={`/places/${placeId}`}>EDIT</Button>}
