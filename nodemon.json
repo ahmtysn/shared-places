@@ -1,7 +1,7 @@
 {
   "env": {
-    "DB_USER": "db_user",
-    "DB_PW": "2tNV9ejc9FvEdJO2",
+    "DB_USER": "Noer",
+    "DB_PW": "PrDBQHK6j7mShpjF",
     "DB_NAME": "placesharer-dev",
     "JWT_SECRET": "supersecretman!",
     "MAPBOX_TOKEN": "pk.eyJ1IjoiaHlmY2xhc3MyNiIsImEiOiJja2QzNG5hMzQxanhnMnNwdnJ0ZmN1YzB0In0.9wpXECjySi4MS-oOpxwWYQ"
