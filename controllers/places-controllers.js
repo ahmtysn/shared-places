@@ -9,16 +9,36 @@ const User = require("./../models/User");
 const getAllPlaces = async (req, res, next) => {
 	let places;
 	try {
-		places = await Place.find();
+		const searchValue = req.query.search;
+		if (searchValue) {
+			const inputValue = new RegExp(`${searchValue}`, "gi");
+			places = await Place.find(
+				{ $or: [{ title: inputValue }, { address: inputValue }] },
+				"-password"
+			).populate("creator");
+			if (places.length > 0) {
+				return res.status(200).json({
+					places: places.map(place => place.toObject({ getters: true })),
+				});
+			} else {
+				const error = new HttpError("Could not find any places!", 404);
+				return next(error);
+			}
+		} else {
+			// get data from DB
+			places = await Place.find({}, "-password").populate("creator");
+			if (places.length > 0) {
+				// Send data to view (frontend)
+				return res.json({
+					places: places.map(place => place.toObject({ getters: true })),
+				});
+			} else {
+				const error = new HttpError("Could not find any places!", 404);
+				return next(error);
+			}
+		}
 	} catch (err) {
 		const error = new HttpError("Something went wrong, could not find places!", 500);
-		return next(error);
-	}
-
-	if (places.length > 0) {
-		return res.status(200).json(places);
-	} else {
-		const error = new HttpError("Could not find any places!", 404);
 		return next(error);
 	}
 };
@@ -27,7 +47,7 @@ const getPlaceById = async (req, res, next) => {
 	const { placeId } = req.params;
 	let foundPlace;
 	try {
-		foundPlace = await Place.findById(placeId);
+		foundPlace = await Place.findById(placeId).populate("creator");
 	} catch (err) {
 		const error = new HttpError("Something went wrong, could not find place.", 500);
 		return next(error);
@@ -43,23 +63,32 @@ const getPlaceById = async (req, res, next) => {
 
 const getPlacesByUserId = async (req, res, next) => {
 	const { userId } = req.params;
+	const searchValue = await req.query.search;
 
 	let places;
+	let modifiedPlaces = [];
+	let searchedPlaces = [];
 	try {
 		places = await Place.find({ creator: userId });
 	} catch (err) {
 		const error = new HttpError("Something went wrong, could not find places.", 500);
 		return next(error);
 	}
-
 	if (places.length > 0) {
 		// Make "id" property available by activating getters
-		const modifiedPlaces = places.map(place => place.toObject({ getters: true }));
-		return res.status(200).json(modifiedPlaces);
-	} else {
-		const error = new HttpError("Could not find places with the provided user ID!", 404);
-		return next(error);
+		if (searchValue) {
+			searchedPlaces = places.filter(
+				place =>
+					place.title.toLowerCase().includes(searchValue) ||
+					place.address.toLowerCase().includes(searchValue)
+			);
+
+			modifiedPlaces = searchedPlaces.map(place => place.toObject({ getters: true }));
+		} else {
+			modifiedPlaces = places.map(place => place.toObject({ getters: true }));
+		}
 	}
+	return res.status(200).json(modifiedPlaces);
 };
 
 const createPlace = async (req, res, next) => {
@@ -69,7 +98,7 @@ const createPlace = async (req, res, next) => {
 		next(new HttpError("The input is incorrect!"));
 	}
 
-	const { title, description, address } = req.body;
+	const { title, description, address } = req.body; //destructured the title, description and address from the body of request
 	const { userId } = req.userData;
 	const { path } = req.file;
 
@@ -88,7 +117,7 @@ const createPlace = async (req, res, next) => {
 		address: address,
 		creator: userId,
 	});
-
+	let today = new Date();
 	let user;
 	// Store place in User
 	try {
@@ -109,6 +138,12 @@ const createPlace = async (req, res, next) => {
 		session.startTransaction(); // Transactions let you execute multiple operations in isolation and potentially undo all the operations if one of them fails.
 		await createdPlace.save({ session });
 		user.places.push(createdPlace); // Mongoose method to push document into array
+		user.newsfeed.push({
+			type: "Add New Place",
+			place: createdPlace.id,
+			date: today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate(),
+			time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
+		});
 		await user.save({ session });
 		await session.commitTransaction();
 	} catch (err) {
@@ -193,6 +228,9 @@ const deletePlace = async (req, res, next) => {
 		session.startTransaction();
 		await place.remove({ session });
 		place.creator.places.pull(place); // Mongoose method that removes objectId
+		place.creator.newsfeed = place.creator.newsfeed.filter(
+			u => (u.type === "Add New Place" && u.place !== placeId) || u.type === "Friends"
+		);
 		await place.creator.save({ session });
 		await session.commitTransaction();
 	} catch (err) {
@@ -214,3 +252,4 @@ exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
 exports.deletePlace = deletePlace;
+// exports.getPlaces = getPlaces;

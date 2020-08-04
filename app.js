@@ -10,7 +10,7 @@ const enableCORS = require("./middlewares/enableCORS");
 // Routes
 const placeRouter = require("./routes/placeRouter.js");
 const userRouter = require("./routes/userRouter.js");
-
+const friendRouter = require("./routes/friends-routes");
 // Middlewares
 app.use(express.json());
 app.use(enableCORS); // Only necessary if API is separate from client
@@ -23,10 +23,24 @@ app.use(express.static("./frontend/build"));
 app.use("/api/places", placeRouter);
 app.use("/api/users", userRouter);
 
+
+// Routes
+app.use("/api/places", placeRouter);
+app.use("/api/users", userRouter);
+app.use("/api/friends", friendRouter);
 // Any request that enters will be served the React app
 app.use((req, res, next) => {
-	res.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
 });
+// middleware placed after routes to catch the error of not existing route
+// app.use((req, res, next) => {
+//   const error = new HttpError("Could not find this route", 404);
+//   throw error;
+// });
+
+// error handling middleware
+// In case of 4 arguments are existed, then express will recognize it as error handling
+// This code will be executed every time getting error
 
 // General error handling if route doesn't exist
 app.use(errorNoRoute);

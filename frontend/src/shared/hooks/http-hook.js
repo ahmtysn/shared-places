@@ -38,7 +38,7 @@ const useHttpRequest = () => {
         return responseData;
       } catch (err) {
         setIsLoading(false);
-        console.log('err', err);
+        console.log(err);
         setError(err.message || 'Something went wrong, please try again');
         throw error;
       }

@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
-import Button from './Button';
+import Button from "./Button";
 
-import './ImageUpload.css';
+import "./ImageUpload.css";
 
-const ImageUpload = ({ id, centered, onInputChange }) => {
+const ImageUpload = ({ id, centered, onInputChange, initialImageUrl }) => {
   const imageUploaderRef = useRef();
   const [file, setFile] = useState();
-  const [previewImageUrl, setPreviewImageUrl] = useState('');
+  const [previewImageUrl, setPreviewImageUrl] = useState(initialImageUrl);
   const [isValid, setIsValid] = useState(false);
 
   const uploadedHandler = (event) => {
@@ -53,21 +53,21 @@ const ImageUpload = ({ id, centered, onInputChange }) => {
       <input
         id={id}
         ref={imageUploaderRef}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         type="file"
         accept=".jpg,.png,.jpeg"
         onChange={uploadedHandler}
       />
-      <div className={`image-upload ${centered && 'center'}`}>
+      <div className={`image-upload ${centered && "center"}`}>
         <div className="image-upload__preview">
           {previewImageUrl ? (
-            <img src={previewImageUrl} alt="Preview Image" />
+            <img src={previewImageUrl} alt="Preview" />
           ) : (
-            'Please upload an image!'
+            "Please upload an image!"
           )}
         </div>
         <Button type="button" onClick={uploadImageHandler}>
-          UPLOAD IMAGE
+          Upload Image
         </Button>
       </div>
     </div>
