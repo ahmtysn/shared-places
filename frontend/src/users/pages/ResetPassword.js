@@ -1,21 +1,25 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, Fragment, useState } from "react";
 
-import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
-import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
-import FormPassword from '../components/ResetPasswordForm/FormResetPassword';
-import AuthContext from './../../shared/context/auth-context';
+import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
+import FormResetPassword from "../components/ResetPasswordForm/FormResetPassword";
+import AuthContext from "./../../shared/context/auth-context";
 
-import useForm from './../../shared/hooks/form-hook';
-import useHttpRequest from '../../shared/hooks/http-hook';
+import useForm from "./../../shared/hooks/form-hook";
+import useHttpRequest from "../../shared/hooks/http-hook";
 
 const ResetPassword = ({ match }) => {
   const { login } = useContext(AuthContext);
-
+  const [same, setSame] = useState(true);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
   const initInputs = {
     newPassword: {
-      value: '',
+      value: "",
+      isValid: true,
+    },
+    retypePassword: {
+      value: "",
       isValid: true,
     },
   };
@@ -24,7 +28,16 @@ const ResetPassword = ({ match }) => {
   const resetHandler = async (e) => {
     e.preventDefault();
 
-    const { newPassword } = formState.inputs;
+    const { newPassword, retypePassword } = formState.inputs;
+
+    if (newPassword.value !== retypePassword.value) {
+      setSame(false);
+      return (retypePassword.isValid = false);
+    } else {
+      setSame(true);
+      return (retypePassword.isValid = true);
+    }
+
     const url = `/api/users/reset-password`;
 
     const body = {
@@ -33,11 +46,11 @@ const ResetPassword = ({ match }) => {
     };
 
     const headers = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
 
     const request = {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(body),
       headers,
     };
@@ -47,7 +60,7 @@ const ResetPassword = ({ match }) => {
         url,
         request.method,
         request.body,
-        request.headers,
+        request.headers
       );
       login(responseData.userId, responseData.token);
     } catch (err) {
@@ -55,16 +68,16 @@ const ResetPassword = ({ match }) => {
     }
   };
 
-  console.log('formState', formState);
   return (
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
 
-      <FormPassword
+      <FormResetPassword
         formState={formState}
         inputHandler={inputHandler}
         formHandler={resetHandler}
+        same={same}
       />
     </Fragment>
   );

@@ -1,6 +1,5 @@
 import React from "react";
 import "./FormPassword.css";
-
 import Input from "../../../shared/components/FormElements/Input";
 import ButtonResetPassword from "./ButtonResetPassword";
 
