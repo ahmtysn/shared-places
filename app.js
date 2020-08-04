@@ -6,7 +6,6 @@ const connectDB = require("./util/connectDB");
 const { errorHandler } = require("./middlewares/errorHandler");
 const { errorNoRoute } = require("./middlewares/errorHandler");
 const enableCORS = require("./middlewares/enableCORS");
-const cors = require("cors");
 
 // Routes
 const placeRouter = require("./routes/placeRouter.js");
@@ -15,7 +14,6 @@ const userRouter = require("./routes/userRouter.js");
 // Middlewares
 app.use(express.json());
 app.use(enableCORS); // Only necessary if API is separate from client
-app.use(cors());
 
 // Whenever request hits this path, return static files
 app.use("/uploads/images", express.static(path.join("uploads", "images")));

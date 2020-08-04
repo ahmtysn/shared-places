@@ -35,7 +35,7 @@ function StarRating(props) {
 		try {
 			let response;
 			//send request to update both, average and creator rate
-			if (auth.userId === props.creatorId) {
+			if (auth.userId === props.creatorId || props.creatorId.id) {
 				response = await sendRequest(
 					`http://localhost:5000/api/places/rate/${props.placeId}`,
 					"PATCH",
