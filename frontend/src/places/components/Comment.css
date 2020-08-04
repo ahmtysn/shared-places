@@ -10,14 +10,13 @@
 	align-items: center;
 	margin-top: 1%;
 	margin-left: 1%;
+	margin-bottom: 1%;
 }
 .comment {
 	display: flex;
 	align-items: center;
 	flex-flow: row;
 	margin-left: 1%;
-	margin-top: -1%;
-	margin-bottom: -1%;
 }
 
 #closeButton {
@@ -80,8 +79,8 @@
 .dropList2 {
 	position: relative;
 	overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	border-radius: 10px; 
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
 }
 
 .dropList_content {
