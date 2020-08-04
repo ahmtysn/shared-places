@@ -25,19 +25,11 @@ const NewsFeed = () => {
             let fullDate = new Date(splittingDate[0], splittingDate[1] - 1, splittingDate[2], splittingTime[0], splittingTime[1], splittingTime[2])
             return fullDate;
         }
-        let temp = currentUserNewsfeed.map(cn => {
-
-            console.log(currentUserNewsfeed)
-
+         currentUserNewsfeed.map(cn => {
             let dateOfBeingFriends = convertTimeAndDate(cn.date, cn.time)
-           
-            let time;
             if (cn.type === "Friends") {
-                console.log(cn)
                 let cf = users.filter(u => u.id === cn.userId || u.id === cn.friendId).filter(u => u.id !== auth.userId)[0].newsfeed
                 let test = cf.filter(feed => convertTimeAndDate(feed.date, feed.time) > dateOfBeingFriends)
-                // console.log(cf)
-                // console.log(dateOfBeingFriends, test)
                 newsHomePage = newsHomePage.concat(test)
             }
         }
@@ -53,7 +45,7 @@ const NewsFeed = () => {
             const currentuser = responseData.filter(u => u.id === auth.userId);
             setUser(currentuser[0].name);
             const currentUserNewsFeed = responseData.filter(u => u.id === auth.userId)[0].newsfeed;
-            const currentUserFriends = responseData.filter(u => u.id === auth.userId)[0].friends;
+            
             const newsHomePage = getNewsFeed( responseData, currentUserNewsFeed);
             setNewsFeed(newsHomePage);
         } catch (err) {

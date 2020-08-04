@@ -39,7 +39,7 @@ userRouter.use(checkAuth);
 
 
 userRouter.route('/').get(getAllUsers);
-userRouter.route('/:userId').get(getUserById);
+
 
 // Private routes
 userRouter.route("/account/:userId").get(getUserById);

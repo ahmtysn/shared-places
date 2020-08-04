@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect ,useContext} from 'react'
 import { Feed, Icon, Image } from 'semantic-ui-react'
 import useHttpRequest from "./../../shared/hooks/http-hook";
 import useAuth from "../../shared/hooks/auth-hook";
 import { Link } from 'react-router-dom';
 import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
-
+import AuthContext from "./../../shared/context/auth-context";
 
 
 const FriendFeedUI = ({ news }) => {
@@ -28,31 +28,43 @@ const FriendFeedUI = ({ news }) => {
   }
 
   const newsDate = timeAndDate();
-
-  const { userId } = useAuth();
+  const { token,userId } = useContext(AuthContext);
   const [u1, setU1] = useState();
   const [u2, setU2] = useState();
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
   const fetchUsers = async () => {
-
     try {
-      const user1 = await sendRequest(`http://localhost:5000/api/users/${news.userId}`);
-      const user2 = await sendRequest(`http://localhost:5000/api/users/${news.friendId}`);
-
+      const urlUser1 = `/api/users/account/${news.userId}`;
+      const urlUser2 = `/api/users/account/${news.friendId}`;
+      const request = {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const user1 = await sendRequest(
+        urlUser1,
+        request.method,
+        null,
+        request.headers
+      );
+      const user2 = await sendRequest(
+        urlUser2,
+        request.method,
+        null,
+        request.headers
+      );
       setU1(user1);
       setU2(user2);
-    
-
     } catch (err) {
       console.log("Error in fetching users!", err);
     }
-
   };
 
   // Fetch users before page loads, with empty [] only runs once
   useEffect(() => {
     fetchUsers();
-  }, [sendRequest]);
+  }, [sendRequest,userId,token]);
 
   return (
     <React.Fragment>
@@ -81,18 +93,18 @@ const FriendFeedUI = ({ news }) => {
               }
                  are friends now
                   <Feed.Date> {
-                  newsDate === 0 ? 'Few seconds Ago'
+                newsDate === 0 ? 'Few seconds Ago'
+                  :
+                  newsDate < 60 ? newsDate + ' Minutes Ago'
                     :
-                    newsDate < 60 ? newsDate + ' Minutes Ago'
+                    newsDate < 1440 ? (parseInt(newsDate / 60)) + ' Hours Ago'
                       :
-                      newsDate < 1440 ? (parseInt(newsDate / 60)) + ' Hours Ago'
+                      newsDate < 43200 ? (parseInt((newsDate * 30) / 43200)) + ' Days Ago'
                         :
-                        newsDate < 43200 ? (parseInt((newsDate * 30) / 43200)) + ' Days Ago'
+                        newsDate < 518400 ? (parseInt((newsDate * 12) / 518400)) + ' Months Ago'
                           :
-                          newsDate < 518400 ? (parseInt((newsDate * 12) / 518400)) + ' Months Ago'
-                            :
-                            'Over than a year ago'
-                }
+                          'Over than a year ago'
+              }
               </Feed.Date>
             </Feed.Summary>
           </Feed.Content>

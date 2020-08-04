@@ -12,7 +12,7 @@
     text-decoration: none;
     padding: 1rem;
     color: white;
-    background: #FF0055;
+    background: black;
   }
   .friend-item__content {
     padding: 0;
@@ -36,7 +36,7 @@
   .friend-item:active h2,
   .friend-item:hover h3,
   .friend-item:active h3 {
-    color: black;
+    color: #FFD900;
     
   }
   .friend-item__info h3 {
