@@ -12,7 +12,7 @@
     text-decoration: none;
     padding: 1rem;
     color: white;
-    background: #FF0055;
+    background: black;
   }
   .friend-item__content {
     padding: 0;
@@ -22,6 +22,7 @@
     width: 120px;
     height: 4rem;
     margin-right: 1rem;
+  
   }
   .friend-item__info h2 {
     font-size: 0.9rem;
@@ -29,12 +30,14 @@
     margin: 0 0 0.5rem 0;
     font-weight: normal;
     color: #FFD900;
+  
   }
   .friend-item:hover h2,
   .friend-item:active h2,
   .friend-item:hover h3,
   .friend-item:active h3 {
-    color: black;
+    color: #FFD900;
+    
   }
   .friend-item__info h3 {
     margin: 0;
@@ -51,7 +54,7 @@
   }
   .friend_btn button:hover,
   .friend_btn button:active {
-    background: #7E3942 !important;
+    background: #0658d1a8 !important;
     border-color: #5C4A4B !important;
   }
   .card_list {

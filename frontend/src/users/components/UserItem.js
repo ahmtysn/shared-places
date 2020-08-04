@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import './UserItem.css';
 import AuthContext from '../../shared/context/auth-context';
@@ -7,9 +7,10 @@ import Card from './../../shared/components/UIElements/Card';
 import AddFriend from '../../friends/components/AddFriend'
 import DeleteFriend from '../../friends/components/DeleteFriend'
 import Button from '../../shared/components/FormElements/Button'
+
 const UserItem = ({ user }) => {
   const auth = useContext(AuthContext);
- 
+
   const [isFriend, setIsFriend] = useState(false);
   const currentPath = window.location.pathname;
 

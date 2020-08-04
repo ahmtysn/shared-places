@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import 'semantic-ui-css/semantic.min.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,8 +15,11 @@ import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner";
 // Pages
 /* eslint-disable import/first */
 
+
 const HomePage = React.lazy(() => import('./home/HomePage'));
+
 const UsersPage = React.lazy(() => import("./users/pages/UsersPage"));
+const NewsFeed = React.lazy(() => import("./users/pages/NewsFeed"));
 const AuthPage = React.lazy(() => import("./users/pages/AuthPage"));
 const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
 const EditPlace = React.lazy(() => import("./places/pages/EditPlace"));
@@ -42,6 +46,7 @@ function App() {
     routes = (
       <Switch>
         <Route exact path="/" component={UsersPage} />
+        <Route exact path="/:userId/newsfeed" component={NewsFeed} />
         <Route exact path="/:userId/places" component={UserPlaces} />
         <Route exact path="/:userId/friends" component={UserFriends} />
         <Route exact path="/places/new" component={NewPlace} />

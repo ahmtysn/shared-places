@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
 import useHttpRequest from "./../../shared/hooks/http-hook";
-
 import UsersList from "./../components/UsersList";
 import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
@@ -33,7 +32,7 @@ const UsersPage = () => {
         `${process.env.REACT_APP_BACKEND_URL}/users/?search=${searchValue}`
       );
       setSearchedUsers(data.users);
-    } catch (error) {}
+    } catch (error) { }
   };
   const onSubmitSearchHandler = (e) => {
     e.preventDefault();
@@ -45,16 +44,19 @@ const UsersPage = () => {
 
   return (
     <Fragment>
+    
       <ErrorModal error={error} onClear={clearError} />
-      <SearchBar
-        inputSearchHandler={inputSearchHandler}
-        onSubmitSearchHandler={onSubmitSearchHandler}
-        searchValue={searchValue}
-        placeholder="Search users with name or email"
-      />
-      {isLoading && <LoadingSpinner asOverlay />}
+      
+        <SearchBar
+          inputSearchHandler={inputSearchHandler}
+          onSubmitSearchHandler={onSubmitSearchHandler}
+          searchValue={searchValue}
+          placeholder="Search users with name or email"
+        />
+        {isLoading && <LoadingSpinner asOverlay />}
 
-      {!isLoading && <UsersList users={searchedUsers || users} />}
+        {!isLoading && <UsersList users={searchedUsers || users} />}
+     
     </Fragment>
   );
 };
