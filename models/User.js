@@ -10,6 +10,8 @@ const userSchema = new Schema({
   friends:[{type: Object, required: true }],
   requestslist:[{type: Object, required: true }],
 
+  newsfeed:[{type: Object, required: true }],
+
   image: { type: String, required: true },
   places: [
     {

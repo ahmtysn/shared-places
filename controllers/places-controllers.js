@@ -50,7 +50,7 @@ const getPlaceById = async (req, res, next) => {
   const { placeId } = req.params;
   let foundPlace;
   try {
-    foundPlace = await Place.findById(placeId);
+    foundPlace = await Place.findById(placeId).populate('creator');
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not find place.',
@@ -70,44 +70,6 @@ const getPlaceById = async (req, res, next) => {
   return res.status(200).json(modifiedPlace);
 };
 
-// const getPlacesByUserId = async (req, res, next) => {
-//   const userId = req.params.userId;
-//   const searchValue = await req.query.search;
-//   let placesOfUser;
-//   try {
-//     if (searchValue) {
-//       const placesList = await (
-//         await User.findById(userId).populate('places')
-//       ).toJSON();
-//       placesOfUser = await placesList.places.filter(
-//         (place) =>
-//           place.title.toLowerCase().includes(searchValue) ||
-//           place.address.toLowerCase().includes(searchValue)
-//       );
-//       res.json({
-//         places: placesOfUser,
-//       });
-//     } else {
-//       placesOfUser = await (
-//         await User.findById(userId).populate('places')
-//       ).toJSON();
-//       if (!placesOfUser || placesOfUser.length === 0) {
-//         return next(
-//           new HttpError('Could not find places for the provided user id.', 404)
-//         );
-//       }
-//       res.status(200).json({
-//         places: placesOfUser.places,
-//       });
-//     }
-//   } catch (err) {
-//     const error = new HttpError(
-//       'Fetching places failed, please try again later.',
-//       500
-//     );
-//     return next(error);
-//   }
-// };
 const getPlacesByUserId = async (req, res, next) => {
   const { userId } = req.params;
   const searchValue = await req.query.search;
@@ -146,6 +108,7 @@ const getPlacesByUserId = async (req, res, next) => {
 };
 
 const createPlace = async (req, res, next) => {
+ 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
@@ -171,7 +134,7 @@ const createPlace = async (req, res, next) => {
     address: address,
     creator: userId,
   });
-
+  let today = new Date();
   let user;
   // Store place in User
   try {
@@ -192,6 +155,12 @@ const createPlace = async (req, res, next) => {
     session.startTransaction(); // Transactions let you execute multiple operations in isolation and potentially undo all the operations if one of them fails.
     await createdPlace.save({ session });
     user.places.push(createdPlace); // Mongoose method to push document into array
+    user.newsfeed.push({
+      type: "Add New Place",
+      place: createdPlace.id,
+      date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+      time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+    })
     await user.save({ session });
     await session.commitTransaction();
   } catch (err) {
@@ -288,6 +257,7 @@ const deletePlace = async (req, res, next) => {
     session.startTransaction();
     await place.remove({ session });
     place.creator.places.pull(place); // Mongoose method that removes objectId
+    place.creator.newsfeed=place.creator.newsfeed.filter(u=> (u.type==="Add New Place" && u.place!==placeId) || u.type==="Friends" )
     await place.creator.save({ session });
     await session.commitTransaction();
   } catch (err) {

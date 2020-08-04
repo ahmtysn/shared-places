@@ -5,12 +5,14 @@ const userRouter = express.Router();
 
 // Controllers
 
+
 const { getAllUsers } = require("./../controllers/users-controllers");
 const { createUser } = require("./../controllers/users-controllers");
 const { logUserIn } = require("./../controllers/users-controllers");
 const { getUserById } = require("./../controllers/users-controllers");
 const { updateAccount } = require("./../controllers/users-controllers");
 const { deleteAccount } = require("./../controllers/users-controllers");
+
 const {
   getBucketList,
   addToBucketList,
@@ -35,8 +37,13 @@ userRouter.route("/login").post(logUserIn);
 // Middleware checks for authentication
 userRouter.use(checkAuth);
 
+
+userRouter.route('/').get(getAllUsers);
+
+
 // Private routes
 userRouter.route("/account/:userId").get(getUserById);
+
 userRouter
   .route("/account/:userId")
   .patch(uploadFile.single("image"), validateUpdateAccount, updateAccount)

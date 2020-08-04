@@ -40,7 +40,29 @@ const getAllUsers = async (req, res, next) => {
     return next(error);
   }
 };
-
+// const getUserById = async (req, res, next) => {
+//   const { userId } = req.params;
+//   let foundUser;
+//   try {
+//     foundUser = await User.findById(userId);
+//   } catch (err) {
+//     const error = new HttpError(
+//       'Something went wrong, could not find place.',
+//       500
+//     );
+//     return next(error);
+//   }
+//   if (!foundUser) {
+//     const error = new HttpError(
+//       'Could not find a place with the provided place ID!',
+//       404
+//     );
+//     return next(error);
+//   }
+//   // Make "id" property available
+//   const modifiedUser = foundUser.toObject({ getters: true });
+//   return res.status(200).json(modifiedUser);
+// };
 const createUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -178,6 +200,7 @@ const logUserIn = async (req, res, next) => {
 //////////////////////////////////////////////////////////
 // get user by ID middleware
 const getUserById = async (req, res, next) => {
+  
   const { userId } = req.params;
   let foundUser;
   try {
@@ -333,8 +356,9 @@ const deleteAccount = async (req, res, next) => {
 };
 
 exports.getAllUsers = getAllUsers;
+exports.getUserById = getUserById;
 exports.createUser = createUser;
 exports.logUserIn = logUserIn;
-exports.getUserById = getUserById;
+
 exports.updateAccount = updateAccount;
 exports.deleteAccount = deleteAccount;
