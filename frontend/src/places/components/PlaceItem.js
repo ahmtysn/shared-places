@@ -99,6 +99,9 @@ const PlaceItem = ({
 						<img src={`http://localhost:5000/${image}`} alt={title} />
 					</div>
 					<div className='place-item__info'>
+						<h2>{title}</h2>
+						<h3>{address}</h3>
+						<p>{description}</p>
 						<StarRating
 							placeId={placeId}
 							raterIds={rate.raterIds}
@@ -107,9 +110,6 @@ const PlaceItem = ({
 							creatorRate={rate.creatorRate}
 							creatorId={creatorId}
 						/>
-						<h2>{title}</h2>
-						<h3>{address}</h3>
-						<p>{description}</p>
 					</div>
 					<div className='place-item__actions'>
 						<Button onClick={openMapHandler} inverse>

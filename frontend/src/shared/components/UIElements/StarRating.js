@@ -84,7 +84,7 @@ function StarRating(props) {
 					value={ratingAverage}
 					count={5}
 					onChange={rateHandler}
-					size={30}
+					size={20}
 					isHalf={true}
 					emptyIcon={<i className='far fa-star'></i>}
 					halfIcon={<i className='fa fa-star-half-alt'></i>}
@@ -105,7 +105,7 @@ function StarRating(props) {
 					count={5}
 					char=''
 					edit={false}
-					size={35}
+					size={23}
 					isHalf={true}
 					emptyIcon={<i className='far fa-heart' />}
 					halfIcon={<i className='fa fa-heart-half-alt' />}
