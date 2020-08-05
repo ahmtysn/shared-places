@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./UserItem.css";
-import AuthContext from "../../shared/context/auth-context";
-import Avatar from "./../../shared/components/UIElements/Avatar";
-import Card from "./../../shared/components/UIElements/Card";
-import AddFriend from "../../friends/components/AddFriend";
-import DeleteFriend from "../../friends/components/DeleteFriend";
-import Button from "../../shared/components/FormElements/Button";
+import React, { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './UserItem.css';
+import AuthContext from '../../shared/context/auth-context';
+import Avatar from './../../shared/components/UIElements/Avatar';
+import Card from './../../shared/components/UIElements/Card';
+import AddFriend from '../../friends/components/AddFriend';
+import DeleteFriend from '../../friends/components/DeleteFriend';
+import Button from '../../shared/components/FormElements/Button';
 const UserItem = ({ user }) => {
   const auth = useContext(AuthContext);
 
@@ -16,39 +16,39 @@ const UserItem = ({ user }) => {
   const { id, image, name, places, friends } = user;
 
   useEffect(() => {
-    if (currentPath === "/" && friends.find((u) => u.id === auth.userId)) {
+    if (currentPath === '/' && friends.find((u) => u.id === auth.userId)) {
       setIsFriend(true);
     }
   }, [setIsFriend]);
 
   return (
-    <li className="user-item">
-      <Card className="user-item__content">
+    <li className='user-item'>
+      <Card className='user-item__content'>
         <Link to={`/${id}/places`}>
-          <div className="user-item__image">
-            <Avatar image={`http://localhost:5000/${image}`} alt={name} />
+          <div className='user-item__image'>
+            <Avatar image={image} alt={name} />
           </div>
-          <div className="user-item__info">
+          <div className='user-item__info'>
             <h2>
               {name}:{isFriend}
             </h2>
             <h3>
-              {places.length} {places.length === 1 ? "Place" : "Places"}
+              {places.length} {places.length === 1 ? 'Place' : 'Places'}
             </h3>
           </div>
         </Link>
         {auth.isLoggedIn && (
           <>
-            {currentPath === "/" && !isFriend ? (
+            {currentPath === '/' && !isFriend ? (
               <AddFriend
                 receivedRequestId={user.id}
                 userId={auth.userId}
                 token={auth.token}
               />
             ) : (
-              currentPath === "/" && (
+              currentPath === '/' && (
                 <Link to={`account/${id}`}>
-                  {" "}
+                  {' '}
                   <Button friend>{name} Profile</Button>
                 </Link>
               )

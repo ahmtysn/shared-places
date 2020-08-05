@@ -14,15 +14,13 @@ ul {
   /* make scrollbar transparent */
 }
 .dropdown {
-  margin-right: 100px;
   position: absolute;
-  top: 65px;
-  background-color: #292929;
-  width: 38rem;
-  height: 20rem;
+  top: 40px;
+  width: 48%;
+  height: 22rem;
   transform: translateX(-45%);
   border-radius: 8px;
-  padding: 1rem;
+  padding:1rem;
   overflow-y: scroll;
   transition: height var(500ms) ease;
 }

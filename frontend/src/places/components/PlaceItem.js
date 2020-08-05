@@ -1,86 +1,88 @@
-import React, { useState, useContext, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext, Fragment } from "react";
+import { Link } from "react-router-dom";
 
-import AuthContext from './../../shared/context/auth-context';
+import StarRating from "../../shared/components/UIElements/StarRating";
+import AuthContext from "./../../shared/context/auth-context";
 
-import Card from './../../shared/components/UIElements/Card';
-import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
-import Button from './../../shared/components/FormElements/Button';
-import Modal from './../../shared/components/UIElements/Modal/Modal';
-import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
-import Map from './../../shared/components/UIElements/Map';
+import Card from "./../../shared/components/UIElements/Card";
+import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
+import Button from "./../../shared/components/FormElements/Button";
+import Modal from "./../../shared/components/UIElements/Modal/Modal";
+import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
+import Map from "./../../shared/components/UIElements/Map";
 
-import useHttpRequest from './../../shared/hooks/http-hook';
+import useHttpRequest from "./../../shared/hooks/http-hook";
 
-import './PlaceItem.css';
+import "./PlaceItem.css";
 
 const PlaceItem = ({
-  image,
-  title,
-  description,
-  address,
-  placeId,
-  coordinates,
-  onDeletePlace,
-  creatorId,
-  creatorName,
-  isAddedToBucketList = false,
+	image,
+	title,
+	description,
+	address,
+	placeId,
+	coordinates,
+	onDeletePlace,
+	creatorId,
+	creatorName,
+	isAddedToBucketList = false,
+	rate,
 }) => {
-  const { isLoggedIn, userId, token } = useContext(AuthContext);
-  const { isLoading, error, clearError, sendRequest } = useHttpRequest();
-  const [showMap, setShowMap] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
-  const [showBucketModal, setShowBucketModal] = useState(false);
-  const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
+	const { isLoggedIn, userId, token } = useContext(AuthContext);
+	const { isLoading, error, clearError, sendRequest } = useHttpRequest();
+	const [showMap, setShowMap] = useState(false);
+	const [showDelete, setShowDelete] = useState(false);
+	const [showBucketModal, setShowBucketModal] = useState(false);
+	const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
 
-  const openMapHandler = () => setShowMap(true);
-  const closeMapHandler = () => setShowMap(false);
-  const openDeleteHandler = () => setShowDelete(true);
-  const closeDeleteHandler = () => setShowDelete(false);
-  const openModalHandler = () => setShowBucketModal(true);
-  const closeBucketModalHandler = () => setShowBucketModal(false);
+	const openMapHandler = () => setShowMap(true);
+	const closeMapHandler = () => setShowMap(false);
+	const openDeleteHandler = () => setShowDelete(true);
+	const closeDeleteHandler = () => setShowDelete(false);
+	const openModalHandler = () => setShowBucketModal(true);
+	const closeBucketModalHandler = () => setShowBucketModal(false);
 
-  const deletePlaceHandler = async (placeId) => {
-    const url = `/api/places/${placeId}`;
+	const deletePlaceHandler = async placeId => {
+		const url = `/api/places/${placeId}`;
 
-    const body = {};
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+		const body = {};
+		const headers = {
+			Authorization: `Bearer ${token}`,
+		};
 
-    const request = {
-      method: 'DELETE',
-      body,
-      headers,
-    };
+		const request = {
+			method: "DELETE",
+			body,
+			headers,
+		};
 
-    try {
-      await sendRequest(url, request.method, request.body, request.headers);
-    } catch (err) {
-      console.log('Error while deleting place!', err);
-    }
+		try {
+			await sendRequest(url, request.method, request.body, request.headers);
+		} catch (err) {
+			console.log("Error while deleting place!", err);
+		}
 
-    setShowDelete(false);
-    onDeletePlace(placeId);
-  };
+		setShowDelete(false);
+		onDeletePlace(placeId);
+	};
 
-  const addBucketList = async () => {
-    try {
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/users/bucketlist/${placeId}`,
-        'PATCH',
-        null,
-        {
-          Authorization: `Bearer ${token}`,
-        }
-      );
-      setShowBucketModal(false);
-      setBucketItemAdded(true);
-    } catch (error) {
-      setShowBucketModal(false);
-      console.log('error');
-    }
-  };
+	const addBucketList = async () => {
+		try {
+			await sendRequest(
+				`${process.env.REACT_APP_BACKEND_URL}/users/bucketlist/${placeId}`,
+				"PATCH",
+				null,
+				{
+					Authorization: `Bearer ${token}`,
+				}
+			);
+			setShowBucketModal(false);
+			setBucketItemAdded(true);
+		} catch (error) {
+			setShowBucketModal(false);
+			console.log("error");
+		}
+	};
 
   return (
     <React.Fragment>
@@ -121,7 +123,7 @@ const PlaceItem = ({
         <Card className="place-item__content">
           {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
-            <img src={`http://localhost:5000/${image}`} alt={title} />
+            <img src={image} alt={title} />
           </div>
           <div className="place-item__info">
             <h2>{title}</h2>

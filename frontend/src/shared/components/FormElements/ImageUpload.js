@@ -67,7 +67,7 @@ const ImageUpload = ({ id, centered, onInputChange, initialImageUrl }) => {
           )}
         </div>
         <Button type="button" onClick={uploadImageHandler}>
-          UPLOAD IMAGE
+          Upload Image
         </Button>
       </div>
     </div>

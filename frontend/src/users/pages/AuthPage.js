@@ -149,7 +149,7 @@ const AuthPage = () => {
       <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Authentication Required!</h2>
+        <h2 className="authentication__header">Hack Your Places</h2>
         <hr />
         <AuthForm
           formState={formState}
@@ -157,6 +157,8 @@ const AuthPage = () => {
           authSubmitHandler={authSubmitHandler}
           isLoginMode={isLoginMode}
         />
+        <hr />
+        <h3 className="authentication__header">{isLoginMode ? "Don't have an account ?" : "Have an account ?"}</h3>
         <Button inverse onClick={switchModeHandler}>
           SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
         </Button>

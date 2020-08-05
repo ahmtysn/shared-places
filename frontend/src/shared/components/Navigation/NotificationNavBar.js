@@ -12,6 +12,11 @@ const NotificationNavBar = () => {
     const [num, setNum] = useState(0);
     const [loadedUsers, setLoadedUsers] = useState();
     const [reqList, setReqList] = useState([]);
+    const [renderBell, setRenderBell] = useState(Math.random());
+    function handleChange(newValue) {
+      setRenderBell(newValue);
+     
+    }
     const fetchUsers = async () => {
         try {
             const responseData = await sendRequest('/api/users');
@@ -27,15 +32,15 @@ const NotificationNavBar = () => {
 
     useEffect(() => {
             fetchUsers();
-    }, [sendRequest]);
+    }, [sendRequest,renderBell]);
 
 
     return (
         <React.Fragment>
-           <div>
+          <div>
                 <ErrorModal error={error} onClear={clearError} />
                 <NotificationBadge count={num} />
-                {loadedUsers && <NotificationList items={reqList} count={num} />}
+                {loadedUsers && <NotificationList bell={handleChange} items={reqList} count={num} />}
                 </div> 
         </React.Fragment>
 
