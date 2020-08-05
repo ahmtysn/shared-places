@@ -1,6 +1,7 @@
 import React, { useState, useContext, Fragment } from "react";
 import { Link } from "react-router-dom";
 
+import StarRating from "../../shared/components/UIElements/StarRating";
 import AuthContext from "./../../shared/context/auth-context";
 
 import {
@@ -26,16 +27,17 @@ import useHttpRequest from "./../../shared/hooks/http-hook";
 import "./PlaceItem.css";
 
 const PlaceItem = ({
-  image,
-  title,
-  description,
-  address,
-  placeId,
-  coordinates,
-  onDeletePlace,
-  creatorId,
-  creatorName,
-  isAddedToBucketList = false,
+	image,
+	title,
+	description,
+	address,
+	placeId,
+	coordinates,
+	onDeletePlace,
+	creatorId,
+	creatorName,
+	isAddedToBucketList = false,
+	rate,
 }) => {
   const { isLoggedIn, userId, token } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
@@ -45,20 +47,20 @@ const PlaceItem = ({
   const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
   const [showIcons, setShowIcons] = useState(false);
 
-  const openMapHandler = () => setShowMap(true);
-  const closeMapHandler = () => setShowMap(false);
-  const openDeleteHandler = () => setShowDelete(true);
-  const closeDeleteHandler = () => setShowDelete(false);
-  const openModalHandler = () => setShowBucketModal(true);
-  const closeBucketModalHandler = () => setShowBucketModal(false);
+	const openMapHandler = () => setShowMap(true);
+	const closeMapHandler = () => setShowMap(false);
+	const openDeleteHandler = () => setShowDelete(true);
+	const closeDeleteHandler = () => setShowDelete(false);
+	const openModalHandler = () => setShowBucketModal(true);
+	const closeBucketModalHandler = () => setShowBucketModal(false);
 
-  const deletePlaceHandler = async (placeId) => {
-    const url = `/api/places/${placeId}`;
+	const deletePlaceHandler = async placeId => {
+		const url = `/api/places/${placeId}`;
 
-    const body = {};
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+		const body = {};
+		const headers = {
+			Authorization: `Bearer ${token}`,
+		};
 
     const request = {
       method: "DELETE",
@@ -72,9 +74,9 @@ const PlaceItem = ({
       console.log("Error while deleting place!", err);
     }
 
-    setShowDelete(false);
-    onDeletePlace(placeId);
-  };
+		setShowDelete(false);
+		onDeletePlace(placeId);
+	};
 
   const addBucketList = async () => {
     try {
@@ -114,7 +116,7 @@ const PlaceItem = ({
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className="map-container">
-          <Map center={coordinates} zoom={16} />
+          <Map center={coordinates} zoom={14} />
         </div>
       </Modal>
       <Modal

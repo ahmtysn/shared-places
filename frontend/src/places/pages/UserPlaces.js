@@ -1,26 +1,32 @@
-import React, { Fragment, useEffect, useState, useContext, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+} from "react";
+import { useParams } from "react-router-dom";
 
 // Context
-import AuthContext from './../../shared/context/auth-context';
+import AuthContext from "./../../shared/context/auth-context";
 
-import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
-import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
+import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
 
 // Custom hooks
-import useHttpRequest from './../../shared/hooks/http-hook';
+import useHttpRequest from "./../../shared/hooks/http-hook";
 
-import PlaceList from '../components/PlaceList';
+import PlaceList from "../components/PlaceList";
 
 // material ui
-import SearchBar from '../../shared/components/FormElements/SearchBar';
+import SearchBar from "../../shared/components/FormElements/SearchBar";
 
 const UserPlaces = () => {
   const { userId } = useParams();
 
   const { token, userId: loggedInUserId, isLoggedIn } = useContext(AuthContext);
   const [userPlaces, setUserPlaces] = useState([]); // const userPlaces = [] // userPlaces = arry of places
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [places, setPlaces] = useState();
 
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
@@ -30,15 +36,15 @@ const UserPlaces = () => {
       try {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/users/bucketlist/${loggedInUserId}`,
-          'GET',
+          "GET",
           null,
           {
-            Authorization: 'Bearer ' + token,
+            Authorization: "Bearer " + token,
           }
         );
         return responseData.bucketListUser;
       } catch (err) {
-        console.log('Could not get all user places!', err);
+        console.log("Could not get all user places!", err);
         return [];
       }
     };
@@ -47,7 +53,7 @@ const UserPlaces = () => {
       try {
         const url = `/api/places/user/${userId}`; // http req
         const request = {
-          method: 'GET',
+          method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -61,7 +67,7 @@ const UserPlaces = () => {
         );
         return response;
       } catch (err) {
-        console.log('Could not get all user places!', err);
+        console.log("Could not get all user places!", err);
         return [];
       }
     };
@@ -71,7 +77,9 @@ const UserPlaces = () => {
       console.log(places)
       setUserPlaces(
         places.map((place) => {
-          const found = bucketList.find((item) => item.id === place.id);
+          const found = bucketList.find(
+            (item) => item.id && item.id.id === place.id
+          );
           if (found) {
             return { ...place, isAddedToBucketList: true };
           } else {
