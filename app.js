@@ -16,10 +16,12 @@ app.use(express.json());
 app.use(enableCORS); // Only necessary if API is separate from client
 
 // Whenever request hits this path, return static files
-
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 app.use(express.static("./frontend/build"));
 
+// Routes
+app.use("/api/places", placeRouter);
+app.use("/api/users", userRouter);
 
 
 // Routes
@@ -47,9 +49,9 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 const server = () => {
-  app.listen(PORT, () => {
-    console.log(`Listening to port ${PORT}!`);
-  });
+	app.listen(PORT, () => {
+		console.log(`Listening to port ${PORT}!`);
+	});
 };
 
 connectDB(server);
