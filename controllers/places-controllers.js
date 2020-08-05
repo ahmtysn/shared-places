@@ -200,50 +200,53 @@ const updatePlace = async (req, res, next) => {
 };
 
 const deletePlace = async (req, res, next) => {
-	const { placeId } = req.params;
+  const { placeId } = req.params;
 
-	let place;
-	try {
-		place = await Place.findById(placeId).populate("creator"); // Add User document
-	} catch (err) {
-		const error = new HttpError("Something went wrong, could not delete place.", 500);
-		return next(error);
-	}
+  let place;
+  try {
+    place = await Place.findById(placeId).populate('creator'); // Add User document
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete place.',
+      500
+    );
+    return next(error);
+  }
 
-	if (!place) {
-		const error = new HttpError("Place does not exist!");
-		return next(error);
-	}
+  if (!place) {
+    const error = new HttpError('Place does not exist!');
+    return next(error);
+  }
 
-	if (place.creator.id !== req.userData.userId) {
-		const error = new HttpError("You are not allowed to delete this place!", 401);
-		next(error);
-	}
+  if (place.creator.id !== req.userData.userId) {
+    const error = new HttpError(
+      'You are not allowed to delete this place!',
+      401
+    );
+    next(error);
+  }
 
-	// Take path to remove place image from file system
-	const imagePath = place.image;
+  try {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    await place.remove({ session });
+    place.creator.places.pull(place); // Mongoose method that removes objectId
+    place.creator.newsfeed = place.creator.newsfeed.filter(
+      (u) =>
+        (u.type === 'Add New Place' && u.place !== placeId) ||
+        u.type === 'Friends'
+    );
+    await place.creator.save({ session });
+    await session.commitTransaction();
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete place.',
+      500
+    );
+    return next(error);
+  }
 
-	try {
-		const session = await mongoose.startSession();
-		session.startTransaction();
-		await place.remove({ session });
-		place.creator.places.pull(place); // Mongoose method that removes objectId
-		place.creator.newsfeed = place.creator.newsfeed.filter(
-			u => (u.type === "Add New Place" && u.place !== placeId) || u.type === "Friends"
-		);
-		await place.creator.save({ session });
-		await session.commitTransaction();
-	} catch (err) {
-		const error = new HttpError("Something went wrong, could not delete place.", 500);
-		return next(error);
-	}
-
-	// Removes file from file system
-	fs.unlink(imagePath, err => {
-		console.log("Error in removing image from file system!", err);
-	});
-
-	res.status(200).json({ msg: "Place successfully deleted!" });
+  res.status(200).json({ msg: 'Place successfully deleted!' });
 };
 
 exports.getAllPlaces = getAllPlaces;

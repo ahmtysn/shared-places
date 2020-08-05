@@ -4,6 +4,7 @@
     "DB_PW": "PrDBQHK6j7mShpjF",
     "DB_NAME": "placesharer-dev",
     "JWT_SECRET": "supersecretman!",
+    "CLOUDINARY_SECRET": "70nW0VyQoB1KuByu2jrAUZGTZtY",
     "JWT_REST_PASSWORD": "passwordTochange",
     "CLIENT_URL": "http://localhost:3000",
     "EMAIL_FROM": "noreplay@mernauth.com",

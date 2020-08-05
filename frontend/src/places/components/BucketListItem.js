@@ -53,7 +53,7 @@ const BucketListItem = (props) => {
         <Card className="bucketList-item__content">
           <div className="bucketList-item__image">
             <img
-              src={`http://localhost:5000/${props.image}`}
+              src={props.image}
               alt={props.title}
             />
           </div>
