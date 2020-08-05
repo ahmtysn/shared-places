@@ -96,7 +96,7 @@ const PlaceItem = ({
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className="map-container">
-          <Map center={coordinates} zoom={16} />
+          <Map center={coordinates} zoom={14} />
         </div>
       </Modal>
       <Modal

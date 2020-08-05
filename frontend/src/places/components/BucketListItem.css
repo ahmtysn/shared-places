@@ -32,6 +32,7 @@
 .bucketList-item__info h3,
 .bucketList-item__info p {
   margin: 0 0 0.5rem 0;
+  color: #222831;
 }
 
 .bucketList-item__actions {
@@ -44,7 +45,7 @@
 }
 
 .bucketList-item__modal-actions {
-  text-align: center;
+  text-align: right;
 }
 
 .bucketList-item__actions button,
