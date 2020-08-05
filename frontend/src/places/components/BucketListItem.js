@@ -68,7 +68,10 @@ const BucketListItem = (props) => {
         {isLoading && <LoadingSpinner asOverlay />}
         <Card className="bucketList-item__content">
           <div className="bucketList-item__image">
-            <img src={props.image} alt={props.title} />
+            <img
+              src={props.image}
+              alt={props.title}
+            />
           </div>
           <div className="bucketList-item__info">
             <h2>{props.title}</h2>
