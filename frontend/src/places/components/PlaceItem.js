@@ -43,7 +43,7 @@ const PlaceItem = ({
   const [showDelete, setShowDelete] = useState(false);
   const [showBucketModal, setShowBucketModal] = useState(false);
   const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
-  const [icons, setIcons] = useState(false);
+  const [showIcons, setShowIcons] = useState(false);
 
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
@@ -95,7 +95,11 @@ const PlaceItem = ({
   };
 
   const showShareIcons = () => {
-    setIcons(true);
+    setShowIcons(true);
+  };
+
+  const closeShareIcons = () => {
+    setShowIcons(false);
   };
 
   return (
@@ -133,6 +137,49 @@ const PlaceItem = ({
           Do you really want to delete this place? This action is IRREVERSIBLE!
         </p>
       </Modal>
+        <Modal
+        className='shareModal'
+          show={showIcons}
+          onCancel={closeShareIcons}
+          header={"Share with your friends on social media!"}
+          contentClass="place-item__modal-content"
+            footer={
+            <React.Fragment>
+              <Button onClick={closeShareIcons} inverse >
+                Cancel
+              </Button>
+            </React.Fragment>
+          }
+        >
+          <div>
+            <FacebookShareButton
+             className='icons'
+              url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
+              imageURL={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
+              quote={title}
+              hashtag={"Hack Your Places"}
+            >
+              <FacebookIcon round size={40} />
+            </FacebookShareButton>
+            <LinkedinShareButton
+             className='icons'
+              url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
+              media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
+              title={title}
+            >
+              <LinkedinIcon round size={40} />
+            </LinkedinShareButton>
+            <TwitterShareButton
+             className='icons'
+              url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
+              media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
+              title={title}
+              hashtags={["Shareplace"]}
+            >
+              <TwitterIcon round size={40} />
+            </TwitterShareButton>
+          </div>
+        </Modal>
       <li className="place-item" key={creatorId}>
         <Card className="place-item__content">
           {isLoading && <LoadingSpinner asOverlay />}
@@ -183,39 +230,11 @@ const PlaceItem = ({
               <h3>In your Bucket List</h3>
             )}
             <div className="place-share">
-              {!icons ? (
-                <ShareIcon
-                  onClick={showShareIcons}
-                  fontSize="medium"
-                  className="ShareIcon"
-                ></ShareIcon>
-              ) : (
-                <div>
-                  <FacebookShareButton
-                    url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
-                    imageURL={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
-                    quote={title}
-                    hashtag ={"Shareplace"}
-                  >
-                    <FacebookIcon round size={32} />
-                  </FacebookShareButton>
-                  <LinkedinShareButton
-                    url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
-                    media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
-                    title={title}
-                  >
-                    <LinkedinIcon round size={32} />
-                  </LinkedinShareButton>
-                  <TwitterShareButton
-                    url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
-                    media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
-                    title={title}
-                    hashtags={["Shareplace"]}
-                  >
-                    <TwitterIcon round size={32} />
-                  </TwitterShareButton>
-                </div>
-              )}
+              <ShareIcon
+                onClick={showShareIcons}
+                fontSize="medium"
+                className="ShareIcon"
+              ></ShareIcon>
             </div>
             <Modal
               show={showBucketModal}
