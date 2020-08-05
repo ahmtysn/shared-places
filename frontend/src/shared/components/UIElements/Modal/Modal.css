@@ -18,6 +18,8 @@
 
 .comments-header {
 	background-color: #ff0055;
+	font-weight: bold;
+	font-size: 1.3rem;
 }
 
 .modal__header h2 {
