@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, Fragment } from "react";
+import React, { useState, useContext, Fragment } from "react";
 
 import AuthContext from "../../shared/context/auth-context";
 import useForm from "./../../shared/hooks/form-hook";
@@ -16,6 +16,8 @@ import {
   VALIDATOR_EMAIL,
 } from "./../../shared/utils/validators";
 
+import ProfilePlaceItem from "./ProfilePlaceItem";
+import ProfileFriendsItem from "./ProfileFriendsItem";
 import useHttpRequest from "../../shared/hooks/http-hook";
 
 import "./../components/AccountSettings.css";
@@ -31,6 +33,10 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
 
   const openDeleteHandler = () => setShowDelete(true);
   const closeDeleteHandler = () => setShowDelete(false);
+
+  const UserIdOfLoggedIn = JSON.parse(localStorage.getItem("userSession"))
+    .userId;
+  const userIdOfCurrentPage = settings.id;
 
   const [formState, inputHandler] = useForm(
     {
@@ -191,7 +197,6 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
           <div className="profile__info">
             <div>
               <h2>Your Name</h2>
-
               <h3>{settings.name}</h3>
             </div>
             <div>
@@ -200,24 +205,81 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
               <h3>{settings.email}</h3>
             </div>
             <div>
-              <h2>Password</h2>
-              <Input
-                id="password"
-                element="input"
-                type="password"
-                initValue={localStorage.getItem("password")}
-                disabled={true}
-                onInputChange={inputHandler}
-              />
-              <i
-                className="far fa-eye"
-                id="togglePassword"
-                onClick={togglePasswordHandler}
-              ></i>
+              <h2>Places</h2>
+              {settings.places && settings.places.length > 0 ? (
+                <ul className="profile__place-list">
+                  {settings.places.map((place) => (
+                    <ProfilePlaceItem
+                      key={`place-${place.id || place._id}`}
+                      id={place.id || place._id}
+                      image={place.image}
+                      title={place.title}
+                      address={place.address}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <Card>
+                  {UserIdOfLoggedIn === userIdOfCurrentPage ? (
+                    <p>
+                      No places found, you can share a place, just click the
+                      button...
+                    </p>
+                  ) : (
+                    <p>This user doesn't have any places!</p>
+                  )}
+                  {UserIdOfLoggedIn === userIdOfCurrentPage && (
+                    <Button to="/places/new">SHARE PLACE</Button>
+                  )}
+                </Card>
+              )}
             </div>
+
+            <div>
+              <h2>Friends</h2>
+              {settings.friends && settings.friends.length > 0 ? (
+                <ul className="profile__place-list">
+                  {settings.friends.map((friend) => (
+                    <ProfileFriendsItem
+                      key={`place-${friend.id || friend._id}`}
+                      id={friend.id || friend._id}
+                      image={friend.image}
+                      email={friend.email}
+                      name={friend.name}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <Card>
+                  <p>
+                    No friends found, you can find a friend, just click the
+                    button...
+                  </p>
+                  <Button to="/">FIND FRIEND</Button>
+                </Card>
+              )}
+            </div>
+            {UserIdOfLoggedIn === userIdOfCurrentPage && (
+              <div>
+                <h2>Password</h2>
+                <Input
+                  id="password"
+                  element="input"
+                  type="password"
+                  initValue={localStorage.getItem("password")}
+                  disabled={true}
+                  onInputChange={inputHandler}
+                />
+                <i
+                  className="far fa-eye"
+                  id="togglePassword"
+                  onClick={togglePasswordHandler}
+                ></i>
+              </div>
+            )}
           </div>
           <div className="profile__actions">
-            {isLoggedIn && (
+            {isLoggedIn && UserIdOfLoggedIn === userIdOfCurrentPage && (
               <Fragment>
                 <Button onClick={editSwitchHandler}>EDIT</Button>
                 <Button onClick={openDeleteHandler} danger>

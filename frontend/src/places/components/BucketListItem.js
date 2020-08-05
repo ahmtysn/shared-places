@@ -7,15 +7,19 @@ import ErrorModal from '../../shared/components/UIElements/Modal/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import Button from '../../shared/components/FormElements/Button';
 import Card from '../../shared/components/UIElements/Card';
+import Map from '../../shared/components/UIElements/Map'
 import useHttpClient from '../../shared/hooks/http-hook';
 
 const BucketListItem = (props) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const { token } = useContext(AuthContext);
 
   const openDetailsHandler = () => setShowDetails(true);
   const cloesDetailsHandler = () => setShowDetails(false);
+  const openMapHandler = () => setShowMap(true);
+  const closeMapHandler = () => setShowMap(false);
 
   const deleteBucketItemHandler = async () => {
     try {
@@ -37,6 +41,18 @@ const BucketListItem = (props) => {
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       <Modal
+        show={showMap}
+        onCancel={closeMapHandler}
+        header={props.address}
+        contentClass="bucketList-item__modal-content"
+        footerClass="bucketList-item__modal-actions"
+        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+      >
+        <div className="map-container">
+          <Map center={props.placeId.location} zoom={15} />
+        </div>
+      </Modal>
+      <Modal
         show={showDetails}
         onCancel={cloesDetailsHandler}
         header={`Details of ${props.title}`}
@@ -53,7 +69,7 @@ const BucketListItem = (props) => {
         <Card className="bucketList-item__content">
           <div className="bucketList-item__image">
             <img
-              src={`http://localhost:5000/${props.image}`}
+              src={props.image}
               alt={props.title}
             />
           </div>
@@ -73,6 +89,9 @@ const BucketListItem = (props) => {
           <div className="bucketList-item__actions">
             <Button onClick={openDetailsHandler} inverse>
               DETAILS
+            </Button>
+            <Button onClick={openMapHandler} inverse>
+              VIEW ON MAP
             </Button>
             <Button onClick={deleteBucketItemHandler} danger>
               DELETE
