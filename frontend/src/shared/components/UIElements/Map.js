@@ -40,7 +40,7 @@ const Map = ({ center, zoom, style, className }) => {
     };
     fetchPoiData();
     fetchAddress();
-  }, [center]);
+  }, [sendRequest, center]);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
