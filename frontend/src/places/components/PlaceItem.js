@@ -1,4 +1,5 @@
-import React, { useState, useContext, Fragment } from "react";
+
+import React, { useState, useContext, Fragment,useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import StarRating from "../../shared/components/UIElements/StarRating";
@@ -13,6 +14,8 @@ import Map from "./../../shared/components/UIElements/Map";
 
 import useHttpRequest from "./../../shared/hooks/http-hook";
 
+import CommentList from "./CommentList";
+
 import "./PlaceItem.css";
 
 const PlaceItem = ({
@@ -26,7 +29,8 @@ const PlaceItem = ({
 	creatorId,
 	creatorName,
 	isAddedToBucketList = false,
-	rate,
+  rate,
+
 }) => {
 	const { isLoggedIn, userId, token } = useContext(AuthContext);
 	const { isLoading, error, clearError, sendRequest } = useHttpRequest();
@@ -34,6 +38,10 @@ const PlaceItem = ({
 	const [showDelete, setShowDelete] = useState(false);
 	const [showBucketModal, setShowBucketModal] = useState(false);
 	const [bucketItemAdded, setBucketItemAdded] = useState(isAddedToBucketList);
+	const [showComments, setShowComments] = useState(false);
+	const [buttonKey, setButtonKey] = useState(Math.random());
+	const [updatedComments, setUpdatedComments] = useState([]);
+
 
 	const openMapHandler = () => setShowMap(true);
 	const closeMapHandler = () => setShowMap(false);
@@ -41,6 +49,10 @@ const PlaceItem = ({
 	const closeDeleteHandler = () => setShowDelete(false);
 	const openModalHandler = () => setShowBucketModal(true);
 	const closeBucketModalHandler = () => setShowBucketModal(false);
+
+	const openComments = () => setShowComments(true);
+	const closeComments = () => setShowComments(false);
+
 
 	const deletePlaceHandler = async placeId => {
 		const url = `/api/places/${placeId}`;
@@ -84,6 +96,17 @@ const PlaceItem = ({
 		}
 	};
 
+// gets all of the comments of a place
+	useEffect(() => {
+		const fetchComments = async () => {
+			try {
+				const responseData = await sendRequest(`http://localhost:5000/api/comments/${placeId}`);
+				setUpdatedComments(responseData.comments);
+			} catch (err) {}
+		};
+		fetchComments();
+	}, [sendRequest, placeId, buttonKey]);
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -99,6 +122,22 @@ const PlaceItem = ({
           <Map center={coordinates} zoom={14} />
         </div>
       </Modal>
+    <Modal
+				className='commentsModal'
+				show={showComments}
+				onCancel={closeComments}
+				header={"Comments"}
+				headerClass={"comments-header"}
+			>
+				<div>
+					<CommentList
+						setButtonKey={setButtonKey}
+						placeUrl={`http://localhost:5000/${image}`}
+						placeId={placeId}
+						className='comment-list'
+					/>
+				</div>
+			</Modal>
       <Modal
         show={showDelete}
         onCancel={closeDeleteHandler}
@@ -143,6 +182,10 @@ const PlaceItem = ({
             <Button onClick={openMapHandler} inverse>
               VIEW ON MAP
             </Button>
+<Button
+							onClick={openComments}
+							key={buttonKey}
+						>{`COMMENTS (${updatedComments.length})`}</Button>
             {isLoggedIn && (
               <Fragment>
                 {creatorId === userId && (

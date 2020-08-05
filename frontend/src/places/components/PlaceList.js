@@ -17,6 +17,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
 			</div>
 		);
 	}
+
 	return (
 		<ul className='place-list'>
 			{items.map(place => (
