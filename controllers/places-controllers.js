@@ -99,16 +99,13 @@ const getPlacesByUserId = async (req, res, next) => {
         place.toObject({ getters: true })
       );
     } else {
-      modifiedPlaces = places.map((place) =>
-        place.toObject({ getters: true })
-      );
+      modifiedPlaces = places.map((place) => place.toObject({ getters: true }));
     }
   }
   return res.status(200).json(modifiedPlaces);
 };
 
 const createPlace = async (req, res, next) => {
- 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
@@ -156,11 +153,17 @@ const createPlace = async (req, res, next) => {
     await createdPlace.save({ session });
     user.places.push(createdPlace); // Mongoose method to push document into array
     user.newsfeed.push({
-      type: "Add New Place",
+      type: 'Add New Place',
       place: createdPlace.id,
-      date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
-      time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
-    })
+      date:
+        today.getFullYear() +
+        '-' +
+        (today.getMonth() + 1) +
+        '-' +
+        today.getDate(),
+      time:
+        today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds(),
+    });
     await user.save({ session });
     await session.commitTransaction();
   } catch (err) {
@@ -249,15 +252,16 @@ const deletePlace = async (req, res, next) => {
     next(error);
   }
 
-  // Take path to remove place image from file system
-  const imagePath = place.image;
-
   try {
     const session = await mongoose.startSession();
     session.startTransaction();
     await place.remove({ session });
     place.creator.places.pull(place); // Mongoose method that removes objectId
-    place.creator.newsfeed=place.creator.newsfeed.filter(u=> (u.type==="Add New Place" && u.place!==placeId) || u.type==="Friends" )
+    place.creator.newsfeed = place.creator.newsfeed.filter(
+      (u) =>
+        (u.type === 'Add New Place' && u.place !== placeId) ||
+        u.type === 'Friends'
+    );
     await place.creator.save({ session });
     await session.commitTransaction();
   } catch (err) {
@@ -267,11 +271,6 @@ const deletePlace = async (req, res, next) => {
     );
     return next(error);
   }
-
-  // Removes file from file system
-  fs.unlink(imagePath, (err) => {
-    console.log('Error in removing image from file system!', err);
-  });
 
   res.status(200).json({ msg: 'Place successfully deleted!' });
 };
