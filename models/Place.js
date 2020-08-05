@@ -22,6 +22,7 @@ const placeSchema = new Schema({
 	creator: {
 		type: mongoose.Types.ObjectId, // Id of related model
 		required: true,
+
 		ref: "User",
 	},
 	rate: {
