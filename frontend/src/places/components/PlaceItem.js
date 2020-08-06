@@ -138,99 +138,96 @@ const PlaceItem = ({
 					/>
 				</div>
 			</Modal>
-      <Modal
-        show={showDelete}
-        onCancel={closeDeleteHandler}
-        header={'Are you sure?'}
-        footerClass="place-item__modal-actions"
-        footer={
-          <React.Fragment>
-            <Button onClick={closeDeleteHandler} inverse>
-              CANCEL
-            </Button>
-            <Button onClick={() => deletePlaceHandler(placeId)} danger>
-              DELETE
-            </Button>
-          </React.Fragment>
-        }
-      >
-        <p>
-          Do you really want to delete this place? This action is IRREVERSIBLE!
-        </p>
-      </Modal>
-      <li className="place-item" key={creatorId}>
-        <Card className="place-item__content">
-          {isLoading && <LoadingSpinner asOverlay />}
-          <div className="place-item__image">
-            <img src={image} alt={title} />
-          </div>
-          <div className="place-item__info">
-            <h2>{title}</h2>
-            <h3>{address}</h3>
-            <p>{description}</p>
-          </div>
-          {creatorName !== null && creatorName.name ? (
-            <Link to={`/${creatorName.id}/places`} style={{ color: 'gray' }}>
-              <div style={{ margin: '20px' }}>
-                <h6>Created By: {creatorName.name}</h6>
-              </div>
-            </Link>
-          ) : (
-            ''
-          )}
-          <div className="place-item__actions">
-            <Button onClick={openMapHandler} inverse>
-              VIEW ON MAP
-            </Button>
-<Button
-							onClick={openComments}
-							key={buttonKey}
-						>{`COMMENTS (${updatedComments.length})`}</Button>
-            {isLoggedIn && (
-              <Fragment>
-                {creatorId === userId && (
-                  <Button to={`/places/${placeId}`}>EDIT</Button>
-                )}
-                {creatorId === userId && (
-                  <Button onClick={openDeleteHandler} danger>
-                    DELETE
-                  </Button>
-                )}
-              </Fragment>
-            )}
-            {!bucketItemAdded ? (
-              userId !== creatorId &&
-              isLoggedIn && (
-                <Button onClick={openModalHandler}>
-                  ADD TO YOUR BUCKET LIST
-                </Button>
-              )
-            ) : (
-              <h3>In your Bucket List</h3>
-            )}
-            <Modal
-              show={showBucketModal}
-              onCancel={closeBucketModalHandler}
-              header={'Bucket List'}
-              footerClass="bucket-item__modal-actions"
-              footer={
-                <React.Fragment>
-                  <Button onClick={closeBucketModalHandler} inverse>
-                    CANCEL
-                  </Button>
-                  <Button onClick={addBucketList} danger>
-                    ADD
-                  </Button>
-                </React.Fragment>
-              }
-            >
-              <p>Do you want to add {title} to your Bucket List?</p>
-            </Modal>
-          </div>
-        </Card>
-      </li>
-    </React.Fragment>
-  );
+			<Modal
+				show={showDelete}
+				onCancel={closeDeleteHandler}
+				header={"Are you sure?"}
+				footerClass='place-item__modal-actions'
+				footer={
+					<React.Fragment>
+						<Button onClick={closeDeleteHandler} inverse>
+							CANCEL
+						</Button>
+						<Button onClick={() => deletePlaceHandler(placeId)} danger>
+							DELETE
+						</Button>
+					</React.Fragment>
+				}
+			>
+				<p>Do you really want to delete this place? This action is IRREVERSIBLE!</p>
+			</Modal>
+			<li className='place-item' key={creatorId}>
+				<Card className='place-item__content'>
+					{isLoading && <LoadingSpinner asOverlay />}
+					<div className='place-item__image'>
+						<img src={`http://localhost:5000/${image}`} alt={title} />
+					</div>
+					<div className='place-item__info'>
+						<h2>{title}</h2>
+						<h3>{address}</h3>
+						<p>{description}</p>
+					<StarRating
+							placeId={placeId}
+							raterIds={rate.raterIds}
+							raterRates={rate.raterRates}
+							averageRating={rate.averageRating}
+							creatorRate={rate.creatorRate}
+							creatorId={creatorId}
+						/>	
+					</div>
+					{creatorName !== null && creatorName.name ? (
+						<Link to={`/${creatorName.id}/places`} style={{ color: "gray" }}>
+							<div style={{ margin: "20px" }}>
+								<h6>Created By: {creatorName.name}</h6>
+							</div>
+						</Link>
+					) : (
+						""
+					)}
+					<div className='place-item__actions'>
+						<Button onClick={openMapHandler} inverse>
+							VIEW ON MAP
+						</Button>
+						{isLoggedIn && (
+							<Fragment>
+								{creatorId === userId && <Button to={`/places/${placeId}`}>EDIT</Button>}
+								{creatorId === userId && (
+									<Button onClick={openDeleteHandler} danger>
+										DELETE
+									</Button>
+								)}
+							</Fragment>
+						)}
+						{!bucketItemAdded ? (
+							userId !== creatorId &&
+							isLoggedIn && <Button onClick={openModalHandler}>ADD TO YOUR BUCKET LIST</Button>
+						) : (
+							<h3>In your Bucket List</h3>
+						)}
+						<Modal
+							show={showBucketModal}
+							onCancel={closeBucketModalHandler}
+							header={"Bucket List"}
+							footerClass='bucket-item__modal-actions'
+							footer={
+								<React.Fragment>
+									<Button onClick={closeBucketModalHandler} inverse>
+										CANCEL
+									</Button>
+									<Button onClick={addBucketList} danger>
+										ADD
+									</Button>
+								</React.Fragment>
+							}
+						>
+							<p>Do you want to add {title} to your Bucket List?</p>
+						</Modal>
+					</div>
+				</Card>
+			</li>
+		</React.Fragment>
+	);
+
 };
 
 export default PlaceItem;
