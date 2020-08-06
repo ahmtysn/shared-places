@@ -69,6 +69,7 @@ const createFriendRequest = async (req, res, next) => {
 
 
 const acceptFriendRequest = async (req, res, next) => {
+    const today = new Date();
     const { friendId, userId } = req.body
     let friendReqReceiver, friendReqSender;
     try {
@@ -76,6 +77,10 @@ const acceptFriendRequest = async (req, res, next) => {
         sess.startTransaction();
         friendReqReceiver = await User.findById(userId)
         friendReqSender = await User.findById(friendId)
+        if (!friendReqSender) {
+            const error = new HttpError('Could not find user he/she might delete his/her account please take an action by rejecting this request.', 404);
+            return next(error);
+        }
         if (friendReqReceiver.friends.find(u => u.id === friendId)) {
             const error = new HttpError(
                 'You have him/her already as friend you can not add it again',
@@ -98,7 +103,20 @@ const acceptFriendRequest = async (req, res, next) => {
             name: friendReqReceiver.name,
             places: friendReqReceiver.places
         });
-
+        friendReqReceiver.newsfeed.push({
+            type: "Friends",
+            userId: userId,
+            friendId: friendId,
+            date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+            time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+        })
+        friendReqSender.newsfeed.push({
+            type: "Friends",
+            userId: friendId,
+            friendId: userId,
+            date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+            time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+        })
         await friendReqReceiver.save({ session: sess });
         await friendReqSender.save({ session: sess });
         await sess.commitTransaction();
@@ -138,11 +156,8 @@ const rejectFriendRequest = async (req, res, next) => {
 }
 
 const deleteFriend = async (req, res, next) => {
-    console.log('got Delete Request')
-
     const { friendId, userId } = req.body
     let friendReqReceiver, friendReqSender;
-    console.log(userId, friendId)
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
@@ -150,6 +165,16 @@ const deleteFriend = async (req, res, next) => {
         friendReqSender = await User.findById(friendId)
         friendReqReceiver.friends = friendReqReceiver.friends.filter(u => u.id !== friendId);
         friendReqSender.friends = friendReqSender.friends.filter(u => u.id !== userId);
+        friendReqReceiver.newsfeed = friendReqReceiver.newsfeed.filter(u => {
+            if (u.type === "Friends" && u.userId === userId && u.friendId === friendId)
+                return false;
+            return true;
+        });
+        friendReqSender.newsfeed = friendReqSender.newsfeed.filter(u => {
+            if (u.type === "Friends" && u.userId === friendId && u.friendId === userId)
+                return false;
+            return true;
+        });
         await friendReqReceiver.save({ session: sess });
         await friendReqSender.save({ session: sess });
         await sess.commitTransaction();
