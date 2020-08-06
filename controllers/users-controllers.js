@@ -181,7 +181,6 @@ const logUserIn = async (req, res, next) => {
         expiresIn: "1h",
       }
     );
-    
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, check your credentials and try again!",
@@ -196,16 +195,21 @@ const logUserIn = async (req, res, next) => {
     .json({ userId: modifiedUser.id, email: modifiedUser.email, token });
 };
 
-// change account settings feature
-//////////////////////////////////////////////////////////
 // get user by ID middleware
 const getUserById = async (req, res, next) => {
   
   const { userId } = req.params;
   let foundUser;
   try {
-    foundUser = await User.findById(userId);
+    foundUser = await User.findById(userId).populate({
+      path: "places",
+      ref: Place,
+    });
+    // .populate({ path: "places.creator", ref: User })
+    // .populate({ path: "friends", ref: User });
   } catch (err) {
+    console.log({ err });
+    console.log("merhaba");
     const error = new HttpError(
       "Something went wrong, could not find account.",
       500
@@ -220,7 +224,9 @@ const getUserById = async (req, res, next) => {
     return next(error);
   }
   // Make "id" property available
+  console.log({ foundUser });
   const modifiedUser = foundUser.toObject({ getters: true });
+  console.log({ modifiedUser });
   return res.status(200).json(modifiedUser);
 };
 

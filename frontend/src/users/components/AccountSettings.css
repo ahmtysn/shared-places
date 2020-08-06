@@ -1,8 +1,15 @@
 .profile-card {
   width: 90%;
-  max-width: 25rem;
+  max-width: 50rem;
   margin: auto;
   text-align: center;
+}
+
+.profile__place-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .profile__modal-actions {
@@ -54,6 +61,10 @@
   border: 1px solid #ccc;
   background: #f8f8f8;
   padding: 0.15rem 0.25rem;
+  text-align: center;
+}
+.profile__info input {
+  text-align: center;
 }
 
 .profile button {

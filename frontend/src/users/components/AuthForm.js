@@ -2,6 +2,8 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 
+import { Link } from 'react-router-dom';
+
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
@@ -56,6 +58,9 @@ const AuthForm = ({
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         onInputChange={inputHandler}
       />
+      <div style={{ marginBottom: '20px' }}>
+        {isLoginMode && <Link to='/forgot-password'>forget password?</Link>}
+      </div>
       {!isLoginMode && (
         <ImageUpload id='image' centered='true' onInputChange={inputHandler} />
       )}
