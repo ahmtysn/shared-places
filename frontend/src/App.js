@@ -24,7 +24,7 @@ const ResetPassword = React.lazy(() => import("./users/pages/ResetPassword"));
 const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
 const EditPlace = React.lazy(() => import("./places/pages/EditPlace"));
 const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
-
+const PlacePage = React.lazy(() => import("./places/pages/PlacePage"));
 const UserProfile = React.lazy(() => import("./users/pages/UserProfile"));
 const UserFriends = React.lazy(() => import("./friends/pages/UserFriends.js"));
 const AllPlaces = React.lazy(() => import("./places/pages/AllPlaces"));
@@ -53,6 +53,7 @@ function App() {
         <Route exact path="/account/:userId" component={UserProfile} />
         <Route exact path="/place/all" component={AllPlaces} />
         <Route exact path="/:userId/bucketlist" component={BucketList} />
+        <Route exact path="/places/:placeId/details" component={PlacePage} />
         <Redirect to="/" />
       </Switch>
     );
@@ -70,6 +71,7 @@ function App() {
         />
         <Route exact path="/auth" component={AuthPage} />
         <Route exact path="/place/all" component={AllPlaces} />
+        <Route exact path="/places/:placeId/details" component={PlacePage} />
         <Redirect to="/auth" />
       </Switch>
     );
