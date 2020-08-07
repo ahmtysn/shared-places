@@ -4,6 +4,7 @@
     "DB_PW": "PrDBQHK6j7mShpjF",
     "DB_NAME": "placesharer-dev",
     "JWT_SECRET": "supersecretman!",
+    "GOOGLE_OATH": "426240820005-8mk3iab4cpplfo85ufiadj6a2cimvj14.apps.googleusercontent.com",
     "MAPBOX_TOKEN": "pk.eyJ1IjoiaHlmY2xhc3MyNiIsImEiOiJja2QzNG5hMzQxanhnMnNwdnJ0ZmN1YzB0In0.9wpXECjySi4MS-oOpxwWYQ",
     "CLOUDINARY_SECRET": "70nW0VyQoB1KuByu2jrAUZGTZtY",
     "JWT_REST_PASSWORD": "passwordTochange",

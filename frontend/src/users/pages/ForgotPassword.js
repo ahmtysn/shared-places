@@ -1,11 +1,11 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment } from 'react';
 
-import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
-import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
-import FormPassword from "../components/ResetPasswordForm/FormPassword";
+import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
+import FormPassword from '../components/ResetPasswordForm/FormPassword';
 
-import useForm from "./../../shared/hooks/form-hook";
-import useHttpRequest from "../../shared/hooks/http-hook";
+import useForm from './../../shared/hooks/form-hook';
+import useHttpRequest from '../../shared/hooks/http-hook';
 
 const ForgotPassword = () => {
   const [isSended, setIsSended] = useState(false);
@@ -14,7 +14,7 @@ const ForgotPassword = () => {
 
   const initInputs = {
     email: {
-      value: "",
+      value: '',
       isValid: true,
     },
   };
@@ -24,18 +24,18 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     const { email } = formState.inputs;
-    const url = "/api/users/forgot-password";
+    const url = '/api/users/forgot-password';
 
     const body = {
       email: email.value,
     };
 
     const headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     };
 
     const request = {
-      method: "PUT",
+      method: 'PUT',
       body: JSON.stringify(body),
       headers,
     };
@@ -44,7 +44,7 @@ const ForgotPassword = () => {
       await sendRequest(url, request.method, request.body, request.headers);
       setIsSended(true);
     } catch (err) {
-      console.log("Could not find E-mail!", err);
+      console.log('Could not find E-mail!', err);
     }
   };
 

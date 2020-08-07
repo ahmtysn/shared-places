@@ -1,4 +1,7 @@
 import React from 'react';
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
+
 import { Link } from 'react-router-dom';
 
 import {
@@ -18,6 +21,8 @@ const AuthForm = ({
   formState,
   inputHandler,
   authSubmitHandler,
+  responseGoogle,
+  responseFacebook,
 }) => {
   return (
     <form onSubmit={authSubmitHandler}>
@@ -33,7 +38,6 @@ const AuthForm = ({
           onInputChange={inputHandler}
         />
       )}
-
       <Input
         id='email'
         element='input'
@@ -61,8 +65,29 @@ const AuthForm = ({
         <ImageUpload id='image' centered='true' onInputChange={inputHandler} />
       )}
       <Button type='submit' disabled={!formState.isValid}>
-        {isLoginMode ? 'Login' : 'Signup'}
+        {isLoginMode ? 'Log in' : 'Sign up'}
       </Button>
+
+      {isLoginMode ? (
+        <div>
+          <GoogleLogin
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            buttonText='LOGIN WITH GOOGLE'
+            className='social-media-button-class google'
+            onSuccess={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
+          <FacebookLogin
+            appId={process.env.REACT_APP_FACEBOOK_ID}
+            autoload={false}
+            fields='name,email,picture'
+            callback={responseFacebook}
+            cssClass='social-media-button-class facebook'
+            icon='fa-facebook'
+            textButton='LOGIN WITH FACEBOOK'
+          />
+        </div>
+      ) : null}
     </form>
   );
 };
