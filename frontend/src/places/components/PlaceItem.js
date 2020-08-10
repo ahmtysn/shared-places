@@ -233,6 +233,14 @@ const PlaceItem = ({
             <h2>{title}</h2>
             <h3>{address}</h3>
             <p>{description}</p>
+<StarRating
+							placeId={placeId}
+							raterIds={rate.raterIds}
+							raterRates={rate.raterRates}
+							averageRating={rate.averageRating}
+							creatorRate={rate.creatorRate}
+							creatorId={creatorId}
+						/>
           </div>
           {creatorName !== null && creatorName.name ? (
             <Link to={`/${creatorName.id}/places`} style={{ color: "gray" }}>
