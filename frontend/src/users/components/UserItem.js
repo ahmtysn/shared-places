@@ -23,7 +23,7 @@ const UserItem = ({ user }) => {
   }, [setIsFriend])
 
 
-  return (
+  return (                              //get user info
     <li className="user-item">
       <Card className="user-item__content">
         <Link to={`/${id}/places`}>

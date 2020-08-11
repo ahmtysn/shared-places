@@ -20,7 +20,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
   return (
     <ul className="place-list">
       {items.map((place) => (
-        <PlaceItem
+        <PlaceItem                    //8 and /placeItem
           key={place.id}
           placeId={place.id}
           image={place.image}

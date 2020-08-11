@@ -12,7 +12,7 @@ const UsersPage = () => {
   const [searchedUsers, setSearchedUsers] = useState();
 
   const fetchUsers = async () => {
-    const url = "/api/users";
+    const url = "/api/users";     // get all users
     try {
       const responseData = await sendRequest(url);
       setUsers(responseData);
@@ -29,7 +29,7 @@ const UsersPage = () => {
   const searchUsers = async (searchValue) => {
     try {
       const data = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/users/?search=${searchValue}`
+        `${process.env.REACT_APP_BACKEND_URL}/users/?search=${searchValue}`   //1  get user  from search value
       );
       setSearchedUsers(data.users);
     } catch (error) { }
@@ -48,16 +48,16 @@ const UsersPage = () => {
       <ErrorModal error={error} onClear={clearError} />
       
         <SearchBar
-          inputSearchHandler={inputSearchHandler}
+          inputSearchHandler={inputSearchHandler}             //5 get search users 
           onSubmitSearchHandler={onSubmitSearchHandler}
           searchValue={searchValue}
           placeholder="Search users with name or email"
         />
         {isLoading && <LoadingSpinner asOverlay />}
-
-        {!isLoading && <UsersList users={searchedUsers || users} />}
+                                                                
+        {!isLoading && <UsersList users={searchedUsers || users} />}   
      
-    </Fragment>
+    </Fragment>  //or get allusers
   );
 };
 

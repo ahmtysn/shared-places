@@ -16,7 +16,7 @@ const NewsFeed = () => {
         return uniqueArray;
     }
 
-    const getNewsFeed = ( users, currentUserNewsfeed) => {
+    const getNewsFeed = ( users, currentUserNewsfeed) => {    
 
         let newsHomePage = currentUserNewsfeed
         const convertTimeAndDate = (date, time) => {
@@ -27,7 +27,7 @@ const NewsFeed = () => {
         }
          currentUserNewsfeed.map(cn => {
             let dateOfBeingFriends = convertTimeAndDate(cn.date, cn.time)
-            if (cn.type === "Friends") {
+            if (cn.type === "Friends") {            // in this function we get only data for fr
                 let cf = users.filter(u => u.id === cn.userId || u.id === cn.friendId).filter(u => u.id !== auth.userId)[0].newsfeed
                 let test = cf.filter(feed => convertTimeAndDate(feed.date, feed.time) > dateOfBeingFriends)
                 newsHomePage = newsHomePage.concat(test)
@@ -35,10 +35,10 @@ const NewsFeed = () => {
         }
         )
        
-        newsHomePage = removeDuplicates(newsHomePage)
+        newsHomePage = removeDuplicates(newsHomePage)   
         return newsHomePage;
     }
-    const fetchUsers = async () => {
+    const fetchUsers = async () => {       //1 send httpReq
         const url = "http://localhost:5000/api/users";
         try {
             const responseData = await sendRequest(url);

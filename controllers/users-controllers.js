@@ -11,14 +11,14 @@ const Place = require("./../models/Place");
 const hashPassword = require("./../util/hashPassword");
 const comparePassword = require("./../util/comparePassword");
 
-const getAllUsers = async (req, res, next) => {
+const getAllUsers = async (req, res, next) => {   //3
   let users;
   try {
     const searchValue = req.query.search;
     if (searchValue) {
       const inputValue = new RegExp(`${searchValue}`, "gi");
       users = await User.find(
-        { $or: [{ name: inputValue }, { email: inputValue }] },
+        { $or: [{ name: inputValue }, { email: inputValue }] }, 
         "-password"
       );
       res.status(200).json({

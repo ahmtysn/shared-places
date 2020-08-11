@@ -6,7 +6,7 @@ const userRouter = express.Router();
 // Controllers
 
 
-const { getAllUsers } = require("./../controllers/users-controllers");
+const { getAllUsers } = require("./../controllers/users-controllers");   //2
 const { createUser } = require("./../controllers/users-controllers");
 const { logUserIn } = require("./../controllers/users-controllers");
 const { getUserById } = require("./../controllers/users-controllers");

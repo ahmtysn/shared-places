@@ -9,15 +9,15 @@ const User = require('./../models/User');
 const getAllPlaces = async (req, res, next) => {
   let places;
   try {
-    const searchValue = req.query.search;
+    const searchValue = req.query.search;        //3
     if (searchValue) {
       const inputValue = new RegExp(`${searchValue}`, 'gi');
       places = await Place.find(
-        { $or: [{ title: inputValue }, { address: inputValue }] },
+        { $or: [{ title: inputValue }, { address: inputValue }] },  //4 git title or address 
         '-password'
-      ).populate('creator');
+      ).populate('creator');    //5 to get data from  /models/place
       if (places.length > 0) {
-        return res.status(200).json({
+        return res.status(200).json({                           //7 go back to front end to /allpalces
           places: places.map((place) => place.toObject({ getters: true })),
         });
       } else {
@@ -25,7 +25,7 @@ const getAllPlaces = async (req, res, next) => {
         return next(error);
       }
     } else {
-      // get data from DB
+      // get data from DB                                      // or get all data 
       places = await Place.find({}, '-password').populate('creator');
       if (places.length > 0) {
         // Send data to view (frontend)
@@ -155,7 +155,7 @@ const createPlace = async (req, res, next) => {
     session.startTransaction(); // Transactions let you execute multiple operations in isolation and potentially undo all the operations if one of them fails.
     await createdPlace.save({ session });
     user.places.push(createdPlace); // Mongoose method to push document into array
-    user.newsfeed.push({
+    user.newsfeed.push({           //  if type places dend with data
       type: "Add New Place",
       place: createdPlace.id,
       date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
@@ -257,7 +257,7 @@ const deletePlace = async (req, res, next) => {
     session.startTransaction();
     await place.remove({ session });
     place.creator.places.pull(place); // Mongoose method that removes objectId
-    place.creator.newsfeed=place.creator.newsfeed.filter(u=> (u.type==="Add New Place" && u.place!==placeId) || u.type==="Friends" )
+    place.creator.newsfeed=place.creator.newsfeed.filter(u=> (u.type==="Add New Place" && u.place!==placeId) || u.type==="Friends" ) //send place or friend
     await place.creator.save({ session });
     await session.commitTransaction();
   } catch (err) {

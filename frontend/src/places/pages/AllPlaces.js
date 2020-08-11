@@ -17,7 +17,7 @@ const AllPlaces = () => {
     const fetchUsers = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/places/place/all`
+          `${process.env.REACT_APP_BACKEND_URL}/places/place/all`       
         );
         setLoadedPlaces(responseData.places);
       } catch (err) {}
@@ -46,7 +46,7 @@ const AllPlaces = () => {
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
 
-      <SearchBar
+      <SearchBar      //1
         inputSearchHandler={inputSearchHandler}
         onSubmitSearchHandler={onSubmitSearchHandler}
         searchValue={searchValue}
@@ -57,7 +57,7 @@ const AllPlaces = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && searchedPlaces ? (
+      {!isLoading && searchedPlaces ? (      //8 get result for search blaces from placeList component
         <PlaceList items={searchedPlaces} />
       ) : loadedPlaces ? (
         <PlaceList items={loadedPlaces} />

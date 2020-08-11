@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const placeSchema = new Schema({
+const placeSchema = new Schema({     //get all information
 	title: {
 		type: String,
 		required: true,
@@ -22,7 +22,7 @@ const placeSchema = new Schema({
 	creator: {
 		type: mongoose.Types.ObjectId, // Id of related model
 		required: true,
-		ref: 'User', // with ref we can use populate method to get all the data from related schema (in this case User schema)
+		ref: 'User', // with ref we can use populate method to get all the data from related schema (in this case User schema) //5
 	},
 });
 

@@ -103,14 +103,14 @@ const acceptFriendRequest = async (req, res, next) => {
             name: friendReqReceiver.name,
             places: friendReqReceiver.places
         });
-        friendReqReceiver.newsfeed.push({
+        friendReqReceiver.newsfeed.push({    //friend reciver req
             type: "Friends",
             userId: userId,
             friendId: friendId,
             date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
             time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
         })
-        friendReqSender.newsfeed.push({
+        friendReqSender.newsfeed.push({             //friend send req
             type: "Friends",
             userId: friendId,
             friendId: userId,

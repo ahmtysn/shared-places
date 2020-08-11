@@ -32,7 +32,7 @@ const AuthPage = () => {
     e.preventDefault();
 //we need all data from AuthForm page
     const { name, email, password, image } = formState.inputs;
-//  we don't need this anymore because it will be managed in our customs hook (useHttpClient)
+
     // here we will get to this page in signup & login modes
     // so we need to check if it is login mode otherwise we need to fetch for signup
     if (isLoginMode) {
@@ -79,7 +79,7 @@ const AuthPage = () => {
 
       }
     } else {
-      const url = "/api/users/signup";
+      const url = "/api/users/signup";               //1 
 
       // Create FormData instance to send binary data
 

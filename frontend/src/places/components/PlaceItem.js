@@ -14,7 +14,7 @@ import useHttpRequest from './../../shared/hooks/http-hook';
 
 import './PlaceItem.css';
 
-const PlaceItem = ({
+const PlaceItem = ({               //9
   image,
   title,
   description,
