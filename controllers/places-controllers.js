@@ -78,7 +78,7 @@ const getPlacesByUserId = async (req, res, next) => {
   let modifiedPlaces = [];
   let searchedPlaces = [];
   try {
-    places = await Place.find({ creator: userId });
+    places = await Place.find({ creator: userId }).populate('creator')
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not find places.',
@@ -94,7 +94,6 @@ const getPlacesByUserId = async (req, res, next) => {
           place.title.toLowerCase().includes(searchValue) ||
           place.address.toLowerCase().includes(searchValue)
       );
-
       modifiedPlaces = searchedPlaces.map((place) =>
         place.toObject({ getters: true })
       );

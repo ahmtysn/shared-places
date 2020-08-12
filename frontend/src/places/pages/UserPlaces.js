@@ -74,7 +74,6 @@ const UserPlaces = () => {
     const fetchUserData = async () => {
       const bucketList = isLoggedIn ? await fetchBucketList() : [];
       const places = await fetchPlaces();
-      console.log(places)
       setUserPlaces(
         places.map((place) => {
           const found = bucketList.find(
@@ -130,9 +129,13 @@ const UserPlaces = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && (
-        <PlaceList items={userPlaces || places} onDeletePlace={onDeletePlace} />
-      )}
+      {!isLoading && places ? (
+        <PlaceList items={places} onDeletePlace={onDeletePlace} />
+      ) : userPlaces ? (
+        <PlaceList items={userPlaces} onDeletePlace={onDeletePlace}/>
+      ) : (
+        ''
+      ) }
     </Fragment>
   );
 };

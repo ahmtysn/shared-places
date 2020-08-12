@@ -28,7 +28,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
 					title={place.title}
 					description={place.description}
 					address={place.address}
-					creatorId={place.creator}
+					creatorId={place.creator.id}
 					coordinates={place.location}
 					onDeletePlace={onDeletePlace}
 					creatorName={place.creator}
