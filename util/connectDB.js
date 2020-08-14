@@ -7,7 +7,7 @@ const DB_URL = `mongodb+srv://${DB_USER}:${DB_PW}@cluster0-jtuqz.mongodb.net/${D
 const DB_URL1 = `mongodb+srv://manu:5jltYkJttJkaxXBg@cluster0-c0hbd.mongodb.net/mern?retryWrites=true&w=majority`;
 const connectDB = (server) => {
   mongoose
-    .connect(DB_URL, {
+    .connect(DB_URL1, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,

@@ -15,6 +15,7 @@ import {
 } from "react-share";
 
 import ShareIcon from "@material-ui/icons/Share";
+import { FaLocationArrow,FaComment,FaBitbucket } from "react-icons/fa";
 
 import Card from "./../../shared/components/UIElements/Card";
 import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
@@ -257,14 +258,14 @@ const PlaceItem = ({
           ) : (
             ""
           )}
-          <div className="place-item__actions">
-            <Button onClick={openMapHandler} inverse>
-              VIEW ON MAP
+          <div className="place-item__actions" >
+            <Button onClick={openMapHandler}   inverse>
+              <FaLocationArrow title="View on Map" size={16}/>
             </Button>
             <Button
               onClick={openComments}
               key={buttonKey}
-            >{`COMMENTS (${updatedComments.length})`}</Button>
+            ><FaComment size={16}/> { ` (${updatedComments.length})`}</Button>
             {isLoggedIn && (
               <Fragment>
                 {creatorId === userId && (
@@ -281,7 +282,7 @@ const PlaceItem = ({
               userId !== creatorId &&
               isLoggedIn && (
                 <Button onClick={openModalHandler}>
-                  ADD TO YOUR BUCKET LIST
+                  <FaBitbucket title="Add to BucketList" size={16}/>
                 </Button>
               )
             ) : (
