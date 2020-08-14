@@ -64,7 +64,6 @@ const PlacesFeedUI = ({ news }) => {
       const place = await sendRequest(
         `http://localhost:5000/api/places/${news.place}`
       );
-      console.log('creator.id', place.creator.id);
 
       setP(place);
     } catch (err) {

@@ -19,7 +19,6 @@ const Map = ({ center, zoom, style, className }) => {
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${center.lng}%2C${center.lat}.json?access_token=${mapboxgl.accessToken}&autocomplete=false&types=poi&limit=200`
         );
         setPoiPlaces(poiData.features);
-        console.log(poiData.features);
       } catch (err) {
         console.log('Could not get poi places!', err);
         return [];

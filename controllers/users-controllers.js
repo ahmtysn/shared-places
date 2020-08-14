@@ -1,31 +1,31 @@
-const uuid = require("uuid");
-const fs = require("fs");
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const { validationResult } = require("express-validator");
+const uuid = require('uuid');
+const fs = require('fs');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
-const HttpError = require("./../models/http-error");
-const User = require("./../models/User");
-const Place = require("./../models/Place");
+const HttpError = require('./../models/http-error');
+const User = require('./../models/User');
+const Place = require('./../models/Place');
 
-const hashPassword = require("./../util/hashPassword");
-const comparePassword = require("./../util/comparePassword");
+const hashPassword = require('./../util/hashPassword');
+const comparePassword = require('./../util/comparePassword');
 
 const getAllUsers = async (req, res, next) => {
   let users;
   try {
     const searchValue = req.query.search;
     if (searchValue) {
-      const inputValue = new RegExp(`${searchValue}`, "gi");
+      const inputValue = new RegExp(`${searchValue}`, 'gi');
       users = await User.find(
         { $or: [{ name: inputValue }, { email: inputValue }] },
-        "-password"
+        '-password'
       );
       res.status(200).json({
         users: users.map((user) => user.toObject({ getters: true })),
       });
     } else {
-      users = await User.find({}, "-password");
+      users = await User.find({}, '-password');
       // Respond with users in JS format
       const modifiedUsers = users.map((user) =>
         user.toObject({ getters: true })
@@ -34,7 +34,7 @@ const getAllUsers = async (req, res, next) => {
     }
   } catch (err) {
     const error = new HttpError(
-      "Fetching users failed, please try again later.",
+      'Fetching users failed, please try again later.',
       500
     );
     return next(error);
@@ -66,7 +66,7 @@ const getAllUsers = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const error = new HttpError("Make sure to pass in the correct data!", 422);
+    const error = new HttpError('Make sure to pass in the correct data!', 422);
     return next(error);
   }
   const { name, email, password } = req.body;
@@ -78,7 +78,7 @@ const createUser = async (req, res, next) => {
     emailExists = await User.findOne({ email });
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not create user!",
+      'Something went wrong, could not create user!',
       500
     );
     return next(error);
@@ -86,7 +86,7 @@ const createUser = async (req, res, next) => {
 
   if (emailExists) {
     const error = new HttpError(
-      "Email already exists, please login instead!",
+      'Email already exists, please login instead!',
       422
     );
     return next(error);
@@ -98,7 +98,7 @@ const createUser = async (req, res, next) => {
     hashedPassword = await hashPassword(password);
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not create user!",
+      'Something went wrong, could not create user!',
       500
     );
     return next(error);
@@ -106,7 +106,7 @@ const createUser = async (req, res, next) => {
 
   if (!hashedPassword || hashedPassword === password) {
     const error = new HttpError(
-      "Something went wrong, could not hash password!",
+      'Something went wrong, could not hash password!',
       500
     );
     return next(error);
@@ -130,11 +130,11 @@ const createUser = async (req, res, next) => {
     token = jwt.sign(
       { userId: newUser.id, email: newUser.email },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: '1h' }
     );
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not create user!",
+      'Something went wrong, could not create user!',
       500
     );
     return next(error);
@@ -161,14 +161,14 @@ const logUserIn = async (req, res, next) => {
     );
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, check your credentials and try again!",
+      'Something went wrong, check your credentials and try again!',
       500
     );
     return next(error);
   }
 
   if (!identifiedUser || !isPasswordCorrect) {
-    const error = new HttpError("Credentials are incorrect!", 403);
+    const error = new HttpError('Credentials are incorrect!', 403);
     return next(error);
   }
 
@@ -178,12 +178,12 @@ const logUserIn = async (req, res, next) => {
       { userId: identifiedUser.id, email: identifiedUser.email },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1h",
+        expiresIn: '1h',
       }
     );
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, check your credentials and try again!",
+      'Something went wrong, check your credentials and try again!',
       500
     );
     return next(error);
@@ -197,36 +197,32 @@ const logUserIn = async (req, res, next) => {
 
 // get user by ID middleware
 const getUserById = async (req, res, next) => {
-  
   const { userId } = req.params;
   let foundUser;
   try {
     foundUser = await User.findById(userId).populate({
-      path: "places",
+      path: 'places',
       ref: Place,
     });
     // .populate({ path: "places.creator", ref: User })
     // .populate({ path: "friends", ref: User });
   } catch (err) {
     console.log({ err });
-    console.log("merhaba");
     const error = new HttpError(
-      "Something went wrong, could not find account.",
+      'Something went wrong, could not find account.',
       500
     );
     return next(error);
   }
   if (!foundUser) {
     const error = new HttpError(
-      "Could not find a account with the provided user ID!",
+      'Could not find a account with the provided user ID!',
       404
     );
     return next(error);
   }
   // Make "id" property available
-  console.log({ foundUser });
   const modifiedUser = foundUser.toObject({ getters: true });
-  console.log({ modifiedUser });
   return res.status(200).json(modifiedUser);
 };
 
@@ -235,7 +231,7 @@ const updateAccount = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
-    const error = new HttpError("The input is incorrect!");
+    const error = new HttpError('The input is incorrect!');
     return next(error);
   }
 
@@ -249,7 +245,7 @@ const updateAccount = async (req, res, next) => {
     user = await User.findById(userId);
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not update this account.",
+      'Something went wrong, could not update this account.',
       500
     );
     return next(error);
@@ -257,7 +253,7 @@ const updateAccount = async (req, res, next) => {
 
   if (user.id.toString() !== req.userData.userId) {
     const error = new HttpError(
-      "You are not allowed to edit this account!",
+      'You are not allowed to edit this account!',
       401
     );
     next(error);
@@ -279,7 +275,7 @@ const updateAccount = async (req, res, next) => {
     user.image = path;
     // Removes old image from file system
     fs.unlink(oldImagePath, (err) => {
-      console.log("Error in removing image from file system!", err);
+      console.log('Error in removing image from file system!', err);
     });
   }
 
@@ -287,7 +283,7 @@ const updateAccount = async (req, res, next) => {
     await user.save();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not update account.",
+      'Something went wrong, could not update account.',
       500
     );
     return next(error);
@@ -306,20 +302,20 @@ const deleteAccount = async (req, res, next) => {
     user = await User.findById(userId); // Add User document
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not delete account.",
+      'Something went wrong, could not delete account.',
       500
     );
     return next(error);
   }
 
   if (!user) {
-    const error = new HttpError("User does not exist!");
+    const error = new HttpError('User does not exist!');
     return next(error);
   }
 
   if (user.id !== req.userData.userId) {
     const error = new HttpError(
-      "You are not allowed to delete this account!",
+      'You are not allowed to delete this account!',
       401
     );
     next(error);
@@ -347,7 +343,7 @@ const deleteAccount = async (req, res, next) => {
     await user.remove();
   } catch (err) {
     const error = new HttpError(
-      "Something went wrong, could not delete account.",
+      'Something went wrong, could not delete account.',
       500
     );
     return next(error);
@@ -355,16 +351,15 @@ const deleteAccount = async (req, res, next) => {
 
   // Removes file from file system
   fs.unlink(imagePath, (err) => {
-    console.log("Error in removing image from file system!", err);
+    console.log('Error in removing image from file system!', err);
   });
 
-  res.status(200).json({ msg: "Account successfully deleted!" });
+  res.status(200).json({ msg: 'Account successfully deleted!' });
 };
 
 exports.getAllUsers = getAllUsers;
 exports.getUserById = getUserById;
 exports.createUser = createUser;
 exports.logUserIn = logUserIn;
-
 exports.updateAccount = updateAccount;
 exports.deleteAccount = deleteAccount;

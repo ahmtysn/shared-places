@@ -6,9 +6,6 @@ import Avatar from './../../shared/components/UIElements/Avatar';
 import Card from './../../shared/components/UIElements/Card';
 
 const ProfilePlaceItem = ({ id, image, title, address }) => {
-  console.log({ image });
-  console.log({ title });
-
   return (
     <li className='user-item'>
       <Card className='user-item__content'>

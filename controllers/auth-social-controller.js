@@ -20,18 +20,17 @@ const googleLogin = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, can not get google data!',
-      500,
+      500
     );
     return next(error);
   }
 
   const { email_verified, name, email } = await response.payload;
-  console.log(response.payload);
   //get email_verified from payload
   if (!email_verified) {
     const error = new HttpError(
       'Something went wrong, can not get user data!',
-      500,
+      500
     );
     return next(error);
   }
@@ -42,7 +41,7 @@ const googleLogin = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, not right credentials !',
-      500,
+      500
     );
     return next(error);
   }
@@ -79,7 +78,7 @@ const googleLogin = async (req, res, next) => {
     } catch (err) {
       const error = new HttpError(
         'Something went wrong,authentication not complit !',
-        500,
+        500
       );
       return next(error);
     }
@@ -106,17 +105,15 @@ const facebookLogin = async (req, res, next) => {
       method: 'GET',
     });
     Json = await response.json();
-    console.log(Json);
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, can not get google data!',
-      500,
+      500
     );
     return next(error);
   }
 
   let { name, email, picture } = Json;
-  console.log(name, email, picture);
 
   let user;
   try {
@@ -124,7 +121,7 @@ const facebookLogin = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, not right credentials !',
-      500,
+      500
     );
     return next(error);
   }
@@ -141,7 +138,6 @@ const facebookLogin = async (req, res, next) => {
     });
   } else {
     let password = email + process.env.JWT_SECRET;
-    console.log(picture);
     //if no user create user
     user = new User({
       name,
@@ -163,7 +159,7 @@ const facebookLogin = async (req, res, next) => {
     } catch (err) {
       const error = new HttpError(
         'Something went wrong,authentication not complit !',
-        500,
+        500
       );
       return next(error);
     }
