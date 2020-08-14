@@ -18,7 +18,7 @@ const getBucketList = async (req, res, next) => {
   } catch (error) {
     return next(
       new HttpError(
-        'Something went wrong, could not find a place for the prasdasdasdovided id.',
+        'Something went wrong, could not find a place for the provided id.',
         500
       )
     );
