@@ -29,7 +29,7 @@ const MainNavigation = () => {
       {drawerIsOpen && <BackDrop clickHandler={closeDrawer} />}
       <SideDrawer show={drawerIsOpen} clickHandler={closeDrawer}>
         <nav className="main-navigation__drawer-nav">
-          <NavLinks />
+          <NavLinks feeds="Feeds" allUsers="Home" allPlaces="All Places" myPlaces="My Places" friends="Friends" newPlace="New Friends" myBucketList="Bucket List" myAccount="My Account" signIn="Sign in" signOut="Sign out"/>
         </nav>
       </SideDrawer>
       <MainHeader>
