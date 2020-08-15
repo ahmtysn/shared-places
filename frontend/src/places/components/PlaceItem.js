@@ -15,7 +15,7 @@ import {
 } from "react-share";
 
 import ShareIcon from "@material-ui/icons/Share";
-import { FaLocationArrow,FaComment,FaBitbucket } from "react-icons/fa";
+import { FaLocationArrow,FaComment,FaBitbucket,FaEdit,FaTrashAlt } from "react-icons/fa";
 
 import Card from "./../../shared/components/UIElements/Card";
 import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
@@ -269,11 +269,11 @@ const PlaceItem = ({
             {isLoggedIn && (
               <Fragment>
                 {creatorId === userId && (
-                  <Button to={`/places/${placeId}`}>EDIT</Button>
+                  <Button to={`/places/${placeId}`}>EDIT <FaEdit size={15}/></Button>
                 )}
                 {creatorId === userId && (
                   <Button onClick={openDeleteHandler} danger>
-                    DELETE
+                    DELETE <FaTrashAlt size={15}/>
                   </Button>
                 )}
               </Fragment>

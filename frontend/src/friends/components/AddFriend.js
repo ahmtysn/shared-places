@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaAddressBook, FaUserAlt, FaCheck } from "react-icons/fa";
 
 import Button from "../../shared/components/FormElements/Button";
 import useHttpClient from "../../shared/hooks/http-hook";
@@ -42,7 +43,7 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
           footer={
             <React.Fragment>
               <Button onClick={closeAddHandler} inverse>
-                OKAY
+                OKAY <FaCheck size={16} />
               </Button>
             </React.Fragment>
           }
@@ -53,12 +54,15 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
       {userId !== receivedRequestId ? (
         <Link>
           <Button friend onClick={newRequest} disabled={reqsent}>
-            {isLoading ? <LoadingSpinner /> : "Add Friend"}
+            {isLoading ? <LoadingSpinner /> : "Add Friend "}
+            <FaAddressBook size={16} />
           </Button>{" "}
         </Link>
       ) : (
         <Link to={`./account/${userId}`}>
-          <Button friend>MY Profile</Button>
+          <Button friend>
+            MY Profile <FaUserAlt size={16} />
+          </Button>
         </Link>
       )}
     </React.Fragment>

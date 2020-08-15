@@ -1,4 +1,6 @@
 import React, { useContext, useState } from 'react';
+import { FaTrashAlt } from "react-icons/fa";
+
 import Button from '../../shared/components/FormElements/Button'
 import useHttpClient from '../../shared/hooks/http-hook';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
@@ -53,7 +55,8 @@ const DeleteFriend = ({ userId, receivedRequestId }) => {
         </Modal>}
         <Link>
             <Button friend onClick={deleteRequest} disabled={reqsent}>
-                {isLoading ? <LoadingSpinner /> : "Delete Friend"}
+                {isLoading ? <LoadingSpinner /> :  "Delete Friend  "}
+                <FaTrashAlt size={15}/>
             </Button>  </Link>
 
 
