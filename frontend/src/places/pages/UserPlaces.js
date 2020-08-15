@@ -118,14 +118,21 @@ const UserPlaces = () => {
         searchValue={searchValue}
         placeholder='Search places with title or address'
       />
+
       {isLoading && (
         <div className='center'>
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && (
-        <PlaceList items={userPlaces || places} onDeletePlace={onDeletePlace} />
-      )}
+
+      {!isLoading &&
+        (places ? (
+          <PlaceList items={places} onDeletePlace={onDeletePlace} />
+        ) : userPlaces ? (
+          <PlaceList items={userPlaces} onDeletePlace={onDeletePlace} />
+        ) : (
+          ''
+        ))}
     </Fragment>
   );
 };
