@@ -6,7 +6,7 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 5 },
-  resetLink: { data: String, default: '' },
+  resetLink: { type: String, default: '' },
   friends: [{ type: Object, required: true }],
   requestslist: [{ type: Object, required: true }],
   newsfeed: [{ type: Object, required: true }],

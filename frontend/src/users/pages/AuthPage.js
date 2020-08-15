@@ -116,7 +116,8 @@ const AuthPage = () => {
           tokenId: response.tokenId,
         },
       }).then((response) => {
-        login(response.user, response.data.token);
+        login(response.data.userId, response.data.token);
+        window.location.reload(false);
       });
     }
   };
@@ -132,7 +133,8 @@ const AuthPage = () => {
           id: response.id,
         },
       }).then((response) => {
-        login(response.data, response.data.token);
+        login(response.data.userId, response.data.token);
+        window.location.reload(false);
       });
     }
   };

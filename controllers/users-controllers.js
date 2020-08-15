@@ -336,7 +336,15 @@ const deleteAccount = async (req, res, next) => {
     if (user.friends.length > 0) {
       await user.friends.map(async (friend) => {
         myFriend = await User.findById(friend.id);
-        await myFriend.friends.pull(user);
+        myFriend.friends = myFriend.friends.filter(
+          (friend) => friend.id !== user.id
+        );
+        myFriend.newsfeed = myFriend.newsfeed.filter(u => {
+          if (u.type === "Friends" && u.userId === myFriend.id && u.friendId === user.id)
+              return false;
+          return true;
+        });
+        await myFriend.save();
       });
     }
     // delete this user account

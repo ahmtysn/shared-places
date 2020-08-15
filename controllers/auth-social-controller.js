@@ -6,6 +6,7 @@ const HttpError = require('./../models/http-error');
 
 //google login controller
 const googleLogin = async (req, res, next) => {
+ 
   const client = new OAuth2Client(process.env.GOOGLE_OATH);
 
   const { tokenId } = req.body;
@@ -51,10 +52,12 @@ const googleLogin = async (req, res, next) => {
       expiresIn: '1h',
     });
     const { email, name } = user;
+    
     //send back user info and token
     return res.json({
       token,
       user: { email, name },
+      userId:user.id
     });
   } else {
     //if no user create user
@@ -69,10 +72,10 @@ const googleLogin = async (req, res, next) => {
     let token;
     try {
       // Save user
-      userData = await user.save();
+       await user.save();
 
       // Create an authentication token
-      token = jwt.sign({ userId: userData.id }, process.env.JWT_SECRET, {
+      token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
         expiresIn: '1h',
       });
     } catch (err) {
@@ -83,8 +86,9 @@ const googleLogin = async (req, res, next) => {
       return next(error);
     }
     //convert document into a plain javascript object, ready for storage in MongoDB
-    const modifiedUser = userData.toObject({ getters: true });
+    const modifiedUser = user.toObject({ getters: true });
     //send back token and user data
+    
     res.status(200).json({
       userId: modifiedUser.id,
       email: modifiedUser.email,

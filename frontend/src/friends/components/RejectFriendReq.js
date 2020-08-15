@@ -54,7 +54,7 @@ const RejectFriendReq = ({ receivedRequestId, userId, token,bell }) => {
                     Friend request has been rejected successfully !
         </p>
             </Modal>}
-            <Link>
+            <Link to="#">
                 <div className="friend_btn">
                     <Button classname="btn_friend" onClick={acceptRequest}>
                         {isLoading ? <LoadingSpinner /> : "Reject"}

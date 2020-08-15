@@ -51,7 +51,7 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
         </Modal>
       )}
       {userId !== receivedRequestId ? (
-        <Link>
+        <Link to="#">
           <Button friend onClick={newRequest} disabled={reqsent}>
             {isLoading ? <LoadingSpinner /> : "Add Friend"}
           </Button>{" "}

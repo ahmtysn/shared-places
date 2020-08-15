@@ -21,32 +21,32 @@ const PlacesFeedUI = ({ news }) => {
     };
     dt2 = new Date(
       `${
-        today.getFullYear() +
-        '-' +
-        leadingZero(today.getMonth() + 1) +
-        '-' +
-        leadingZero(today.getDate())
+      today.getFullYear() +
+      '-' +
+      leadingZero(today.getMonth() + 1) +
+      '-' +
+      leadingZero(today.getDate())
       }T${
-        leadingZero(today.getHours()) +
-        ':' +
-        leadingZero(today.getMinutes()) +
-        ':' +
-        leadingZero(today.getSeconds())
+      leadingZero(today.getHours()) +
+      ':' +
+      leadingZero(today.getMinutes()) +
+      ':' +
+      leadingZero(today.getSeconds())
       }Z`
     );
     dt1 = new Date(
       `${
-        splittingDate[0] +
-        '-' +
-        leadingZero(splittingDate[1]) +
-        '-' +
-        leadingZero(splittingDate[2])
+      splittingDate[0] +
+      '-' +
+      leadingZero(splittingDate[1]) +
+      '-' +
+      leadingZero(splittingDate[2])
       }T${
-        leadingZero(splittingTime[0]) +
-        ':' +
-        leadingZero(splittingTime[1]) +
-        ':' +
-        leadingZero(splittingTime[2])
+      leadingZero(splittingTime[0]) +
+      ':' +
+      leadingZero(splittingTime[1]) +
+      ':' +
+      leadingZero(splittingTime[2])
       }Z`
     );
     let diff = (dt2 - dt1) / 1000;
@@ -96,37 +96,32 @@ const PlacesFeedUI = ({ news }) => {
                   {newsDate === 0
                     ? 'Few seconds Ago'
                     : newsDate < 60
-                    ? newsDate + ' Minutes Ago'
-                    : newsDate < 1440
-                    ? parseInt(newsDate / 60) + ' Hours Ago'
-                    : newsDate < 43200
-                    ? parseInt((newsDate * 30) / 43200) + ' Days Ago'
-                    : newsDate < 518400
-                    ? parseInt((newsDate * 12) / 518400) + ' Months Ago'
-                    : 'Over than a year ago'}
+                      ? newsDate + ' Minutes Ago'
+                      : newsDate < 1440
+                        ? parseInt(newsDate / 60) + ' Hours Ago'
+                        : newsDate < 43200
+                          ? parseInt((newsDate * 30) / 43200) + ' Days Ago'
+                          : newsDate < 518400
+                            ? parseInt((newsDate * 12) / 518400) + ' Months Ago'
+                            : 'Over than a year ago'}
                 </Feed.Date>
               </Feed.Summary>
               <Feed.Extra images>
-                <Link to={`/${p.creator.id}/places`}>
-                  <div>
-                    <Image
-                      src={p.image}
-                      as='a'
-                      size='massive'
-                      href='#'
-                      target='HELLO'
-                    />
-                  </div>
-                </Link>
+                <div>
+                  <Image
+                    src={p.image}
+                    as='a'
+                    size='massive'
+                    href={`/${p.creator.id}/places`}
+                    target='HELLO'
+                  />
+                </div>
               </Feed.Extra>
             </Feed.Content>
           </Feed.Event>
           <Feed.Meta>
             <Feed.Like>
-              <Link>
-                {' '}
-                <Icon name='like' color='red' />1 Likes
-              </Link>
+              <Icon name='like' color='red' />1 Likes
             </Feed.Like>
           </Feed.Meta>
         </Feed>

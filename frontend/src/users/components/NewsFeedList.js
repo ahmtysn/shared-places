@@ -18,10 +18,10 @@ const NewsFeedList = (props) => {
        {newsfeed.length===0 && <Card><h1 style={{color:'black'}}>Welcome Our New Member  <Icon name='like' color="red" /> {name}  <Icon name='like' color="red" /> </h1></Card>}
             { sortedNewsByDate.map(news => {
                 if (news.type === "Friends") {
-                    return <Card className="newsfeed"><FriendFeedUI news={news} /></Card>
+                    return <Card key={news.userId} className="newsfeed"><FriendFeedUI news={news} /></Card>
                 }
                 else if (news.type === "Add New Place") {
-                    return <Card className="newsfeed"> <PlacesFeedUI news={news} /></Card>
+                    return <Card key={news.place} className="newsfeed"> <PlacesFeedUI news={news} /></Card>
                 }
             }) }
         </ul>

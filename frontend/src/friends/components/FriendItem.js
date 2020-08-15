@@ -13,7 +13,7 @@ const FriendItem = (props) => {
     <React.Fragment>
       <li className='friend-item'>
         <Card className='friend-item__content'>
-          <Link>
+          <Link to="#">
             <div className='friend-item__image'>
               <Avatar image={props.image} alt={props.name} />
             </div>

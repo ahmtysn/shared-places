@@ -54,7 +54,7 @@ const AcceptFriendReq = ({ receivedRequestId, userId, token, bell }) => {
           <p>Friend request has been Accepted successfully !</p>
         </Modal>
       )}
-      <Link>
+      <Link to="#">
         <div className='friend_btn'>
           <Button friend onClick={acceptRequest}>
             {isLoading ? <LoadingSpinner /> : 'Accept'}
