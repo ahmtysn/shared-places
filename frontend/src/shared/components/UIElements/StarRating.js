@@ -103,9 +103,9 @@ function StarRating(props) {
 					key={starsKey}
 					value={creatorRating}
 					count={5}
-					char=''
+					char='♥'
 					edit={false}
-					size={23}
+					size={30}
 					isHalf={true}
 					emptyIcon={<i className='far fa-heart' />}
 					halfIcon={<i className='fa fa-heart-half-alt' />}
