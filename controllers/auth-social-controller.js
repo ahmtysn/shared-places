@@ -134,11 +134,11 @@ const facebookLogin = async (req, res, next) => {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
-    const { email, name } = user;
+    const { email, name,id } = user;
     //send back user info and token
     return res.json({
       token,
-      user: { email, name },
+      userId:id,
     });
   } else {
     let password = email + process.env.JWT_SECRET;
