@@ -87,7 +87,7 @@ const PlacesFeedUI = ({ news }) => {
             </Feed.Label>
             <Feed.Content>
               <Feed.Summary>
-                <Link to={`/${p.creator.id}/places`}>
+                <Link to={`/account/${p.creator.id}`}>
                   {p.creator.id === userId ? 'You' : p.creator.name}
                 </Link>{' '}
                 added a new place{' '}

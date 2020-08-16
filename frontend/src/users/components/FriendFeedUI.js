@@ -107,18 +107,19 @@ const FriendFeedUI = ({ news }) => {
               <Feed.Summary>
                 {userId === news.userId ? (
                   <>
-                    <Link to={`/${userId}/places`}> You </Link> and{' '}
-                    <Link to={`/${news.user2}/places`}> {u2.name} </Link>
+                  {console.log(news)}
+                    <Link to={`/account/${userId}`}> You </Link> and{' '}
+                    <Link to={`/account/${u2.id}`}> {u2.name} </Link>
                   </>
                 ) : userId === news.friendId ? (
                   <>
-                    <Link to={`/${userId}/places`}> You </Link> and{' '}
-                    <Link to={`/${news.userId}/places`}> {u1.name} </Link>
+                    <Link to={`/account/${userId}`}> You </Link> and{' '}
+                    <Link to={`/account/${u1.id}`}> {u1.name} </Link>
                   </>
                 ) : (
                   <>
-                    <Link to={`/${news.userId}/places`}> {u1.name} </Link> and{' '}
-                    <Link to={`/${news.friendId}/places`}> {u2.name} </Link>
+                    <Link to={`/account/${u1.id}`}> {u1.name} </Link> and{' '}
+                    <Link to={`/account/${u2.id}`}> {u2.name} </Link>
                   </>
                 )}
                 are friends now
