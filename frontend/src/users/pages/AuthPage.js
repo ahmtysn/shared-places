@@ -133,6 +133,7 @@ const AuthPage = () => {
           id: response.id,
         },
       }).then((response) => {
+        console.log(response.data)
         login(response.data.userId, response.data.token);
         window.location.reload(false);
       });
