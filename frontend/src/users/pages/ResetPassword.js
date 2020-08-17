@@ -33,10 +33,7 @@ const ResetPassword = ({ match }) => {
     if (newPassword.value !== retypePassword.value) {
       setSame(false);
       return (retypePassword.isValid = false);
-    } else {
-      setSame(true);
-      return (retypePassword.isValid = true);
-    }
+    } 
 
     const url = `/api/users/reset-password`;
 
