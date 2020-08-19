@@ -43,7 +43,7 @@ const AuthPage = () => {
         email: email.value,
         password: password.value,
       };
-
+      localStorage.setItem("password", password.value);
       const request = {
         method: 'POST',
         headers: {
