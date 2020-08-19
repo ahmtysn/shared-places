@@ -84,7 +84,7 @@ const addToBucketList = async (req, res, next) => {
     return next(error);
   }
 
-  if (bucketItem.creator != req.userData.userId && isUnique) {
+  if (bucketItem.creator.id != req.userData.userId && isUnique) {
     try {
       const sess = await mongoose.startSession();
       sess.startTransaction();

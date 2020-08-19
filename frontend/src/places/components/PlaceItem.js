@@ -110,7 +110,6 @@ const PlaceItem = ({
   const closeShareIcons = () => {
     setShowIcons(false);
   };
-
   // gets all of the comments of a place
   useEffect(() => {
     const fetchComments = async () => {
@@ -270,7 +269,7 @@ const PlaceItem = ({
               </Fragment>
             )}
             {!bucketItemAdded ? (
-              userId !== creatorId.id &&
+              userId !== creatorId &&
               isLoggedIn && (
                 <Button onClick={openModalHandler}>
                   ADD TO YOUR BUCKET LIST
