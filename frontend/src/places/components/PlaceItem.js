@@ -85,7 +85,6 @@ const PlaceItem = ({
     setShowDelete(false);
     onDeletePlace(placeId);
   };
-
   const addBucketList = async () => {
     try {
       await sendRequest(
@@ -271,7 +270,7 @@ const PlaceItem = ({
               </Fragment>
             )}
             {!bucketItemAdded ? (
-              userId !== creatorId &&
+              userId !== creatorId.id &&
               isLoggedIn && (
                 <Button onClick={openModalHandler}>
                   ADD TO YOUR BUCKET LIST
