@@ -201,6 +201,24 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
 
               <h3>{settings.email}</h3>
             </div>
+          {UserIdOfLoggedIn === userIdOfCurrentPage && (
+              <div>
+                <h2>Password</h2>
+                <Input
+                  id='password'
+                  element='input'
+                  type='password'
+                  initValue={localStorage.getItem('password')}
+                  disabled={true}
+                  onInputChange={inputHandler}
+                />
+                <i
+                  className='far fa-eye'
+                  id='togglePassword'
+                  onClick={togglePasswordHandler}
+                ></i>
+              </div>
+            )}
             <div>
               <h2>Places</h2>
               {settings.places && settings.places.length > 0 ? (
@@ -256,24 +274,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                 </Card>
               )}
             </div>
-            {UserIdOfLoggedIn === userIdOfCurrentPage && (
-              <div>
-                <h2>Password</h2>
-                <Input
-                  id='password'
-                  element='input'
-                  type='password'
-                  initValue={localStorage.getItem('password')}
-                  disabled={true}
-                  onInputChange={inputHandler}
-                />
-                <i
-                  className='far fa-eye'
-                  id='togglePassword'
-                  onClick={togglePasswordHandler}
-                ></i>
-              </div>
-            )}
+            
           </div>
           <div className='profile__actions'>
             {isLoggedIn && UserIdOfLoggedIn === userIdOfCurrentPage && (
