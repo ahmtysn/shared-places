@@ -68,7 +68,7 @@ const BucketListItem = (props) => {
       >
         {isLoading && <LoadingSpinner asOverlay />}
         <Card className='bucketList-item__content'>
-          <div className='bucketList-item__image'>
+          <div className='bucketList-item_detail__image'>
             <img src={props.image} alt={props.title} />
           </div>
           <div className='bucketList-item__info'>
@@ -78,11 +78,18 @@ const BucketListItem = (props) => {
           </div>
         </Card>
       </Modal>
+
       <li className='bucketList-item'>
-        <Card className='bucketList-item__content'>
-          <div className='bucketList-item__info'>
-            <h2>{props.title}</h2>
-            <h3>{props.address}</h3>
+        <Card className='bucketList-item__content_sum'>
+          <div className='bucketList-item__details'>
+            <div className='bucketList-item__image'>
+              <img src={props.image} alt={props.title} />
+            </div>
+            <div className='bucketList-item__info'>
+              <h2>{props.title}</h2>
+              <h3>{props.address}</h3>
+              <h4>Created By: {props.creator}</h4>
+            </div>
           </div>
           <div className='bucketList-item__actions'>
             <Button onClick={openDetailsHandler} inverse>

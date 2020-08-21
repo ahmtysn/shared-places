@@ -11,28 +11,54 @@
   padding: 0;
 }
 
+.bucketList-item__content_sum {
+  background-color: #204051;
+  padding: 0;
+}
+
 .bucketList-item__info {
   padding: 1rem;
   text-align: center;
+  margin-right: 1rem;
+}
+
+.bucketList-item__details {
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .bucketList-item__image {
+  width: 10rem;
+  height: 10rem;
+  margin: 1rem 1rem 0 2rem;
+}
+
+.bucketList-item_detail__image {
   width: 100%;
   height: 20rem;
   margin-right: 1.5rem;
+}
+
+.bucketList-item_detail__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .bucketList-item__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 100%;
 }
 
 .bucketList-item__info h2,
 .bucketList-item__info h3,
 .bucketList-item__info p {
   margin: 0 0 0.5rem 0;
-  color: #222831;
 }
 
 .bucketList-item__actions {
