@@ -1,9 +1,7 @@
 import React, { useState, useContext, Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import StarRating from '../../shared/components/UIElements/StarRating';
 import AuthContext from './../../shared/context/auth-context';
-
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -12,20 +10,17 @@ import {
   LinkedinIcon,
   TwitterIcon,
 } from 'react-share';
-
+import { FaRegCommentDots, FaRegMap, FaEdit, FaTrashAlt } from 'react-icons/fa';
 import ShareIcon from '@material-ui/icons/Share';
-
+import { GiBrokenHeartZone } from 'react-icons/gi';
 import Card from './../../shared/components/UIElements/Card';
 import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
 import Button from './../../shared/components/FormElements/Button';
 import Modal from './../../shared/components/UIElements/Modal/Modal';
 import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
 import Map from './../../shared/components/UIElements/Map';
-
 import useHttpRequest from './../../shared/hooks/http-hook';
-
 import CommentList from './CommentList';
-
 import './PlaceItem.css';
 
 const PlaceItem = ({
@@ -58,7 +53,6 @@ const PlaceItem = ({
   const closeDeleteHandler = () => setShowDelete(false);
   const openModalHandler = () => setShowBucketModal(true);
   const closeBucketModalHandler = () => setShowBucketModal(false);
-
   const openComments = () => setShowComments(true);
   const closeComments = () => setShowComments(false);
 
@@ -81,10 +75,10 @@ const PlaceItem = ({
     } catch (err) {
       console.log('Error while deleting place!', err);
     }
-
     setShowDelete(false);
     onDeletePlace(placeId);
   };
+
   const addBucketList = async () => {
     try {
       await sendRequest(
@@ -110,7 +104,7 @@ const PlaceItem = ({
   const closeShareIcons = () => {
     setShowIcons(false);
   };
-  // gets all of the comments of a place
+
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -249,21 +243,22 @@ const PlaceItem = ({
             ''
           )}
           <div className='place-item__actions'>
-            <Button onClick={openMapHandler} inverse>
-              VIEW ON MAP
+            <Button onClick={openMapHandler}>
+              <FaRegMap size={24} />
             </Button>
-            <Button
-              onClick={openComments}
-              key={buttonKey}
-            >{`COMMENTS (${updatedComments.length})`}</Button>
+            <Button onClick={openComments} key={buttonKey}>
+              <FaRegCommentDots size={24} /> ({updatedComments.length})
+            </Button>
             {isLoggedIn && (
               <Fragment>
                 {creatorId === userId && (
-                  <Button to={`/places/${placeId}`}>EDIT</Button>
+                  <Button to={`/places/${placeId}`}>
+                    <FaEdit size={24} />
+                  </Button>
                 )}
                 {creatorId === userId && (
                   <Button onClick={openDeleteHandler} danger>
-                    DELETE
+                    <FaTrashAlt size={24} />
                   </Button>
                 )}
               </Fragment>
@@ -272,7 +267,7 @@ const PlaceItem = ({
               userId !== creatorId &&
               isLoggedIn && (
                 <Button onClick={openModalHandler}>
-                  ADD TO YOUR BUCKET LIST
+                  <GiBrokenHeartZone size={24} />
                 </Button>
               )
             ) : (

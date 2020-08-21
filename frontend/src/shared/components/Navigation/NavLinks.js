@@ -2,7 +2,18 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import AuthContext from './../../context/auth-context';
 import { AiFillHome } from 'react-icons/ai';
-import { BsFillPeopleFill } from 'react-icons/bs';
+import { BiLocationPlus } from 'react-icons/bi';
+import { GiBrokenHeartZone } from 'react-icons/gi';
+
+import { BsFillPeopleFill, BsNewspaper } from 'react-icons/bs';
+import {
+  FaUserCog,
+  FaMapMarkedAlt,
+  FaStreetView,
+  FaSignInAlt,
+  FaSignOutAlt,
+} from 'react-icons/fa';
+
 import './NavLinks.css';
 
 const NavLinks = () => {
@@ -13,23 +24,25 @@ const NavLinks = () => {
       {isLoggedIn && (
         <li>
           <NavLink to={`/${userId}/newsfeed`}>
-            <AiFillHome size={27} />
+            <BsNewspaper size={27} />
           </NavLink>
         </li>
       )}
       <li>
         <NavLink to='/' exact>
-          All Users
+          <AiFillHome size={27} />
         </NavLink>
       </li>
       <li>
         <NavLink to='/place/all' exact>
-          All Places
+          <FaStreetView size={27} />
         </NavLink>
       </li>
       {isLoggedIn && (
         <li>
-          <NavLink to={`/${userId}/places`}>My Places</NavLink>
+          <NavLink to={`/${userId}/places`}>
+            <FaMapMarkedAlt size={27} />
+          </NavLink>
         </li>
       )}
       {isLoggedIn && (
@@ -41,28 +54,38 @@ const NavLinks = () => {
       )}
       {isLoggedIn && (
         <li>
-          <NavLink to='/places/new'>Add New Place</NavLink>
+          <NavLink to='/places/new'>
+            <BiLocationPlus size={27} />
+          </NavLink>
         </li>
       )}
       {isLoggedIn && (
         <li>
-          <NavLink to={`/${userId}/bucketlist`}>Bucket List</NavLink>
+          <NavLink to={`/${userId}/bucketlist`}>
+            <GiBrokenHeartZone size={27} />
+          </NavLink>
         </li>
       )}
       {isLoggedIn && (
         <li>
-          <NavLink to={`/account/${userId}`}>My Account</NavLink>
+          <NavLink to={`/account/${userId}`}>
+            <FaUserCog size={27} />
+          </NavLink>
         </li>
       )}
       {!isLoggedIn && (
         <li>
-          <NavLink to='/auth'>Authentication</NavLink>
+          <NavLink to='/auth'>
+            <FaSignInAlt size={27} />
+          </NavLink>
         </li>
       )}
 
       {isLoggedIn && (
         <li>
-          <button onClick={logout}>LOGOUT</button>
+          <button onClick={logout}>
+            <FaSignOutAlt size={27} />
+          </button>
         </li>
       )}
     </ul>
