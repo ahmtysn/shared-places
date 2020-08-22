@@ -15,17 +15,17 @@ import {
 import { Tooltip, Zoom, withStyles } from '@material-ui/core';
 import './NavLinks.css';
 
-const LightTooltip = withStyles((theme) => ({
-  tooltip: {
-    backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)',
-    boxShadow: theme.shadows[1],
-    fontSize: 16,
-  },
-}))(Tooltip);
-
 const NavLinks = () => {
   const { isLoggedIn, logout, userId } = useContext(AuthContext);
+
+  const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 16,
+    },
+  }))(Tooltip);
 
   return (
     <ul className='nav-links'>

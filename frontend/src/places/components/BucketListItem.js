@@ -10,6 +10,7 @@ import Card from '../../shared/components/UIElements/Card';
 import Map from '../../shared/components/UIElements/Map';
 import useHttpClient from '../../shared/hooks/http-hook';
 import { FaMapMarkedAlt, FaInfoCircle, FaTrashAlt } from 'react-icons/fa';
+import { Tooltip, Zoom, withStyles } from '@material-ui/core';
 
 const BucketListItem = (props) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -21,6 +22,15 @@ const BucketListItem = (props) => {
   const cloesDetailsHandler = () => setShowDetails(false);
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
+
+  const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 14,
+    },
+  }))(Tooltip);
 
   const deleteBucketItemHandler = async () => {
     try {
@@ -92,15 +102,27 @@ const BucketListItem = (props) => {
             </div>
           </div>
           <div className='bucketList-item__actions'>
-            <Button onClick={openDetailsHandler} inverse>
-              <FaInfoCircle size={24} />
-            </Button>
-            <Button onClick={openMapHandler} inverse>
-              <FaMapMarkedAlt size={24} />
-            </Button>
-            <Button onClick={deleteBucketItemHandler} danger>
-              <FaTrashAlt size={24} />
-            </Button>
+            <LightTooltip TransitionComponent={Zoom} title='Details'>
+              <span>
+                <Button onClick={openDetailsHandler} inverse>
+                  <FaInfoCircle size={24} />
+                </Button>
+              </span>
+            </LightTooltip>
+            <LightTooltip TransitionComponent={Zoom} title='Show Map'>
+              <span>
+                <Button onClick={openMapHandler} inverse>
+                  <FaMapMarkedAlt size={24} />
+                </Button>
+              </span>
+            </LightTooltip>
+            <LightTooltip TransitionComponent={Zoom} title='Delete'>
+              <span>
+                <Button onClick={deleteBucketItemHandler} danger>
+                  <FaTrashAlt size={24} />
+                </Button>
+              </span>
+            </LightTooltip>
           </div>
         </Card>
       </li>

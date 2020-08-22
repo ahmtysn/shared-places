@@ -21,6 +21,7 @@ import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
 import Map from './../../shared/components/UIElements/Map';
 import useHttpRequest from './../../shared/hooks/http-hook';
 import CommentList from './CommentList';
+import { Tooltip, Zoom, withStyles } from '@material-ui/core';
 import './PlaceItem.css';
 
 const PlaceItem = ({
@@ -55,6 +56,15 @@ const PlaceItem = ({
   const closeBucketModalHandler = () => setShowBucketModal(false);
   const openComments = () => setShowComments(true);
   const closeComments = () => setShowComments(false);
+
+  const LightTooltip = withStyles((theme) => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 14,
+    },
+  }))(Tooltip);
 
   const deletePlaceHandler = async (placeId) => {
     const url = `/api/places/${placeId}`;
@@ -216,7 +226,6 @@ const PlaceItem = ({
           {isLoading && <LoadingSpinner asOverlay />}
           <div className='place-item__image'>
             <Link to={`/places/${placeId}/details`}>
-              {' '}
               <img src={image} alt={title} />
             </Link>
           </div>
@@ -243,47 +252,68 @@ const PlaceItem = ({
             ''
           )}
           <div className='place-item__actions'>
-            <Button onClick={openMapHandler}>
-              <FaRegMap size={24} />
-            </Button>
-            <Button onClick={openComments} key={buttonKey}>
-              <FaRegCommentDots size={24} /> ({updatedComments.length})
-            </Button>
+            <LightTooltip TransitionComponent={Zoom} title='Show Map'>
+              <span>
+                <Button onClick={openMapHandler}>
+                  <FaRegMap size={24} />
+                </Button>
+              </span>
+            </LightTooltip>
+            <LightTooltip TransitionComponent={Zoom} title='Add Comment'>
+              <span>
+                <Button onClick={openComments} key={buttonKey}>
+                  <FaRegCommentDots size={24} /> ({updatedComments.length})
+                </Button>
+              </span>
+            </LightTooltip>
             {isLoggedIn && (
               <Fragment>
                 {creatorId === userId && (
-                  <Button to={`/places/${placeId}`}>
-                    <FaEdit size={24} />
-                  </Button>
+                  <LightTooltip TransitionComponent={Zoom} title='Edit'>
+                    <span>
+                      <Button to={`/places/${placeId}`}>
+                        <FaEdit size={24} />
+                      </Button>
+                    </span>
+                  </LightTooltip>
                 )}
                 {creatorId === userId && (
-                  <Button onClick={openDeleteHandler} danger>
-                    <FaTrashAlt size={24} />
-                  </Button>
+                  <LightTooltip TransitionComponent={Zoom} title='Delete'>
+                    <span>
+                      <Button onClick={openDeleteHandler} danger>
+                        <FaTrashAlt size={24} />
+                      </Button>
+                    </span>
+                  </LightTooltip>
                 )}
               </Fragment>
             )}
             {!bucketItemAdded ? (
               userId !== creatorId &&
               isLoggedIn && (
-                <Button
-                  onClick={openModalHandler}
-                  data-tip
-                  data-for='registerTip'
+                <LightTooltip
+                  TransitionComponent={Zoom}
+                  title='Add to Your Bucket List'
                 >
-                  <GiFullWoodBucketHandle size={28} />
-                </Button>
+                  <span>
+                    <Button onClick={openModalHandler}>
+                      <GiFullWoodBucketHandle size={24} />
+                    </Button>
+                  </span>
+                </LightTooltip>
               )
             ) : (
               <h3>In your Bucket List</h3>
             )}
-            <div className='place-share'>
-              <ShareIcon
-                onClick={showShareIcons}
-                fontSize='medium'
-                className='ShareIcon'
-              ></ShareIcon>
-            </div>
+            <LightTooltip TransitionComponent={Zoom} title='Share'>
+              <div className='place-share'>
+                <ShareIcon
+                  onClick={showShareIcons}
+                  fontSize='medium'
+                  className='ShareIcon'
+                ></ShareIcon>
+              </div>
+            </LightTooltip>
             <Modal
               show={showBucketModal}
               onCancel={closeBucketModalHandler}
