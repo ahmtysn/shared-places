@@ -12,8 +12,7 @@ import {
   FaSignInAlt,
   FaSignOutAlt,
 } from 'react-icons/fa';
-import { withStyles } from '@material-ui/core/styles';
-import { Tooltip, Zoom } from '@material-ui/core';
+import { Tooltip, Zoom, withStyles } from '@material-ui/core';
 import './NavLinks.css';
 
 const LightTooltip = withStyles((theme) => ({

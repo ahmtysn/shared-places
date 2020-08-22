@@ -12,7 +12,7 @@ import {
 } from 'react-share';
 import { FaRegCommentDots, FaRegMap, FaEdit, FaTrashAlt } from 'react-icons/fa';
 import ShareIcon from '@material-ui/icons/Share';
-import { GiBrokenHeartZone } from 'react-icons/gi';
+import { GiFullWoodBucketHandle } from 'react-icons/gi';
 import Card from './../../shared/components/UIElements/Card';
 import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
 import Button from './../../shared/components/FormElements/Button';
@@ -266,8 +266,12 @@ const PlaceItem = ({
             {!bucketItemAdded ? (
               userId !== creatorId &&
               isLoggedIn && (
-                <Button onClick={openModalHandler}>
-                  <GiBrokenHeartZone size={24} />
+                <Button
+                  onClick={openModalHandler}
+                  data-tip
+                  data-for='registerTip'
+                >
+                  <GiFullWoodBucketHandle size={28} />
                 </Button>
               )
             ) : (
