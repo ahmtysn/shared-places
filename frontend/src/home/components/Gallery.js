@@ -43,6 +43,7 @@ const Gallery = () => {
         showThumbs={false}
         showIndicators={false}
         autoPlay={true}
+        dynamicHeight={true}
         className="carousel"
       >
         {!isLoading &&

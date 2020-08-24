@@ -72,7 +72,7 @@ function App() {
         <Route exact path="/auth" component={AuthPage} />
         <Route exact path="/place/all" component={AllPlaces} />
         <Route exact path="/places/:placeId/details" component={PlacePage} />
-        <Redirect to="/auth" />
+        <Redirect to="/" />
       </Switch>
     );
   }
