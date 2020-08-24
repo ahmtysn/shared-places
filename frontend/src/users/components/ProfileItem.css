@@ -41,7 +41,7 @@
 .user-item a:first-child:active h2,
 .user-item a:first-child:hover h3,
 .user-item a:first-child:active h3 {
-  color: #292929;
+  color: #ff5722;
 }
 
 .user-item__info h3 {
