@@ -119,7 +119,7 @@ const PlaceItem = ({
     const fetchComments = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/comments/${placeId}`
+          `${process.env.REACT_APP_BACKEND_URL}/comments/${placeId}`
         );
         setUpdatedComments(responseData.comments);
       } catch (err) {}

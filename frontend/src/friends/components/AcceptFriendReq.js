@@ -20,7 +20,7 @@ const AcceptFriendReq = ({ receivedRequestId, userId, token, bell }) => {
   const acceptRequest = async () => {
     try {
       await sendRequest(
-        'http://localhost:5000/api/friends/requests/accept',
+        `${process.env.REACT_APP_BACKEND_URL}/friends/requests/accept`,
         'PATCH',
         JSON.stringify({
           friendId: receivedRequestId,
@@ -54,7 +54,7 @@ const AcceptFriendReq = ({ receivedRequestId, userId, token, bell }) => {
           <p>Friend request has been Accepted successfully !</p>
         </Modal>
       )}
-      <Link to="#">
+      <Link to='#'>
         <div className='friend_btn'>
           <Button friend onClick={acceptRequest}>
             {isLoading ? <LoadingSpinner /> : 'Accept'}
