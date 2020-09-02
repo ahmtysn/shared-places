@@ -9,7 +9,7 @@ const ProfilePlaceItem = ({ id, image, title, address }) => {
   return (
     <li className='user-item'>
       <Card className='user-item__content'>
-        <Link to={`/places/${id}`}>
+        <Link to={`/places/${id}/details`}>
           <div className='user-item__image'>
             <Avatar image={image} alt={title} />
           </div>
