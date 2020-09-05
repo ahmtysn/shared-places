@@ -57,15 +57,15 @@ const NewPlace = () => {
     };
 
     try {
-      await sendRequest(
+      const responseData = await sendRequest(
         url,
         request.method,
         request.body,
         request.headers
       );
-
-      // Redirect to homepage
-      push('/');
+      // Redirect to place which just added
+      const placeId = responseData.id;
+      push(`/places/${placeId}/details`);
     } catch (err) {
       console.log('Error at creating place!', err);
     }

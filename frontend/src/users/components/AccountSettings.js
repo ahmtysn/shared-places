@@ -1,26 +1,26 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useContext, Fragment } from 'react';
 
-import AuthContext from "../../shared/context/auth-context";
-import useForm from "./../../shared/hooks/form-hook";
+import AuthContext from '../../shared/context/auth-context';
+import useForm from './../../shared/hooks/form-hook';
 
-import Card from "../../shared/components/UIElements/Card";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import Button from "../../shared/components/FormElements/Button";
-import Modal from "../../shared/components/UIElements/Modal/Modal";
-import ErrorModal from "../../shared/components/UIElements/Modal/ErrorModal";
-import ImageUpload from "./../../shared/components/FormElements/ImageUpload";
-import Input from "./../../shared/components/FormElements/Input";
+import Card from '../../shared/components/UIElements/Card';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import Button from '../../shared/components/FormElements/Button';
+import Modal from '../../shared/components/UIElements/Modal/Modal';
+import ErrorModal from '../../shared/components/UIElements/Modal/ErrorModal';
+import ImageUpload from './../../shared/components/FormElements/ImageUpload';
+import Input from './../../shared/components/FormElements/Input';
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL,
-} from "./../../shared/utils/validators";
+} from './../../shared/utils/validators';
 
-import ProfilePlaceItem from "./ProfilePlaceItem";
-import ProfileFriendsItem from "./ProfileFriendsItem";
-import useHttpRequest from "../../shared/hooks/http-hook";
+import ProfilePlaceItem from './ProfilePlaceItem';
+import ProfileFriendsItem from './ProfileFriendsItem';
+import useHttpRequest from '../../shared/hooks/http-hook';
 
-import "./../components/AccountSettings.css";
+import './../components/AccountSettings.css';
 
 const AccountSettings = ({ settings, onDeleteAccount }) => {
   const { isLoggedIn, userId, token, logout } = useContext(AuthContext);
@@ -34,18 +34,18 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
   const openDeleteHandler = () => setShowDelete(true);
   const closeDeleteHandler = () => setShowDelete(false);
 
-  const UserIdOfLoggedIn = JSON.parse(localStorage.getItem("userSession"))
+  const UserIdOfLoggedIn = JSON.parse(localStorage.getItem('userSession'))
     .userId;
   const userIdOfCurrentPage = settings.id;
 
   const [formState, inputHandler] = useForm(
     {
       name: {
-        value: "",
+        value: '',
         isValid: false,
       },
       email: {
-        value: "",
+        value: '',
         isValid: false,
       },
       image: {
@@ -53,7 +53,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
         isValid: false,
       },
       password: {
-        value: "",
+        value: '',
         isValid: false,
       },
     },
@@ -70,7 +70,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
     };
 
     const request = {
-      method: "DELETE",
+      method: 'DELETE',
       body,
       headers,
     };
@@ -78,7 +78,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
     try {
       await sendRequest(url, request.method, request.body, request.headers);
     } catch (err) {
-      console.log("Error while deleting account!", err);
+      console.log('Error while deleting account!', err);
     }
 
     setShowDelete(false);
@@ -100,17 +100,17 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
 
     // Create FormData instance to send binary data
     const formData = new FormData();
-    formData.append("name", name.value);
-    formData.append("email", email.value);
-    formData.append("password", password.value);
-    formData.append("image", image.value);
+    formData.append('name', name.value);
+    formData.append('email', email.value);
+    formData.append('password', password.value);
+    formData.append('image', image.value);
 
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
     const request = {
-      method: "PATCH",
+      method: 'PATCH',
       body: formData,
       headers,
     };
@@ -118,7 +118,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
     try {
       await sendRequest(url, request.method, request.body, request.headers);
     } catch (err) {
-      console.log("Could not edit account!", err);
+      console.log('Could not edit account!', err);
     }
 
     setConfirmEdit(true);
@@ -126,13 +126,13 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
 
   // toggle Password Handler
   const togglePasswordHandler = () => {
-    const password = document.querySelector("#password");
+    const password = document.querySelector('#password');
     const type =
-      password.getAttribute("type") === "password" ? "text" : "password";
-    password.setAttribute("type", type);
+      password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
     // toggle the eye slash icon
-    const togglePassword = document.querySelector("#togglePassword");
-    togglePassword.classList.toggle("fa-eye-slash");
+    const togglePassword = document.querySelector('#togglePassword');
+    togglePassword.classList.toggle('fa-eye-slash');
   };
 
   return (
@@ -141,8 +141,8 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
       <Modal
         show={showDelete}
         onCancel={closeDeleteHandler}
-        header={"Are you sure?"}
-        footerClass="profile__modal-actions"
+        header={'Are you sure?'}
+        footerClass='profile__modal-actions'
         footer={
           <React.Fragment>
             <Button onClick={closeDeleteHandler} inverse>
@@ -161,8 +161,8 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
       </Modal>
       <Modal
         show={confirmDelete}
-        header={"Delete account confirmation!"}
-        footerClass="profile__modal-actions"
+        header={'Delete account confirmation!'}
+        footerClass='profile__modal-actions'
         footer={
           <React.Fragment>
             <Button onClick={() => onDeleteAccount()}>OK</Button>
@@ -173,8 +173,8 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
       </Modal>
       <Modal
         show={confirmEdit}
-        header={"Account edited!"}
-        footerClass="profile__modal-actions"
+        header={'Account edited!'}
+        footerClass='profile__modal-actions'
         footer={
           <React.Fragment>
             <Button onClick={() => logout()} danger>
@@ -186,15 +186,12 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
         <p>You need to login again for changes to take effect</p>
       </Modal>
       {!isEditMode && (
-        <Card className="profile-card">
+        <Card className='profile-card'>
           {isLoading && <LoadingSpinner asOverlay />}
-          <div className="profile__image">
-            <img
-              src={`http://localhost:5000/${settings.image}`}
-              alt={settings.name}
-            />
+          <div className='profile__image'>
+            <img src={settings.image} alt={settings.name} />
           </div>
-          <div className="profile__info">
+          <div className='profile__info'>
             <div>
               <h2>Your Name</h2>
               <h3>{settings.name}</h3>
@@ -204,10 +201,28 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
 
               <h3>{settings.email}</h3>
             </div>
+          {UserIdOfLoggedIn === userIdOfCurrentPage && (
+              <div>
+                <h2>Password</h2>
+                <Input
+                  id='password'
+                  element='input'
+                  type='password'
+                  initValue={localStorage.getItem('password')}
+                  disabled={true}
+                  onInputChange={inputHandler}
+                />
+                <i
+                  className='far fa-eye'
+                  id='togglePassword'
+                  onClick={togglePasswordHandler}
+                ></i>
+              </div>
+            )}
             <div>
               <h2>Places</h2>
               {settings.places && settings.places.length > 0 ? (
-                <ul className="profile__place-list">
+                <ul className='profile__place-list'>
                   {settings.places.map((place) => (
                     <ProfilePlaceItem
                       key={`place-${place.id || place._id}`}
@@ -229,7 +244,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                     <p>This user doesn't have any places!</p>
                   )}
                   {UserIdOfLoggedIn === userIdOfCurrentPage && (
-                    <Button to="/places/new">SHARE PLACE</Button>
+                    <Button to='/places/new'>SHARE PLACE</Button>
                   )}
                 </Card>
               )}
@@ -238,7 +253,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
             <div>
               <h2>Friends</h2>
               {settings.friends && settings.friends.length > 0 ? (
-                <ul className="profile__place-list">
+                <ul className='profile__place-list'>
                   {settings.friends.map((friend) => (
                     <ProfileFriendsItem
                       key={`place-${friend.id || friend._id}`}
@@ -255,30 +270,13 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                     No friends found, you can find a friend, just click the
                     button...
                   </p>
-                  <Button to="/">FIND FRIEND</Button>
+                  <Button to='/'>FIND FRIEND</Button>
                 </Card>
               )}
             </div>
-            {UserIdOfLoggedIn === userIdOfCurrentPage && (
-              <div>
-                <h2>Password</h2>
-                <Input
-                  id="password"
-                  element="input"
-                  type="password"
-                  initValue={localStorage.getItem("password")}
-                  disabled={true}
-                  onInputChange={inputHandler}
-                />
-                <i
-                  className="far fa-eye"
-                  id="togglePassword"
-                  onClick={togglePasswordHandler}
-                ></i>
-              </div>
-            )}
+            
           </div>
-          <div className="profile__actions">
+          <div className='profile__actions'>
             {isLoggedIn && UserIdOfLoggedIn === userIdOfCurrentPage && (
               <Fragment>
                 <Button onClick={editSwitchHandler}>EDIT</Button>
@@ -291,34 +289,34 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
         </Card>
       )}
       {isEditMode && (
-        <Card className="profile-card">
+        <Card className='profile-card'>
           {isLoading && <LoadingSpinner asOverlay />}
           <form onSubmit={editSubmitHandler}>
             <ImageUpload
-              id="image"
-              centered="true"
+              id='image'
+              centered='true'
               onInputChange={inputHandler}
-              initialImageUrl={`http://localhost:5000/${settings.image}`}
+              initialImageUrl={settings.image}
             />
             <Input
-              id="name"
-              element="input"
-              type="text"
-              placeholder="Your Name"
-              label="Your Name"
-              errorText="Your name is required!"
+              id='name'
+              element='input'
+              type='text'
+              placeholder='Your Name'
+              label='Your Name'
+              errorText='Your name is required!'
               validators={[VALIDATOR_REQUIRE()]}
               onInputChange={inputHandler}
               initValue={settings.name}
               initIsValid={true}
             />
             <Input
-              id="email"
-              element="input"
-              type="email"
-              placeholder="Your Email"
-              label="Email"
-              errorText="Please enter a valid email!"
+              id='email'
+              element='input'
+              type='email'
+              placeholder='Your Email'
+              label='Email'
+              errorText='Please enter a valid email!'
               validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
               onInputChange={inputHandler}
               initValue={settings.email}
@@ -326,26 +324,26 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
             />
             <div>
               <Input
-                id="password"
-                element="input"
-                type="password"
-                placeholder="Your Password"
-                label="Password"
-                errorText="Please enter a valid password, at least 5 characters!"
+                id='password'
+                element='input'
+                type='password'
+                placeholder='Your Password'
+                label='Password'
+                errorText='Please enter a valid password, at least 5 characters!'
                 validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
                 onInputChange={inputHandler}
-                initValue={localStorage.getItem("password")}
+                initValue={localStorage.getItem('password')}
                 initIsValid={true}
               />
               <i
-                className="far fa-eye"
-                id="togglePassword"
+                className='far fa-eye'
+                id='togglePassword'
                 onClick={togglePasswordHandler}
               ></i>
             </div>
 
             <Button onClick={editSwitchHandler}>CANCEL</Button>
-            <Button type="submit" danger>
+            <Button type='submit' danger>
               SAVE
             </Button>
           </form>

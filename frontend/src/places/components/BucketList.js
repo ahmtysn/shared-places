@@ -35,7 +35,7 @@ const BucketList = () => {
     };
     fetchPlaces();
   }, [sendRequest, userId, token]);
-
+console.log(places)
   const deleteBucketItem = (deletedPlaceId) => {
     setPlaces((prevPlace) =>
       prevPlace.filter((place) => place.id.id !== deletedPlaceId)
@@ -47,15 +47,18 @@ const BucketList = () => {
       {isLoading && <LoadingSpinner asOverlay />}
       {error && <ErrorModal error={error} onClear={clearError} />}
       {(!places || places.length === 0) && !isLoading && (
-          <div className="place-list center">
-            <Card>
-              <h2>No places found. Do you want to add some?</h2>
-              <Button to="/">Go Home Page</Button>
-            </Card>
-          </div>
-        )}
+        <div className='place-list center'>
+          <Card>
+            <h2>
+              Your bucket list is empty. Would you like to add places to your
+              bucket list?
+            </h2>
+            <Button to='/'>Go Home Page</Button>
+          </Card>
+        </div>
+      )}
 
-      <ul className="bucket-list">
+      <ul className='bucket-list'>
         {!isLoading &&
           places &&
           places.map((place) => (
@@ -67,6 +70,7 @@ const BucketList = () => {
               description={place.id.description}
               address={place.id.address}
               deleteOnClick={deleteBucketItem}
+              creator={place.createdUser}
             />
           ))}
       </ul>

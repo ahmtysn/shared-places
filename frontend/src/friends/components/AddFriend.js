@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import Button from "../../shared/components/FormElements/Button";
-import useHttpClient from "../../shared/hooks/http-hook";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import ErrorModal from "../../shared/components/UIElements/Modal/ErrorModal";
-import { Link } from "react-router-dom";
-import Modal from "../../shared/components/UIElements/Modal/Modal";
+import Button from '../../shared/components/FormElements/Button';
+import useHttpClient from '../../shared/hooks/http-hook';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/components/UIElements/Modal/ErrorModal';
+import { Link } from 'react-router-dom';
+import Modal from '../../shared/components/UIElements/Modal/Modal';
 const AddFriend = ({ receivedRequestId, userId, token }) => {
   const [reqsent, setReqSent] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -16,15 +16,15 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
     setReqSent(true);
     try {
       await sendRequest(
-        "http://localhost:5000/api/friends/add",
-        "POST",
+        `${process.env.REACT_APP_BACKEND_URL}/friends/add`,
+        'POST',
         JSON.stringify({
           friendId: receivedRequestId,
           userId: userId,
         }),
         {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
         }
       );
       openAddHandler();
@@ -38,7 +38,7 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
         <Modal
           show={showAdd}
           onCancel={closeAddHandler}
-          header={"Friend Request"}
+          header={'Friend Request'}
           footer={
             <React.Fragment>
               <Button onClick={closeAddHandler} inverse>
@@ -51,10 +51,10 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
         </Modal>
       )}
       {userId !== receivedRequestId ? (
-        <Link>
+        <Link to='#'>
           <Button friend onClick={newRequest} disabled={reqsent}>
-            {isLoading ? <LoadingSpinner /> : "Add Friend"}
-          </Button>{" "}
+            {isLoading ? <LoadingSpinner /> : 'Add Friend'}
+          </Button>{' '}
         </Link>
       ) : (
         <Link to={`./account/${userId}`}>

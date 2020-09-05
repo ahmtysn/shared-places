@@ -6,6 +6,7 @@ const HttpError = require('./../models/http-error');
 
 //google login controller
 const googleLogin = async (req, res, next) => {
+ 
   const client = new OAuth2Client(process.env.GOOGLE_OATH);
 
   const { tokenId } = req.body;
@@ -20,18 +21,17 @@ const googleLogin = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, can not get google data!',
-      500,
+      500
     );
     return next(error);
   }
 
   const { email_verified, name, email } = await response.payload;
-  console.log(response.payload);
   //get email_verified from payload
   if (!email_verified) {
     const error = new HttpError(
       'Something went wrong, can not get user data!',
-      500,
+      500
     );
     return next(error);
   }
@@ -42,7 +42,7 @@ const googleLogin = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, not right credentials !',
-      500,
+      500
     );
     return next(error);
   }
@@ -52,10 +52,12 @@ const googleLogin = async (req, res, next) => {
       expiresIn: '1h',
     });
     const { email, name } = user;
+    
     //send back user info and token
     return res.json({
       token,
       user: { email, name },
+      userId:user.id
     });
   } else {
     //if no user create user
@@ -70,22 +72,23 @@ const googleLogin = async (req, res, next) => {
     let token;
     try {
       // Save user
-      userData = await user.save();
+       await user.save();
 
       // Create an authentication token
-      token = jwt.sign({ userId: userData.id }, process.env.JWT_SECRET, {
+      token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
         expiresIn: '1h',
       });
     } catch (err) {
       const error = new HttpError(
         'Something went wrong,authentication not complit !',
-        500,
+        500
       );
       return next(error);
     }
     //convert document into a plain javascript object, ready for storage in MongoDB
-    const modifiedUser = userData.toObject({ getters: true });
+    const modifiedUser = user.toObject({ getters: true });
     //send back token and user data
+    
     res.status(200).json({
       userId: modifiedUser.id,
       email: modifiedUser.email,
@@ -106,17 +109,15 @@ const facebookLogin = async (req, res, next) => {
       method: 'GET',
     });
     Json = await response.json();
-    console.log(Json);
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, can not get google data!',
-      500,
+      500
     );
     return next(error);
   }
 
   let { name, email, picture } = Json;
-  console.log(name, email, picture);
 
   let user;
   try {
@@ -124,7 +125,7 @@ const facebookLogin = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, not right credentials !',
-      500,
+      500
     );
     return next(error);
   }
@@ -133,15 +134,14 @@ const facebookLogin = async (req, res, next) => {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
-    const { email, name } = user;
+    const { email, name,id } = user;
     //send back user info and token
     return res.json({
       token,
-      user: { email, name },
+      userId:id,
     });
   } else {
     let password = email + process.env.JWT_SECRET;
-    console.log(picture);
     //if no user create user
     user = new User({
       name,
@@ -163,7 +163,7 @@ const facebookLogin = async (req, res, next) => {
     } catch (err) {
       const error = new HttpError(
         'Something went wrong,authentication not complit !',
-        500,
+        500
       );
       return next(error);
     }

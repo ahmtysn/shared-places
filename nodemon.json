@@ -1,10 +1,10 @@
 {
   "env": {
-    "DB_USER": "Noer",
-    "DB_PW": "PrDBQHK6j7mShpjF",
+    "DB_USER": "dbAdmin",
+    "DB_PW": "LsxwQrdsrEVLABlL",
     "DB_NAME": "placesharer-dev",
     "JWT_SECRET": "supersecretman!",
-    "GOOGLE_OATH": "426240820005-8mk3iab4cpplfo85ufiadj6a2cimvj14.apps.googleusercontent.com",
+    "GOOGLE_OATH": "1023635616404-7pc7cm52hhj0t997u43rshrctjdafdqe.apps.googleusercontent.com",
     "MAPBOX_TOKEN": "pk.eyJ1IjoiaHlmY2xhc3MyNiIsImEiOiJja2QzNG5hMzQxanhnMnNwdnJ0ZmN1YzB0In0.9wpXECjySi4MS-oOpxwWYQ",
     "CLOUDINARY_SECRET": "70nW0VyQoB1KuByu2jrAUZGTZtY",
     "JWT_REST_PASSWORD": "passwordTochange",

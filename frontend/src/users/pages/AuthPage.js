@@ -43,10 +43,7 @@ const AuthPage = () => {
         email: email.value,
         password: password.value,
       };
-      ///////////////////////////////////////
-      localStorage.setItem('password', password.value);
-      ///////////////////////////////////////////
-
+      localStorage.setItem("password", password.value);
       const request = {
         method: 'POST',
         headers: {
@@ -60,7 +57,7 @@ const AuthPage = () => {
           url,
           request.method,
           request.body,
-          request.headers,
+          request.headers
         );
 
         window.location.reload(false);
@@ -99,7 +96,7 @@ const AuthPage = () => {
           url,
           request.method,
           request.body,
-          request.headers,
+          request.headers
         );
 
         login(responseData.userId, responseData.token);
@@ -111,7 +108,6 @@ const AuthPage = () => {
 
   // google handler
   const responseGoogle = (response) => {
-    console.log(response);
     if (isLoginMode || !isLoginMode) {
       axios({
         method: 'POST',
@@ -120,14 +116,14 @@ const AuthPage = () => {
           tokenId: response.tokenId,
         },
       }).then((response) => {
-        login(response.user, response.data.token);
+        login(response.data.userId, response.data.token);
+        window.location.reload(false);
       });
     }
   };
 
   //facebook handler
   const responseFacebook = (response) => {
-    console.log(response);
     if (isLoginMode || !isLoginMode) {
       axios({
         method: 'POST',
@@ -137,7 +133,9 @@ const AuthPage = () => {
           id: response.id,
         },
       }).then((response) => {
-        login(response.data, response.data.token);
+        console.log(response.data)
+        login(response.data.userId, response.data.token);
+        window.location.reload(false);
       });
     }
   };
@@ -152,7 +150,7 @@ const AuthPage = () => {
           name: undefined,
           image: undefined,
         },
-        formState.inputs.email.isValid && formState.inputs.password.isValid,
+        formState.inputs.email.isValid && formState.inputs.password.isValid
       );
     } else {
       setFormData(
@@ -167,7 +165,7 @@ const AuthPage = () => {
             isValid: false,
           },
         },
-        false,
+        false
       );
     }
     setIsLoginMode((prevState) => !prevState);

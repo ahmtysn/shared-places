@@ -18,7 +18,7 @@ const getBucketList = async (req, res, next) => {
   } catch (error) {
     return next(
       new HttpError(
-        'Something went wrong, could not find a place for the prasdasdasdovided id.',
+        'Something went wrong, could not find a place for the provided id.',
         500
       )
     );
@@ -84,7 +84,7 @@ const addToBucketList = async (req, res, next) => {
     return next(error);
   }
 
-  if (bucketItem.creator != req.userData.userId && isUnique) {
+  if (bucketItem.creator.id != req.userData.userId && isUnique) {
     try {
       const sess = await mongoose.startSession();
       sess.startTransaction();
