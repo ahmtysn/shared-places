@@ -61,8 +61,6 @@ function App() {
     routes = (
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/" component={UsersPage} />
-        <Route exact path="/:userId/places" component={UserPlaces} />
         <Route exact path="/forgot-password" component={ForgetPassword} />
         <Route
           exact
@@ -70,8 +68,6 @@ function App() {
           component={ResetPassword}
         />
         <Route exact path="/auth" component={AuthPage} />
-        <Route exact path="/place/all" component={AllPlaces} />
-        <Route exact path="/places/:placeId/details" component={PlacePage} />
         <Redirect to="/" />
       </Switch>
     );
