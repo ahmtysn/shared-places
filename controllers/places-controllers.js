@@ -187,7 +187,7 @@ const updatePlace = async (req, res, next) => {
   }
 
   // Only allow title and description to be updated
-  const { title, description } = req.body;
+  const { title, address, description } = req.body;
 
   const { placeId } = req.params;
 
@@ -207,8 +207,17 @@ const updatePlace = async (req, res, next) => {
     return next(error);
   }
 
+  let coordinates;
+  try {
+    coordinates = await getCoordsForAddress(address);
+  } catch (error) {
+    return next(error);
+  }
+
   place.title = title;
+  place.address = address;
   place.description = description;
+  place.location = coordinates;
 
   try {
     await place.save();

@@ -9,45 +9,66 @@ import {
 
 import './PlaceForm.css';
 
-const PlaceForm = ({ isAdd, formState, inputHandler, formHandler }) => {
+const PlaceForm = ({
+  isAdd,
+  formState,
+  inputHandler,
+  formHandler,
+  loadedPlace,
+}) => {
   return (
-    <form className="place-form" onSubmit={formHandler}>
+    <form className='place-form' onSubmit={formHandler}>
       {isAdd && (
-        <ImageUpload id="image" centered={true} onInputChange={inputHandler} />
+        <ImageUpload id='image' centered={true} onInputChange={inputHandler} />
       )}
       <Input
-        id="title"
-        element="input"
-        type="text"
-        label="Title"
-        value={formState.inputs.title.value}
-        errorText="Please enter a valid title!"
+        id='title'
+        element='input'
+        type='text'
+        label='Title'
+        placeholder={loadedPlace && loadedPlace.title}
+        value={
+          isAdd
+            ? formState.inputs.title.value
+            : formState.inputs.title.value || loadedPlace.title
+        }
+        errorText='Please enter a valid title!'
         validators={[VALIDATOR_REQUIRE()]}
         onInputChange={inputHandler}
       />
-      {isAdd && (
-        <Input
-          id="address"
-          element="input"
-          type="text"
-          label="Address"
-          value={formState.inputs.address.value}
-          errorText="Please enter a valid address!"
-          validators={[VALIDATOR_REQUIRE()]}
-          onInputChange={inputHandler}
-        />
-      )}
+
       <Input
-        id="description"
-        element="textarea"
-        label="Description"
-        value={formState.inputs.description.value}
-        errorText="Please enter a valid description (at least 5 characters)!"
+        id='address'
+        element='input'
+        type='text'
+        label='Address'
+        placeholder={loadedPlace && loadedPlace.address}
+        value={
+          isAdd
+            ? formState.inputs.address.value
+            : formState.inputs.address.value || loadedPlace.address
+        }
+        errorText='Please enter a valid address!'
+        validators={[VALIDATOR_REQUIRE()]}
+        onInputChange={inputHandler}
+      />
+
+      <Input
+        id='description'
+        element='textarea'
+        label='Description'
+        placeholder={loadedPlace && loadedPlace.description}
+        value={
+          isAdd
+            ? formState.inputs.description.value
+            : formState.inputs.description.value || loadedPlace.description
+        }
+        errorText='Please enter a valid description (at least 5 characters)!'
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         onInputChange={inputHandler}
       />
-      <Button type="submit" disabled={!formState.isValid}>
-        {isAdd ? 'Add' : 'Edit'} place
+      <Button type='submit' disabled={!formState.isValid}>
+        {isAdd ? 'Add' : 'Edit'} Place
       </Button>
     </form>
   );

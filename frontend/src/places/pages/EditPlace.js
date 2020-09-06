@@ -23,6 +23,10 @@ const EditPlace = () => {
       value: '',
       isValid: true,
     },
+    address: {
+      value: '',
+      isValid: true,
+    },
     description: {
       value: '',
       isValid: true,
@@ -57,6 +61,10 @@ const EditPlace = () => {
               value: identifiedPlace.title,
               isValid: true,
             },
+            address: {
+              value: identifiedPlace.address,
+              isValid: true,
+            },
             description: {
               value: identifiedPlace.description,
               isValid: true,
@@ -75,13 +83,14 @@ const EditPlace = () => {
     e.preventDefault();
 
     const {
-      inputs: { title, description },
+      inputs: { title, address, description },
     } = formState;
 
     const url = `/api/places/${placeId}`;
 
     const body = {
       title: title.value,
+      address: address.value,
       description: description.value,
     };
 
@@ -97,26 +106,21 @@ const EditPlace = () => {
     };
 
     try {
-      await sendRequest(
-        url,
-        request.method,
-        request.body,
-        request.headers
-      );
+      await sendRequest(url, request.method, request.body, request.headers);
 
-      push(`/${userId}/places`);
+      push(`/places/${placeId}/details`);
     } catch (err) {
       console.log('Could not edit place!', err);
     }
   };
 
   if (isLoading) {
-    return <div className="center">Loading...</div>;
+    return <div className='center'>Loading...</div>;
   }
 
   if (isLoading) {
     return (
-      <div className="center">
+      <div className='center'>
         <LoadingSpinner />
       </div>
     );
@@ -124,7 +128,7 @@ const EditPlace = () => {
 
   if (!loadedPlace && !error) {
     return (
-      <div className="center">
+      <div className='center'>
         <Card>
           <h2>Could not find place!</h2>
         </Card>
@@ -140,6 +144,7 @@ const EditPlace = () => {
           formState={formState}
           inputHandler={inputHandler}
           formHandler={editPlaceSubmitHandler}
+          loadedPlace={loadedPlace}
           isAdd={false}
         />
       )}
