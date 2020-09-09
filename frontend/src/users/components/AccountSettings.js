@@ -120,8 +120,20 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
     } catch (err) {
       console.log('Could not edit account!', err);
     }
-
-    setConfirmEdit(true);
+  
+    // if only profile image edited
+    const loginPassword = localStorage.getItem("password");
+    if (
+      name.value === settings.name &&
+      email.value === settings.email &&
+      password.value === loginPassword &&
+      image.value !== settings.image
+    ) {
+      setIsEditMode(false);
+      //window.location.reload(false);
+    } else {
+      setConfirmEdit(true);
+    }
   };
 
   // toggle Password Handler
