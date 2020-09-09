@@ -43,7 +43,7 @@ const AuthPage = () => {
         email: email.value,
         password: password.value,
       };
-      localStorage.setItem("password", password.value);
+      localStorage.setItem('password', password.value);
       const request = {
         method: 'POST',
         headers: {
@@ -98,7 +98,7 @@ const AuthPage = () => {
           request.body,
           request.headers
         );
-
+        localStorage.setItem('password', password.value);
         login(responseData.userId, responseData.token);
       } catch (err) {
         console.log('Error at sign up!', err);
