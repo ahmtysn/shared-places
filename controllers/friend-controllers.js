@@ -31,7 +31,7 @@ const createFriendRequest = async (req, res, next) => {
         friendReqSender = await User.findById(userId)
         if (friendReqReceiver.requestslist.find(u => u.id === userId)) {
             const error = new HttpError(
-                `You have already sent a friend request before to ${friendReqReceiver.name}  you can not send more than one request to each friend thanks`,
+                `You have already sent a friend request before to ${friendReqReceiver.name}  you can not send more than one request to each user.`,
                 500
             );
             return next(error);
@@ -39,7 +39,7 @@ const createFriendRequest = async (req, res, next) => {
         }
         if (friendReqSender.requestslist.find(u => u.id === friendId)) {
             const error = new HttpError(
-                `You have already a friend request from ${friendReqReceiver.name} please take an anction by clicking accept or reject buttons`,
+                `You have already a friend request from ${friendReqReceiver.name} please take an action by clicking accept or reject buttons`,
                 500
             );
             return next(error);
@@ -180,7 +180,7 @@ const deleteFriend = async (req, res, next) => {
         await sess.commitTransaction();
     } catch (err) {
         const error = new HttpError(
-            'delete  friend failed, please try again later.' + err,
+            'delete friend failed, please try again later.' + err,
             500
         );
         return next(error);

@@ -16,7 +16,7 @@ const Features = () => {
           src={feature1}
           alt="feature 1"
         />
-        <h4 className="caption">discover new interesting places</h4>
+        <h4 className="caption">Discover new interesting places</h4>
       </div>
       <div className="feature">
         <img
@@ -24,7 +24,7 @@ const Features = () => {
           src={feature2}
           alt="feature 2"
         />
-        <h4 className="caption">add and connect with friends <br/> from all over the world</h4>
+        <h4 className="caption">Add and connect with friends<br/>from all over the world</h4>
       </div>
 
       <div className="feature">

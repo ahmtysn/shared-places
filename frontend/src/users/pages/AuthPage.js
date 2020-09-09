@@ -67,7 +67,7 @@ const AuthPage = () => {
 
         login(responseData.userId, responseData.token);
       } catch (err) {
-        console.log('Error at login!', err);
+        console.log('Error at log in!', err);
         // we handled error in custom hook (useHttpClient)
         // so can stay empty
       }
@@ -101,7 +101,7 @@ const AuthPage = () => {
 
         login(responseData.userId, responseData.token);
       } catch (err) {
-        console.log('Error at signup!', err);
+        console.log('Error at sign up!', err);
       }
     }
   };
@@ -188,10 +188,10 @@ const AuthPage = () => {
         />
         <hr />
         <h3 className='authentication__header'>
-          {isLoginMode ? "Don't have an account ?" : 'Have an account ?'}
+          {isLoginMode ? "Don't have an account yet ?" : 'Already have an account ?'}
         </h3>
         <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
+          {isLoginMode ? 'Sign up' : 'Log in'}
         </Button>
       </Card>
     </Fragment>

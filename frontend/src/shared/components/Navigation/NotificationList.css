@@ -25,7 +25,6 @@ ul {
   transition: height var(500ms) ease;
 }
 .notification {
-  text-transform: uppercase;
   text-align: center;
   color: #01a9b4;
   margin: 10px 0px;

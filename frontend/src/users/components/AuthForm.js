@@ -31,9 +31,9 @@ const AuthForm = ({
           element='input'
           id='name'
           type='text'
-          placeholder='Your Name'
-          label='Your Name'
-          errorText='Your name is required!'
+          placeholder='Name'
+          label='Name'
+          errorText='Name is required!'
           validators={[VALIDATOR_REQUIRE()]}
           onInputChange={inputHandler}
         />
@@ -42,7 +42,7 @@ const AuthForm = ({
         id='email'
         element='input'
         type='email'
-        placeholder='Your Email'
+        placeholder='Email'
         label='Email'
         errorText='Please enter a valid email!'
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
@@ -52,14 +52,14 @@ const AuthForm = ({
         id='password'
         element='input'
         type='password'
-        placeholder='Your Password'
+        placeholder='Password'
         label='Password'
         errorText='Please enter a valid password, at least 5 characters!'
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         onInputChange={inputHandler}
       />
       <div style={{ marginBottom: '20px' }}>
-        {isLoginMode && <Link to='/forgot-password'>forget password?</Link>}
+        {isLoginMode && <Link to='/forgot-password'>forgot your password?</Link>}
       </div>
       {!isLoginMode && (
         <ImageUpload id='image' centered='true' onInputChange={inputHandler} />
@@ -72,7 +72,7 @@ const AuthForm = ({
         <div>
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText='LOGIN WITH GOOGLE'
+            buttonText='Log in with Google'
             className='social-media-button-class google'
             onSuccess={responseGoogle}
             cookiePolicy={'single_host_origin'}
@@ -84,7 +84,7 @@ const AuthForm = ({
             callback={responseFacebook}
             cssClass='social-media-button-class facebook'
             icon='fa-facebook'
-            textButton='LOGIN WITH FACEBOOK'
+            textButton=' Log in with Facebook'
           />
         </div>
       ) : null}

@@ -32,7 +32,7 @@ const addToBucketList = async (req, res, next) => {
     bucketItem = await Place.findById(placeId).populate('creator');
     if (!bucketItem) {
       return next(
-        new HttpError(`Could not find a place  for the provided place id.`, 404)
+        new HttpError(`Could not find a place for the provided place id.`, 404)
       );
     }
   } catch (error) {

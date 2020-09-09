@@ -57,7 +57,7 @@ const BucketListItem = (props) => {
         header={props.address}
         contentClass='bucketList-item__modal-content'
         footerClass='bucketList-item__modal-actions'
-        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+        footer={<Button onClick={closeMapHandler}>Close</Button>}
       >
         <div className='map-container'>
           <Map center={props.placeId.location} zoom={15} />
@@ -71,7 +71,7 @@ const BucketListItem = (props) => {
         footer={
           <React.Fragment>
             <Button onClick={cloesDetailsHandler} inverse>
-              CANCEL
+              Cancel
             </Button>
           </React.Fragment>
         }

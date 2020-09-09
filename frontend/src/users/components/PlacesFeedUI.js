@@ -92,6 +92,7 @@ const PlacesFeedUI = ({ news }) => {
                 </Link>{' '}
                 added a new place{' '}
                 <Link to={`/${p.creator.id}/places`}> {p.title}</Link>
+                .
                 <Feed.Date>
                   {newsDate === 0
                     ? 'Few seconds Ago'
@@ -121,7 +122,7 @@ const PlacesFeedUI = ({ news }) => {
           </Feed.Event>
           <Feed.Meta>
             <Feed.Like>
-              <Icon name='like' color='red' />1 Likes
+              <Icon name='like' color='red' />1 Like
             </Feed.Like>
           </Feed.Meta>
         </Feed>

@@ -146,10 +146,10 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
         footer={
           <React.Fragment>
             <Button onClick={closeDeleteHandler} inverse>
-              CANCEL
+              Cancel
             </Button>
             <Button onClick={() => deleteAccountHandler(userId)} danger>
-              DELETE
+              Delete
             </Button>
           </React.Fragment>
         }
@@ -178,12 +178,12 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
         footer={
           <React.Fragment>
             <Button onClick={() => logout()} danger>
-              Logout
+              Log out
             </Button>
           </React.Fragment>
         }
       >
-        <p>You need to login again for changes to take effect</p>
+        <p>You need to log in again for changes to take effect</p>
       </Modal>
       {!isEditMode && (
         <Card className='profile-card'>
@@ -193,7 +193,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
           </div>
           <div className='profile__info'>
             <div>
-              <h2>Your Name</h2>
+              <h2>Name</h2>
               <h3>{settings.name}</h3>
             </div>
             <div>
@@ -244,7 +244,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                     <p>This user doesn't have any places!</p>
                   )}
                   {UserIdOfLoggedIn === userIdOfCurrentPage && (
-                    <Button to='/places/new'>SHARE PLACE</Button>
+                    <Button to='/places/new'>Share Place</Button>
                   )}
                 </Card>
               )}
@@ -279,9 +279,9 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
           <div className='profile__actions'>
             {isLoggedIn && UserIdOfLoggedIn === userIdOfCurrentPage && (
               <Fragment>
-                <Button onClick={editSwitchHandler}>EDIT</Button>
+                <Button onClick={editSwitchHandler}>Edit</Button>
                 <Button onClick={openDeleteHandler} danger>
-                  DELETE
+                  Delete
                 </Button>
               </Fragment>
             )}
@@ -302,9 +302,9 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
               id='name'
               element='input'
               type='text'
-              placeholder='Your Name'
-              label='Your Name'
-              errorText='Your name is required!'
+              placeholder='Name'
+              label='Name'
+              errorText='Name is required!'
               validators={[VALIDATOR_REQUIRE()]}
               onInputChange={inputHandler}
               initValue={settings.name}
@@ -314,7 +314,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
               id='email'
               element='input'
               type='email'
-              placeholder='Your Email'
+              placeholder='Email'
               label='Email'
               errorText='Please enter a valid email!'
               validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
@@ -327,7 +327,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                 id='password'
                 element='input'
                 type='password'
-                placeholder='Your Password'
+                placeholder='Password'
                 label='Password'
                 errorText='Please enter a valid password, at least 5 characters!'
                 validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
@@ -342,9 +342,9 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
               ></i>
             </div>
 
-            <Button onClick={editSwitchHandler}>CANCEL</Button>
+            <Button onClick={editSwitchHandler}>Cancel</Button>
             <Button type='submit' danger>
-              SAVE
+              Save
             </Button>
           </form>
         </Card>

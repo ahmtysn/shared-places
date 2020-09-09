@@ -18,3 +18,19 @@
   width : 60%;
   margin : 0 auto;
 }
+
+.gallery-image {
+  max-height: 30rem;
+}
+
+@media (max-width: 1024px) {
+  .gallery-image {
+    max-height: 18rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-image {
+    max-height: 12rem;
+  }
+}

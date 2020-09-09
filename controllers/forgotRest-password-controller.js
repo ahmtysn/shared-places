@@ -26,7 +26,7 @@ const forgotPassword = async (req, res, next) => {
     identifiedUser = await User.findOne({ email });
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, can not  find email!',
+      'Something went wrong, can not find email!',
       500,
     );
     return next(error);
@@ -48,7 +48,7 @@ const forgotPassword = async (req, res, next) => {
     );
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, can not create email token  !',
+      'Something went wrong, can not create email token!',
       500,
     );
     return next(error);
@@ -81,7 +81,7 @@ const forgotPassword = async (req, res, next) => {
     });
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong!, can not send email',
+      'Something went wrong, can not send email!',
       500,
     );
     return next(error);
@@ -93,7 +93,7 @@ const resetPassword = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const error = new HttpError(
-      '1 Make sure to pass in the correct data!',
+      'Make sure to pass in the correct data!',
       422,
     );
     return next(error);
@@ -160,7 +160,7 @@ const resetPassword = async (req, res, next) => {
       { expiresIn: '1h' },
     );
   } catch (err) {
-    const error = new HttpError('Something went wrong,Cant save user', 500);
+    const error = new HttpError('Something went wrong,Can not save user', 500);
     return next(error);
   }
 

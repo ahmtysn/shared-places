@@ -122,7 +122,7 @@ const FriendFeedUI = ({ news }) => {
                     <Link to={`/account/${u2.id}`}> {u2.name} </Link>
                   </>
                 )}
-                are friends now
+                are friends now.
                 <Feed.Date>
                   {' '}
                   {newsDate === 0

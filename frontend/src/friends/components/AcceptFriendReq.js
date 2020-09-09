@@ -46,12 +46,12 @@ const AcceptFriendReq = ({ receivedRequestId, userId, token, bell }) => {
           footer={
             <React.Fragment>
               <Button onClick={closeAcceptHandler} inverse>
-                OKAY
+                Okay
               </Button>
             </React.Fragment>
           }
         >
-          <p>Friend request has been Accepted successfully !</p>
+          <p>Friend request has been accepted successfully!</p>
         </Modal>
       )}
       <Link to='#'>

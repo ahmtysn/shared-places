@@ -162,14 +162,14 @@ function CommentList(props) {
               history.push('/auth');
             }}
           >
-            Log In
+            Log in
           </button>
         </>
       ) : (
         <form className='formDiv' onSubmit={commentSubmitHandler}>
           <div className='form'>
             <textarea
-              placeholder='type your comment here..'
+              placeholder='Type your comment here..'
               className='formInput'
               maxlength='151'
               onChange={(e) => inputHandler(e.target.value)}
@@ -183,7 +183,7 @@ function CommentList(props) {
             disabled={commentInput.length < 5}
             type='submit'
           >
-            POST COMMENT
+            Post Comment
           </button>
         </form>
       )}

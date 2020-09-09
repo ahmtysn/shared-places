@@ -37,11 +37,11 @@ const FormPassword = ({ formState, inputHandler, formHandler, same }) => {
       />
       {!same && formState.isValid === true && (
         <div className="form-control--invalid">
-          <p>The is not the same password!</p>
+          <p>Please use the same password!</p>
         </div>
       )}
       <ButtonResetPassword className="reset_password_btn" type="submit">
-        SUBMIT
+        Submit
       </ButtonResetPassword>
     </form>
   );

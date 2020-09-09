@@ -47,7 +47,7 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
             </React.Fragment>
           }
         >
-          <p>Your request has been send successfully !</p>
+          <p>Your request has been sent successfully!</p>
         </Modal>
       )}
       {userId !== receivedRequestId ? (
@@ -58,7 +58,7 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
         </Link>
       ) : (
         <Link to={`./account/${userId}`}>
-          <Button friend>MY Profile</Button>
+          <Button friend>My Profile</Button>
         </Link>
       )}
     </React.Fragment>

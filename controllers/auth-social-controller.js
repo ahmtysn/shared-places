@@ -41,7 +41,7 @@ const googleLogin = async (req, res, next) => {
     user = await User.findOne({ email }).exec({ email });
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, not right credentials !',
+      'Something went wrong, please check your credentials!',
       500
     );
     return next(error);
@@ -80,7 +80,7 @@ const googleLogin = async (req, res, next) => {
       });
     } catch (err) {
       const error = new HttpError(
-        'Something went wrong,authentication not complit !',
+        'Something went wrong, authentication not complete!',
         500
       );
       return next(error);
@@ -111,7 +111,7 @@ const facebookLogin = async (req, res, next) => {
     Json = await response.json();
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, can not get google data!',
+      'Something went wrong, can not get facebook data!',
       500
     );
     return next(error);
@@ -124,7 +124,7 @@ const facebookLogin = async (req, res, next) => {
     user = await User.findOne({ email }).exec({ email });
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, not right credentials !',
+      'Something went wrong, please check your credentials!',
       500
     );
     return next(error);
@@ -162,7 +162,7 @@ const facebookLogin = async (req, res, next) => {
       });
     } catch (err) {
       const error = new HttpError(
-        'Something went wrong,authentication not complit !',
+        'Something went wrong, authentication not complete!',
         500
       );
       return next(error);

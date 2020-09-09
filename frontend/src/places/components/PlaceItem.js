@@ -136,7 +136,7 @@ const PlaceItem = ({
         header={address}
         contentClass='place-item__modal-content'
         footerClass='place-item__modal-actions'
-        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+        footer={<Button onClick={closeMapHandler}>Close</Button>}
       >
         <div className='map-container'>
           <Map center={coordinates} zoom={14} />
@@ -166,10 +166,10 @@ const PlaceItem = ({
         footer={
           <React.Fragment>
             <Button onClick={closeDeleteHandler} inverse>
-              CANCEL
+              Cancel
             </Button>
             <Button onClick={() => deletePlaceHandler(placeId)} danger>
-              DELETE
+              Delete
             </Button>
           </React.Fragment>
         }
@@ -215,7 +215,7 @@ const PlaceItem = ({
             url={`${process.env.REACT_APP_ASSETS_URL}/places/${placeId}/details`}
             media={`${process.env.REACT_APP_ASSETS_URL}/${image}`}
             title={title}
-            hashtags={['Shareplace']}
+            hashtags={['Hack Your Places']}
           >
             <TwitterIcon round size={40} />
           </TwitterShareButton>
@@ -322,10 +322,10 @@ const PlaceItem = ({
               footer={
                 <React.Fragment>
                   <Button onClick={closeBucketModalHandler} inverse>
-                    CANCEL
+                    Cancel
                   </Button>
                   <Button onClick={addBucketList} danger>
-                    ADD
+                    Add
                   </Button>
                 </React.Fragment>
               }

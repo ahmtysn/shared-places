@@ -28,7 +28,7 @@ const FormPassword = ({
       />
 
       <ButtonResetPassword className="reset_password_btn" type="submit">
-        SUBMIT
+        Submit
       </ButtonResetPassword>
       {isSended && formState.inputs.email.value && (
         <div className="email-sended">

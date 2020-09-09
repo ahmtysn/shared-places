@@ -50,10 +50,11 @@ console.log(places)
         <div className='place-list center'>
           <Card>
             <h2>
-              Your bucket list is empty. Would you like to add places to your
+              Your bucket list is empty.<br/>
+              Would you like to add places to your
               bucket list?
             </h2>
-            <Button to='/'>Go Home Page</Button>
+            <Button to='/'>Back to Home Page</Button>
           </Card>
         </div>
       )}

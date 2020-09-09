@@ -40,16 +40,16 @@ const DeleteFriend = ({ userId, receivedRequestId }) => {
         <Modal
           show={showAdd}
           onCancel={closeAddHandler}
-          header={'Friend Request'}
+          header={'Delete Friend!'}
           footer={
             <React.Fragment>
               <Button onClick={closeAddHandler} inverse>
-                OKAY
+                Okay
               </Button>
             </React.Fragment>
           }
         >
-          <p>A friend deleted successfully !</p>
+          <p>This user has been deleted successfully from your friend list!</p>
         </Modal>
       )}
       <Link>
