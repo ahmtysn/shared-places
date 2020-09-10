@@ -13,20 +13,23 @@ import AuthPage from "../users/pages/AuthPage";
 
 
 const HomePage = () => {
+  let x = 0;
+  let y = document.height;
+  window.scroll(x, y);
   return (
     <Fragment>
       <MainHeader>
         <h1 className="main-navigation__title">
-        <img className="main-navigation__logo" src={logo} alt="Logo" />
+          <img className="main-navigation__logo" src={logo} alt="Logo" />
           <Link to="/">Hack Your Places</Link>
         </h1>
       </MainHeader>
       <Banner />
       <div className="home-auth-card ">
-      <AuthPage/>
+        <AuthPage />
       </div>
       <Features />
-      <Gallery/>
+      <Gallery />
     </Fragment>
   );
 };

@@ -12,6 +12,9 @@ import useForm from './../../shared/hooks/form-hook';
 import useHttpRequest from './../../shared/hooks/http-hook';
 
 const NewPlace = () => {
+  let x = 0;
+  let y = document.height; 
+  window.scroll(x, y);
   const initInputs = {
     title: {
       value: '',

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import Button from '../../shared/components/FormElements/Button';
 import useHttpClient from '../../shared/hooks/http-hook';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
@@ -8,13 +9,17 @@ import Modal from '../../shared/components/UIElements/Modal/Modal';
 import './friendItem.css';
 
 const AcceptFriendReq = ({ receivedRequestId, userId, token, bell }) => {
+  let history = useHistory();
+  const backToFriendsList = () => {
+    history.push(`/${userId}/friends`);
+  }
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showAccept, setShowAccept] = useState(false);
   const openAcceptHandler = () => setShowAccept(true);
   const closeAcceptHandler = () => {
     setShowAccept(false);
     bell(Math.random());
-    //window.location.reload(true)
+    backToFriendsList();
   };
 
   const acceptRequest = async () => {
@@ -32,7 +37,7 @@ const AcceptFriendReq = ({ receivedRequestId, userId, token, bell }) => {
         }
       );
       openAcceptHandler();
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (

@@ -108,14 +108,14 @@ const acceptFriendRequest = async (req, res, next) => {
             userId: userId,
             friendId: friendId,
             date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
-            time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+            time: today.getUTCHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
         })
         friendReqSender.newsfeed.push({
             type: "Friends",
             userId: friendId,
             friendId: userId,
             date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
-            time: today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+            time: today.getUTCHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
         })
         await friendReqReceiver.save({ session: sess });
         await friendReqSender.save({ session: sess });

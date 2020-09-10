@@ -6,14 +6,14 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import ErrorModal from '../../shared/components/UIElements/Modal/ErrorModal';
 import { Link } from 'react-router-dom';
 import Modal from '../../shared/components/UIElements/Modal/Modal';
-const AddFriend = ({ receivedRequestId, userId, token }) => {
-  const [reqsent, setReqSent] = useState(false);
+const AddFriend = ({ receivedRequestId, userId, token, pending }) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showAdd, setShowAdd] = useState(false);
+  const [pen, setPen] = useState(false);
   const openAddHandler = () => setShowAdd(true);
   const closeAddHandler = () => setShowAdd(false);
   const newRequest = async () => {
-    setReqSent(true);
+    setPen(true);
     try {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/friends/add`,
@@ -28,7 +28,7 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
         }
       );
       openAddHandler();
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
@@ -52,15 +52,15 @@ const AddFriend = ({ receivedRequestId, userId, token }) => {
       )}
       {userId !== receivedRequestId ? (
         <Link to='#'>
-          <Button friend onClick={newRequest} disabled={reqsent}>
-            {isLoading ? <LoadingSpinner /> : 'Add Friend'}
+          <Button friend onClick={newRequest} disabled={pending ? pending : pen}>
+            {isLoading ? <LoadingSpinner /> : pending === true || pen === true ? 'Pending' : 'Add Friend'}
           </Button>{' '}
         </Link>
       ) : (
-        <Link to={`./account/${userId}`}>
-          <Button friend>My Profile</Button>
-        </Link>
-      )}
+          <Link to={`./account/${userId}`}>
+            <Button friend>My Profile</Button>
+          </Link>
+        )}
     </React.Fragment>
   );
 };

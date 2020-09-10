@@ -10,6 +10,9 @@ import PlaceItem from '../components/PlaceItem';
 import useHttpRequest from '../../shared/hooks/http-hook';
 
 const PlacePage = () => {
+  let x = 0;
+  let y = document.height; 
+  window.scroll(x, y);
   const [place, setPlace] = useState({});
   const { placeId } = useParams();
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();

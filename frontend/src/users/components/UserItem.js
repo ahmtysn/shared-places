@@ -9,18 +9,22 @@ import DeleteFriend from '../../friends/components/DeleteFriend';
 import Button from '../../shared/components/FormElements/Button';
 const UserItem = ({ user }) => {
   const auth = useContext(AuthContext);
-
+  const [reqsent, setReqSent] = useState(false);
   const [isFriend, setIsFriend] = useState(false);
   const currentPath = window.location.pathname;
 
-  const { id, image, name, places, friends } = user;
+  const { id, image, name, places, friends, requestslist } = user;
 
   useEffect(() => {
     if (currentPath === '/' && friends.find((u) => u.id === auth.userId)) {
       setIsFriend(true);
     }
   }, [setIsFriend]);
-
+  useEffect(() => {
+    if (currentPath === '/' && requestslist.find((u) => u.id === auth.userId)) {
+      setReqSent(true);
+    }
+  }, [setReqSent]);
   return (
     <li className='user-item'>
       <Card className='user-item__content'>
@@ -44,15 +48,16 @@ const UserItem = ({ user }) => {
                 receivedRequestId={user.id}
                 userId={auth.userId}
                 token={auth.token}
+                pending={reqsent}
               />
             ) : (
-              currentPath === '/' && (
-                <Link to={`account/${id}`}>
-                  {' '}
-                  <Button friend>{name} Profile</Button>
-                </Link>
-              )
-            )}
+                currentPath === '/' && (
+                  <Link to={`account/${id}`}>
+                    {' '}
+                    <Button friend>{name} Profile</Button>
+                  </Link>
+                )
+              )}
             {currentPath === `/${auth.userId}/friends` && (
               <DeleteFriend receivedRequestId={user.id} userId={auth.userId} />
             )}

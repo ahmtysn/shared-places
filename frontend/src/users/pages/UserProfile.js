@@ -13,6 +13,9 @@ import useHttpRequest from "./../../shared/hooks/http-hook";
 import AccountSettings from "../components/AccountSettings";
 
 const UserProfile = () => {
+  let x = 0;  
+  let y = document.height; 
+  window.scroll(x, y);
   const { userId } = useParams();
   const { token, logout } = useContext(AuthContext);
   const [userSettings, setUserSettings] = useState({});

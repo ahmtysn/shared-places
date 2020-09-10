@@ -27,7 +27,7 @@ const PlacesFeedUI = ({ news }) => {
         '-' +
         leadingZero(today.getDate())
       }T${
-        leadingZero(today.getHours()) +
+        leadingZero(today.getUTCHours()) +
         ':' +
         leadingZero(today.getMinutes()) +
         ':' +
@@ -81,7 +81,7 @@ const PlacesFeedUI = ({ news }) => {
         <Feed>
           <Feed.Event>
             <Feed.Label>
-              <Link to={`/${p.creator.id}/places`}>
+              <Link to={`/account/${p.creator.id}`}>
                 <Image src={p.creator.image} />
               </Link>
             </Feed.Label>
@@ -91,7 +91,7 @@ const PlacesFeedUI = ({ news }) => {
                   {p.creator.id === userId ? 'You' : p.creator.name}
                 </Link>{' '}
                 added a new place{' '}
-                <Link to={`/${p.creator.id}/places`}> {p.title}</Link>
+                <Link to={`/places/${p.id}/details`}> {p.title}</Link>
                 .
                 <Feed.Date>
                   {newsDate === 0
@@ -113,18 +113,13 @@ const PlacesFeedUI = ({ news }) => {
                     src={p.image}
                     as='a'
                     size='massive'
-                    href={`/${p.creator.id}/places`}
+                    href={`http://hackyourplaces.herokuapp.com/places/${p.id}/details`}
                     target='HELLO'
                   />
                 </div>
               </Feed.Extra>
             </Feed.Content>
           </Feed.Event>
-          <Feed.Meta>
-            <Feed.Like>
-              <Icon name='like' color='red' />1 Like
-            </Feed.Like>
-          </Feed.Meta>
         </Feed>
       )}
     </React.Fragment>
