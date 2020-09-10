@@ -1,21 +1,22 @@
-import React, { Fragment, useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import React, { Fragment, useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 
 // Context
-import AuthContext from "./../../shared/context/auth-context";
+import AuthContext from './../../shared/context/auth-context';
 
-import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
-import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
+import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
 
 // Custom hooks
-import useHttpRequest from "./../../shared/hooks/http-hook";
+import useHttpRequest from './../../shared/hooks/http-hook';
 
-import AccountSettings from "../components/AccountSettings";
+import AccountSettings from '../components/AccountSettings';
 
 const UserProfile = () => {
   const { userId } = useParams();
   const { token, logout } = useContext(AuthContext);
   const [userSettings, setUserSettings] = useState({});
+  const [editDone, setEditDone] = useState(false);
 
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
@@ -25,7 +26,7 @@ const UserProfile = () => {
         const url = `/api/users/account/${userId}`;
 
         const request = {
-          method: "GET",
+          method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -40,7 +41,7 @@ const UserProfile = () => {
 
         setUserSettings(response);
       } catch (err) {
-        console.log("Could not get user settings!", err);
+        console.log('Could not get user settings!', err);
       }
     };
     fetchSettings();
@@ -51,14 +52,20 @@ const UserProfile = () => {
     logout();
   };
 
+  const onEditAccount = () => {
+    setEditDone(true);
+  };
+
   return (
     <Fragment>
       {error && <ErrorModal error={error} onClear={clearError} />}
       {isLoading && <LoadingSpinner asOverlay />}
+      {editDone && <LoadingSpinner asOverlay />}
       {!isLoading && !error && (
         <AccountSettings
           settings={userSettings}
           onDeleteAccount={onDeleteAccount}
+          onEditAccount={onEditAccount}
         />
       )}
     </Fragment>

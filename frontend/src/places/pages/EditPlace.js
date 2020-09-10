@@ -31,6 +31,10 @@ const EditPlace = () => {
       value: '',
       isValid: true,
     },
+    image: {
+      value: null,
+      isValid: true,
+    },
   };
   const [formState, inputHandler, setFormData] = useForm(initInputs, false);
 
@@ -69,6 +73,10 @@ const EditPlace = () => {
               value: identifiedPlace.description,
               isValid: true,
             },
+            image: {
+              value: identifiedPlace.image,
+              isValid: true,
+            },
           },
           true
         );
@@ -83,25 +91,25 @@ const EditPlace = () => {
     e.preventDefault();
 
     const {
-      inputs: { title, address, description },
+      inputs: { title, address, description, image },
     } = formState;
 
     const url = `/api/places/${placeId}`;
 
-    const body = {
-      title: title.value,
-      address: address.value,
-      description: description.value,
-    };
+    // Create FormData instance to send binary data
+    const formData = new FormData();
+    formData.append('title', title.value);
+    formData.append('address', address.value);
+    formData.append('description', description.value);
+    formData.append('image', image.value);
 
     const headers = {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
 
     const request = {
       method: 'PATCH',
-      body: JSON.stringify(body),
+      body: formData,
       headers,
     };
 

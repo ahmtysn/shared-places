@@ -22,7 +22,7 @@ import useHttpRequest from '../../shared/hooks/http-hook';
 
 import './../components/AccountSettings.css';
 
-const AccountSettings = ({ settings, onDeleteAccount }) => {
+const AccountSettings = ({ settings, onDeleteAccount, onEditAccount }) => {
   const { isLoggedIn, userId, token, logout } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
@@ -90,7 +90,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
     setIsEditMode((prevState) => !prevState);
   };
 
-  // Submitb eidted settings
+  // Submit eidted settings
   const editSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -120,9 +120,9 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
     } catch (err) {
       console.log('Could not edit account!', err);
     }
-  
+
     // if only profile image edited
-    const loginPassword = localStorage.getItem("password");
+    const loginPassword = localStorage.getItem('password');
     if (
       name.value === settings.name &&
       email.value === settings.email &&
@@ -130,7 +130,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
       image.value !== settings.image
     ) {
       setIsEditMode(false);
-      //window.location.reload(false);
+      onEditAccount();
     } else {
       setConfirmEdit(true);
     }
@@ -213,7 +213,7 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
 
               <h3>{settings.email}</h3>
             </div>
-          {UserIdOfLoggedIn === userIdOfCurrentPage && (
+            {UserIdOfLoggedIn === userIdOfCurrentPage && (
               <div>
                 <h2>Password</h2>
                 <Input
@@ -286,7 +286,6 @@ const AccountSettings = ({ settings, onDeleteAccount }) => {
                 </Card>
               )}
             </div>
-            
           </div>
           <div className='profile__actions'>
             {isLoggedIn && UserIdOfLoggedIn === userIdOfCurrentPage && (

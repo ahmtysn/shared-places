@@ -219,6 +219,12 @@ const updatePlace = async (req, res, next) => {
   place.description = description;
   place.location = coordinates;
 
+  // if place image changed
+  if (req.file) {
+    const { path } = req.file;
+    place.image = path;
+  }
+
   try {
     await place.save();
   } catch (err) {
