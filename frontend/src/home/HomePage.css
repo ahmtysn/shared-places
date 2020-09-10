@@ -1,14 +1,16 @@
 .home-auth-card {
-    position: absolute;
-    right: 0;
-    top: 0;
-    opacity: 0.6;
-    width: 20rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0.6;
+  width: 20rem;
 }
 
-@media (max-width: 1023px){
-.home-auth-card {
-    margin : 0  auto ;
-    position: relative;
-}
+@media (max-width: 700px) {
+  .home-auth-card {
+    margin: 0 auto;
+    right: 23%;
+    left: 23%;
+    top: 8%;
+  }
 }

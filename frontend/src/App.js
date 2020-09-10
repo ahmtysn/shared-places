@@ -67,7 +67,6 @@ function App() {
           path="/reset-password/:resetLink"
           component={ResetPassword}
         />
-        <Route exact path="/auth" component={AuthPage} />
         <Redirect to="/" />
       </Switch>
     );

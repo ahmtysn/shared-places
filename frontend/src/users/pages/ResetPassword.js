@@ -9,6 +9,9 @@ import useForm from "./../../shared/hooks/form-hook";
 import useHttpRequest from "../../shared/hooks/http-hook";
 
 const ResetPassword = ({ match }) => {
+  let x = 0;  
+  let y = document.height; 
+  window.scroll(x, y);
   const { login } = useContext(AuthContext);
   const [same, setSame] = useState(true);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();

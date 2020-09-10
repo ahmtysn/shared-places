@@ -8,6 +8,9 @@ import useForm from './../../shared/hooks/form-hook';
 import useHttpRequest from '../../shared/hooks/http-hook';
 
 const ForgotPassword = () => {
+  let x = 0;  
+  let y = document.height; 
+  window.scroll(x, y);
   const [isSended, setIsSended] = useState(false);
 
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();

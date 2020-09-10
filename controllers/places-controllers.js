@@ -162,7 +162,7 @@ const createPlace = async (req, res, next) => {
         '-' +
         today.getDate(),
       time:
-        today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds(),
+        today.getUTCHours() + ':' + today.getMinutes() + ':' + today.getSeconds(),
     });
     await user.save({ session });
     await session.commitTransaction();

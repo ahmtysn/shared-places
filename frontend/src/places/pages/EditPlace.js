@@ -11,6 +11,9 @@ import useForm from './../../shared/hooks/form-hook';
 import useHttpRequest from '../../shared/hooks/http-hook';
 
 const EditPlace = () => {
+  let x = 0;
+  let y = document.height; 
+  window.scroll(x, y);
   const { userId, token } = useContext(AuthContext);
   const { placeId } = useParams();
   const { push } = useHistory();

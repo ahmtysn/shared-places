@@ -27,7 +27,7 @@ const FriendFeedUI = ({ news }) => {
         '-' +
         leadingZero(today.getDate())
       }T${
-        leadingZero(today.getHours()) +
+        leadingZero(today.getUTCHours()) +
         ':' +
         leadingZero(today.getMinutes()) +
         ':' +
@@ -101,7 +101,7 @@ const FriendFeedUI = ({ news }) => {
         <Feed>
           <Feed.Event>
             <Feed.Label>
-              <Image src={u1.image} />
+            <Link to={`/account/${u1.id}`}><Image src={u1.image} /></Link>
             </Feed.Label>
             <Feed.Content>
               <Feed.Summary>
@@ -139,11 +139,6 @@ const FriendFeedUI = ({ news }) => {
                 </Feed.Date>
               </Feed.Summary>
             </Feed.Content>
-            <Feed.Meta>
-              <Feed.Like>
-                <Icon name='like' color='red' />8 Likes
-              </Feed.Like>
-            </Feed.Meta>
           </Feed.Event>
         </Feed>
       )}

@@ -1,0 +1,17 @@
+.SearchBarContainer {
+  width: 50%;
+  max-width: 50rem;
+  margin: auto;
+}
+@media (min-width: 768px) and (max-width: 850px) {
+  .SearchBarContainer {
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  .SearchBarContainer {
+    margin-top: 100px;
+    max-width: 50rem;
+  }
+}

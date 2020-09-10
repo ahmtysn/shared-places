@@ -6,6 +6,9 @@ import ErrorModal from '../../shared/components/UIElements/Modal/ErrorModal';
 import AuthContext from '../../shared/context/auth-context';
 
 const UserFriends = () => {
+  let x = 0;
+  let y = document.height; 
+  window.scroll(x, y);
   const auth = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();

@@ -16,7 +16,13 @@ main {
   margin-top: 5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 900px) {
+  .main-header {
+    height: auto;
+    padding: 5px;
+  }
+}
+@media (min-width: 767px) {
   .main-header {
     justify-content: space-between;
   }

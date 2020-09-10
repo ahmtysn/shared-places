@@ -5,6 +5,9 @@ import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
 import NewsFeedList from '../../users/components/NewsFeedList';
 import AuthContext from '../../shared/context/auth-context';
 const NewsFeed = () => {
+  let x = 0;  
+  let y = document.height; 
+  window.scroll(x, y);
   const auth = useContext(AuthContext);
   const [newsfeed, setNewsFeed] = useState([]);
   const [user, setUser] = useState('');

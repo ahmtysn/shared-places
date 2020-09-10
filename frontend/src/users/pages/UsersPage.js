@@ -6,11 +6,15 @@ import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
 import SearchBar from "../../shared/components/FormElements/SearchBar";
 
 const UsersPage = () => {
+  let x = 0;
+  let y = document.height;
+  window.scroll(x, y);
+  
   const [users, setUsers] = useState([]);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
   const [searchValue, setSearchValue] = useState("");
   const [searchedUsers, setSearchedUsers] = useState();
-
+ 
   const fetchUsers = async () => {
     const url = "/api/users";
     try {
@@ -44,19 +48,19 @@ const UsersPage = () => {
 
   return (
     <Fragment>
-    
-      <ErrorModal error={error} onClear={clearError} />
-      
-        <SearchBar
-          inputSearchHandler={inputSearchHandler}
-          onSubmitSearchHandler={onSubmitSearchHandler}
-          searchValue={searchValue}
-          placeholder="Search users with name or email"
-        />
-        {isLoading && <LoadingSpinner asOverlay />}
 
-        {!isLoading && <UsersList users={searchedUsers || users} />}
-     
+      <ErrorModal error={error} onClear={clearError} />
+
+      <SearchBar
+        inputSearchHandler={inputSearchHandler}
+        onSubmitSearchHandler={onSubmitSearchHandler}
+        searchValue={searchValue}
+        placeholder="Search users with name or email"
+      />
+      {isLoading && <LoadingSpinner asOverlay />}
+
+      {!isLoading && <UsersList users={searchedUsers || users}  />}
+
     </Fragment>
   );
 };

@@ -16,6 +16,9 @@ import PlaceList from '../components/PlaceList';
 import SearchBar from '../../shared/components/FormElements/SearchBar';
 
 const UserPlaces = () => {
+  let x = 0;
+  let y = document.height; 
+  window.scroll(x, y);
   const { userId } = useParams();
 
   const { token, userId: loggedInUserId, isLoggedIn } = useContext(AuthContext);

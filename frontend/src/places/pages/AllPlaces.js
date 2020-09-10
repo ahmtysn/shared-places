@@ -7,6 +7,9 @@ import useHttpRequest from '../../shared/hooks/http-hook';
 import SearchBar from '../../shared/components/FormElements/SearchBar';
 
 const AllPlaces = () => {
+  let x = 0;
+  let y = document.height; 
+  window.scroll(x, y);
   const { isLoading, error, sendRequest, clearError } = useHttpRequest();
   const [loadedPlaces, setLoadedPlaces] = useState();
   const [searchValue, setSearchValue] = useState('');
