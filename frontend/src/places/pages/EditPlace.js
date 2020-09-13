@@ -12,7 +12,7 @@ import useHttpRequest from '../../shared/hooks/http-hook';
 
 const EditPlace = () => {
   let x = 0;
-  let y = document.height; 
+  let y = document.height;
   window.scroll(x, y);
   const { userId, token } = useContext(AuthContext);
   const { placeId } = useParams();
@@ -125,31 +125,10 @@ const EditPlace = () => {
     }
   };
 
-  if (isLoading) {
-    return <div className='center'>Loading...</div>;
-  }
-
-  if (isLoading) {
-    return (
-      <div className='center'>
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  if (!loadedPlace && !error) {
-    return (
-      <div className='center'>
-        <Card>
-          <h2>Could not find place!</h2>
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <Fragment>
       <ErrorModal error={error} onClear={clearError} />
+      {isLoading && <LoadingSpinner asOverlay />}
       {!isLoading && loadedPlace && (
         <PlaceForm
           formState={formState}
