@@ -7,15 +7,15 @@ import Card from '../../shared/components/UIElements/Card';
 
 const ProfilePlaceItem = ({ id, image, name, email }) => {
   return (
-    <li className='user-item'>
-      <Card className='user-item__content'>
+    <li className='profile-item'>
+      <Card className='profile-item__content'>
         <Link to={`/account/${id}`}>
-          <div className='user-item__image'>
+          <div className='profile-item__image'>
             <Avatar image={image} alt={name} />
           </div>
-          <div className='user-item__info'>
-            <h2>{name}</h2>
-            <h4>{email}</h4>
+          <div className='profile-item__info'>
+            <h5>{name}</h5>
+            <h5>{email}</h5>
           </div>
         </Link>
       </Card>

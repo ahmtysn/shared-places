@@ -17,8 +17,9 @@
 
 .button:hover,
 .button:active {
-  background: #ff5722;
-  border-color: #ff5722;
+  background: #ffd900;
+  border-color: black;
+  color: black;
 }
 
 .button--inverse {
@@ -37,19 +38,19 @@
   border-color: #c02739;
 }
 .button--friend {
-  text-transform: uppercase;
   margin: 10px 0px;
   width: 100%;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
   background: #01a9b4;
   border-color: #909596;
+  font-weight: bold;
 }
 
 .button--danger:hover,
 .button--danger:active {
-  background: #ff5722;
-  border-color: #ff5722;
+  background: #ad1f2f;
+  border-color: black;
 }
 
 .button:disabled,

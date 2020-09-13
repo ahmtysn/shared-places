@@ -36,7 +36,9 @@ const NotificationNavBar = () => {
     <React.Fragment>
       <div>
         <ErrorModal error={error} onClear={clearError} />
+
         <NotificationBadge count={num} />
+
         {loadedUsers && (
           <NotificationList bell={handleChange} items={reqList} count={num} />
         )}

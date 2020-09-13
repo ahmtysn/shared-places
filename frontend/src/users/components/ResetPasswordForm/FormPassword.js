@@ -1,12 +1,12 @@
-import React from "react";
-import "./FormPassword.css";
-import Input from "../../../shared/components/FormElements/Input";
-import ButtonResetPassword from "./ButtonResetPassword";
+import React from 'react';
+import './FormPassword.css';
+import Input from '../../../shared/components/FormElements/Input';
+import Button from '../../../shared/components/FormElements/Button';
 
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
-} from "../../../shared/utils/validators";
+} from '../../../shared/utils/validators';
 
 const FormPassword = ({
   formState,
@@ -15,24 +15,26 @@ const FormPassword = ({
   isSended = false,
 }) => {
   return (
-    <form className="reset_password_form" onSubmit={formHandler}>
+    <form className='reset_password_form' onSubmit={formHandler}>
       <Input
-        id="email"
-        element="input"
-        type="email"
-        label="Email"
+        id='email'
+        element='input'
+        type='email'
+        label='Email'
         // value={formState.inputs.email.value}
-        errorText="Please enter a valid email!"
+        errorText='Please enter a valid email!'
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
         onInputChange={inputHandler}
       />
-
-      <ButtonResetPassword className="reset_password_btn" type="submit">
-        Submit
-      </ButtonResetPassword>
+      <div className='actions-btn'>
+        <Button type='submit'>Submit</Button>
+        <Button type='button' to={'/aut'} danger>
+          Cancel
+        </Button>
+      </div>
       {isSended && formState.inputs.email.value && (
-        <div className="email-sended">
-          Email has been sended to : <span>{formState.inputs.email.value}</span>{" "}
+        <div className='email-sended'>
+          Email has been sended to : <span>{formState.inputs.email.value}</span>{' '}
           ...please follow the instructions
         </div>
       )}

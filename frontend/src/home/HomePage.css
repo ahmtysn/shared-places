@@ -2,15 +2,14 @@
   position: absolute;
   right: 0;
   top: 0;
-  opacity: 0.6;
+  opacity: 0.8;
   width: 20rem;
 }
 
-@media (max-width: 700px) {
+/* Media Query for Mobile Devices */
+@media (max-width: 480px) {
   .home-auth-card {
-    margin: 0 auto;
-    right: 23%;
-    left: 23%;
-    top: 8%;
+    margin: auto;
+    width: 100%;
   }
 }

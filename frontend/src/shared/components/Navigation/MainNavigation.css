@@ -25,11 +25,11 @@
   margin-top: auto;
   margin-bottom: auto;
   flex: 2;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .main-navigation__logo {
-  width: 3rem;
+  width: 16rem;
   margin: 0.5rem;
 }
 
@@ -46,7 +46,7 @@
   height: 100%;
 }
 
-@media (min-width: 767px) {
+@media (min-width: 1025px) {
   .main-navigation__menu-btn {
     display: none;
   }

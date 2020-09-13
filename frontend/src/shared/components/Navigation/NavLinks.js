@@ -28,95 +28,82 @@ const NavLinks = () => {
   }))(Tooltip);
 
   return (
-    <ul className='nav-links'>
+    <React.Fragment>
       {isLoggedIn && (
-        <li>
-          <LightTooltip TransitionComponent={Zoom} title='News Feed'>
-            <NavLink to={`/${userId}/newsfeed`}>
-              <BsNewspaper size={27} />
-            </NavLink>
-          </LightTooltip>
-        </li>
-      )}
-      <li>
-        <LightTooltip TransitionComponent={Zoom} title='All Users'>
-          <NavLink to='/' exact>
-            <AiFillHome size={27} />
-          </NavLink>
-        </LightTooltip>
-      </li>
-      <li>
-        <LightTooltip TransitionComponent={Zoom} title='All Places'>
-          <NavLink to='/place/all' exact>
-            <FaStreetView size={27} />
-          </NavLink>
-        </LightTooltip>
-      </li>
-      {isLoggedIn && (
-        <li>
-          <LightTooltip TransitionComponent={Zoom} title='My Places'>
-            <NavLink to={`/${userId}/places`}>
-              <FaMapMarkedAlt size={27} />
-            </NavLink>
-          </LightTooltip>
-        </li>
-      )}
-      {isLoggedIn && (
-        <li>
-          <LightTooltip TransitionComponent={Zoom} title='Friends'>
-            <NavLink to={`/${userId}/friends`}>
-              <BsFillPeopleFill size={27} />
-            </NavLink>
-          </LightTooltip>
-        </li>
-      )}
-      {isLoggedIn && (
-        <li>
-          <LightTooltip TransitionComponent={Zoom} title='Add Place'>
-            <NavLink to='/places/new'>
-              <BiLocationPlus size={27} />
-            </NavLink>
-          </LightTooltip>
-        </li>
-      )}
-      {isLoggedIn && (
-        <li>
-          <LightTooltip TransitionComponent={Zoom} title='Bucket List'>
-            <NavLink to={`/${userId}/bucketlist`}>
-              <GiFullWoodBucketHandle size={27} />
-            </NavLink>
-          </LightTooltip>
-        </li>
-      )}
-      {isLoggedIn && (
-        <li>
-          <LightTooltip TransitionComponent={Zoom} title='My Account'>
-            <NavLink to={`/account/${userId}`}>
-              <FaUserCog size={27} />
-            </NavLink>
-          </LightTooltip>
-        </li>
-      )}
-      {!isLoggedIn && (
-        <li>
-          <LightTooltip TransitionComponent={Zoom} title='Sign In'>
-            <NavLink to='/auth'>
-              <FaSignInAlt size={27} />
-            </NavLink>
-          </LightTooltip>
-        </li>
-      )}
+        <ul className='nav-links'>
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='All Users'>
+              <NavLink to='/' exact>
+                <AiFillHome size={27} />
+              </NavLink>
+            </LightTooltip>
+          </li>
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='All Places'>
+              <NavLink to='/place/all' exact>
+                <FaStreetView size={27} />
+              </NavLink>
+            </LightTooltip>
+          </li>
 
-      {isLoggedIn && (
-        <li>
-          <LightTooltip TransitionComponent={Zoom} title='Sign Out'>
-            <button onClick={logout}>
-              <FaSignOutAlt size={27} />
-            </button>
-          </LightTooltip>
-        </li>
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='My Places'>
+              <NavLink to={`/${userId}/places`}>
+                <FaMapMarkedAlt size={27} />
+              </NavLink>
+            </LightTooltip>
+          </li>
+
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='Bucket List'>
+              <NavLink to={`/${userId}/bucketlist`}>
+                <GiFullWoodBucketHandle size={29} />
+              </NavLink>
+            </LightTooltip>
+          </li>
+
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='Add Place'>
+              <NavLink to='/places/new'>
+                <BiLocationPlus size={27} />
+              </NavLink>
+            </LightTooltip>
+          </li>
+
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='News Feed'>
+              <NavLink to={`/${userId}/newsfeed`}>
+                <BsNewspaper size={27} />
+              </NavLink>
+            </LightTooltip>
+          </li>
+
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='Friends'>
+              <NavLink to={`/${userId}/friends`}>
+                <BsFillPeopleFill size={27} />
+              </NavLink>
+            </LightTooltip>
+          </li>
+
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='My Account'>
+              <NavLink to={`/account/${userId}`}>
+                <FaUserCog size={27} />
+              </NavLink>
+            </LightTooltip>
+          </li>
+
+          <li>
+            <LightTooltip TransitionComponent={Zoom} title='Sign Out'>
+              <button onClick={logout}>
+                <FaSignOutAlt size={27} />
+              </button>
+            </LightTooltip>
+          </li>
+        </ul>
       )}
-    </ul>
+    </React.Fragment>
   );
 };
 

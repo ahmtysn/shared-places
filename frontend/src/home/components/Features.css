@@ -15,17 +15,19 @@
   height: 10rem;
 }
 .caption {
-  font-weight: normal;
-  color: black;
+  font-weight: bold;
+  color: #01a9b4;
   text-align: center;
 }
 
-@media (max-width: 700px) {
+/* Media Query for Mobile Devices */
+@media (max-width: 480px) {
   .picture {
-    width: 6rem;
+    width: 5rem;
+    height: 5rem;
   }
   .features-container {
-    margin: 3rem;
+    margin: 2rem;
     flex-direction: column;
     justify-items: center;
   }
@@ -35,13 +37,17 @@
     width: 100%;
     align-content: space-around;
     justify-items: baseline;
+    margin-top: 1.5rem;
   }
   .picture {
     margin-right: 1.5rem;
   }
 }
-@media (max-width: 1023px) {
-  .feature {
-    margin-top: 0;
-  }
+
+/* Media Query for low resolution Tablets, Ipads */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) {
 }

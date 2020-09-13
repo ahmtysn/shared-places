@@ -2,6 +2,7 @@
   text-align: center;
   width: calc(45% - 2rem);
   min-width: 17.5rem;
+  padding: 1rem 0.5rem 1rem 0.5rem;
 }
 .friend-item a {
   display: flex;
@@ -15,7 +16,11 @@
 }
 .friend-item__content {
   padding: 0;
-  width: 90%;
+  width: 100%;
+}
+
+.friend-item__content a:hover {
+  border: none;
 }
 .friend-item__image {
   width: 120px;
@@ -38,27 +43,31 @@
 .friend-item__info h3 {
   margin: 0;
 }
+
 .friend_btn button {
-  text-transform: uppercase;
-  width: 100px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
-  background: #0c8676 !important;
+  background: #01a9b4 !important;
   border-color: #909596;
+  font-weight: bold;
 }
 .friend_btn button:hover,
 .friend_btn button:active {
-  background: #0658d1a8 !important;
-  border-color: #5c4a4b !important;
+  background: #ffd900 !important;
+  border-color: black !important;
+  color: black;
+  font-weight: bold;
 }
 .card_list {
   z-index: 0;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 15px;
+  width: calc(63% - 2rem);
+  background: rgba(1, 169, 180, 0.4);
+  border-radius: 0.3rem;
+  margin-top: 0.2rem;
+  float: right;
 }
 .btns {
   display: flex;
@@ -67,8 +76,44 @@
 .btn {
   width: 50%;
 }
-@media only screen and (max-width: 600px) and (min-width: 375px) {
+
+.btn a:hover {
+  background-color: black;
+  border: none;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 480px) {
   .friend-item {
-    margin-left: 4rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+  .card_list {
+    width: calc(45% - 2rem);
+    min-width: 17.5rem;
+    float: right;
+  }
+}
+
+/* Media Query for low resolution  Tablets, Ipads */
+@media (min-width: 481px) and (max-width: 767px) {
+  .friend-item {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+  .card_list {
+    width: calc(45% - 2rem);
+    min-width: 17.5rem;
+    float: right;
+  }
+}
+
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .friend-item {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+  .card_list {
+    width: calc(45% - 2rem);
+    min-width: 17.5rem;
+    float: right;
   }
 }

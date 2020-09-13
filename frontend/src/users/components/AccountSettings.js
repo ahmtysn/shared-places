@@ -205,17 +205,17 @@ const AccountSettings = ({ settings, onDeleteAccount, onEditAccount }) => {
           </div>
           <div className='profile__info'>
             <div>
-              <h2>Name</h2>
-              <h3>{settings.name}</h3>
+              <h3>Name</h3>
+              <h4>{settings.name}</h4>
             </div>
             <div>
-              <h2>Email</h2>
+              <h3>Email</h3>
 
-              <h3>{settings.email}</h3>
+              <h4>{settings.email}</h4>
             </div>
             {UserIdOfLoggedIn === userIdOfCurrentPage && (
               <div>
-                <h2>Password</h2>
+                <h3>Password</h3>
                 <Input
                   id='password'
                   element='input'

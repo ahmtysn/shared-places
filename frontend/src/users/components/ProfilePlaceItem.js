@@ -7,15 +7,15 @@ import Card from './../../shared/components/UIElements/Card';
 
 const ProfilePlaceItem = ({ id, image, title, address }) => {
   return (
-    <li className='user-item'>
-      <Card className='user-item__content'>
+    <li className='profile-item'>
+      <Card className='profile-item__content'>
         <Link to={`/places/${id}/details`}>
-          <div className='user-item__image'>
+          <div className='profile-item__image'>
             <Avatar image={image} alt={title} />
           </div>
-          <div className='user-item__info'>
-            <h2>{title}</h2>
-            <h4>{address}</h4>
+          <div className='profile-item__info'>
+            <h5>{title}</h5>
+            <h5>{address}</h5>
           </div>
         </Link>
       </Card>

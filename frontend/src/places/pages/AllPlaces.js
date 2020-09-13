@@ -8,7 +8,7 @@ import SearchBar from '../../shared/components/FormElements/SearchBar';
 
 const AllPlaces = () => {
   let x = 0;
-  let y = document.height; 
+  let y = document.height;
   window.scroll(x, y);
   const { isLoading, error, sendRequest, clearError } = useHttpRequest();
   const [loadedPlaces, setLoadedPlaces] = useState();
@@ -45,6 +45,20 @@ const AllPlaces = () => {
     setSearchValue(e.target.value);
   };
 
+  const onDeletePlaceAll = (deletedPlaceId) => {
+    // After deleted place update state again to show all current places
+    setLoadedPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place.id !== deletedPlaceId)
+    );
+  };
+
+  const onDeletePlaceSearched = (deletedPlaceId) => {
+    // After deleted place update state again to show all current places
+    setSearchedPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place.id !== deletedPlaceId)
+    );
+  };
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -61,9 +75,12 @@ const AllPlaces = () => {
         </div>
       )}
       {!isLoading && searchedPlaces ? (
-        <PlaceList items={searchedPlaces} />
+        <PlaceList
+          items={searchedPlaces}
+          onDeletePlace={onDeletePlaceSearched}
+        />
       ) : loadedPlaces ? (
-        <PlaceList items={loadedPlaces} />
+        <PlaceList items={loadedPlaces} onDeletePlace={onDeletePlaceAll} />
       ) : (
         ''
       )}
