@@ -22,7 +22,7 @@ import useHttpRequest from '../../shared/hooks/http-hook';
 
 import './../components/AccountSettings.css';
 
-const AccountSettings = ({ settings, onDeleteAccount, onEditAccount }) => {
+const AccountSettings = ({ settings, onDeleteAccount }) => {
   const { isLoggedIn, userId, token, logout } = useContext(AuthContext);
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
@@ -130,7 +130,7 @@ const AccountSettings = ({ settings, onDeleteAccount, onEditAccount }) => {
       image.value !== settings.image
     ) {
       setIsEditMode(false);
-      onEditAccount();
+      window.location.reload(false);
     } else {
       setConfirmEdit(true);
     }

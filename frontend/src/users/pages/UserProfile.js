@@ -13,13 +13,12 @@ import useHttpRequest from './../../shared/hooks/http-hook';
 import AccountSettings from '../components/AccountSettings';
 
 const UserProfile = () => {
-  let x = 0;  
-  let y = document.height; 
+  let x = 0;
+  let y = document.height;
   window.scroll(x, y);
   const { userId } = useParams();
   const { token, logout } = useContext(AuthContext);
   const [userSettings, setUserSettings] = useState({});
-  const [editDone, setEditDone] = useState(false);
 
   const { isLoading, error, clearError, sendRequest } = useHttpRequest();
 
@@ -55,20 +54,14 @@ const UserProfile = () => {
     logout();
   };
 
-  const onEditAccount = () => {
-    setEditDone(true);
-  };
-
   return (
     <Fragment>
       {error && <ErrorModal error={error} onClear={clearError} />}
       {isLoading && <LoadingSpinner asOverlay />}
-      {editDone && <LoadingSpinner asOverlay />}
       {!isLoading && !error && (
         <AccountSettings
           settings={userSettings}
           onDeleteAccount={onDeleteAccount}
-          onEditAccount={onEditAccount}
         />
       )}
     </Fragment>
