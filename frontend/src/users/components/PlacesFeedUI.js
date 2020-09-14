@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Feed, Icon, Image } from 'semantic-ui-react';
+import { Feed, Image } from 'semantic-ui-react';
 import useHttpRequest from './../../shared/hooks/http-hook';
 import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
 import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
@@ -91,8 +91,7 @@ const PlacesFeedUI = ({ news }) => {
                   {p.creator.id === userId ? 'You' : p.creator.name}
                 </Link>{' '}
                 added a new place{' '}
-                <Link to={`/places/${p.id}/details`}> {p.title}</Link>
-                .
+                <Link to={`/places/${p.id}/details`}> {p.title}</Link>.
                 <Feed.Date>
                   {newsDate === 0
                     ? 'Few seconds Ago'

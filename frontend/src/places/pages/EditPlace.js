@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import AuthContext from './../../shared/context/auth-context';
 
-import Card from './../../shared/components/UIElements/Card';
 import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
 import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
 import PlaceForm from './../components/PlaceForm';
@@ -14,7 +13,7 @@ const EditPlace = () => {
   let x = 0;
   let y = document.height;
   window.scroll(x, y);
-  const { userId, token } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
   const { placeId } = useParams();
   const { push } = useHistory();
 

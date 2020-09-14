@@ -1,5 +1,4 @@
 const uuid = require('uuid');
-const fs = require('fs');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
@@ -271,12 +270,7 @@ const updateAccount = async (req, res, next) => {
   // if account image changed
   if (req.file) {
     const { path } = req.file;
-    let oldImagePath = user.image;
     user.image = path;
-    // Removes old image from file system
-    fs.unlink(oldImagePath, (err) => {
-      console.log('Error in removing image from file system!', err);
-    });
   }
 
   try {
@@ -339,9 +333,13 @@ const deleteAccount = async (req, res, next) => {
         myFriend.friends = myFriend.friends.filter(
           (friend) => friend.id !== user.id
         );
-        myFriend.newsfeed = myFriend.newsfeed.filter(u => {
-          if (u.type === "Friends" && u.userId === myFriend.id && u.friendId === user.id)
-              return false;
+        myFriend.newsfeed = myFriend.newsfeed.filter((u) => {
+          if (
+            u.type === 'Friends' &&
+            u.userId === myFriend.id &&
+            u.friendId === user.id
+          )
+            return false;
           return true;
         });
         await myFriend.save();
@@ -356,11 +354,6 @@ const deleteAccount = async (req, res, next) => {
     );
     return next(error);
   }
-
-  // Removes file from file system
-  fs.unlink(imagePath, (err) => {
-    console.log('Error in removing image from file system!', err);
-  });
 
   res.status(200).json({ msg: 'Account successfully deleted!' });
 };

@@ -15,8 +15,8 @@ const FormPassword = ({ formState, inputHandler, formHandler, same }) => {
         id='newPassword'
         element='input'
         type='password'
-        placeholder='password..'
-        label='PASSWORD'
+        placeholder='Enter new password'
+        label='New password'
         // value={formState.inputs.resetLink.value}
         errorText='The password must be at least 6 character!'
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(6)]}
@@ -27,8 +27,8 @@ const FormPassword = ({ formState, inputHandler, formHandler, same }) => {
         id='retypePassword'
         element='input'
         type='password'
-        placeholder='retype the password..'
-        label='RETYPE PASSWORD'
+        placeholder='Retype new password..'
+        label='Confirm new password'
         // value={formState.inputs.newPassword.value}
         errorText='The is not the same password!'
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(6)]}
@@ -36,10 +36,12 @@ const FormPassword = ({ formState, inputHandler, formHandler, same }) => {
       />
       {!same && formState.isValid === true && (
         <div className='form-control--invalid'>
-          <p>Please use the same password!</p>
+          <p>Password dosn't match, Please retype again !!</p>
         </div>
       )}
-      <Button type='submit'>Reset Password</Button>
+      <div className='actions-btn'>
+        <Button type='submit'>Reset Password</Button>
+      </div>
     </form>
   );
 };

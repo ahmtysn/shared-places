@@ -1,4 +1,3 @@
-const fs = require('fs');
 const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 const HttpError = require('./../models/http-error');
@@ -162,7 +161,11 @@ const createPlace = async (req, res, next) => {
         '-' +
         today.getDate(),
       time:
-        today.getUTCHours() + ':' + today.getMinutes() + ':' + today.getSeconds(),
+        today.getUTCHours() +
+        ':' +
+        today.getMinutes() +
+        ':' +
+        today.getSeconds(),
     });
     await user.save({ session });
     await session.commitTransaction();

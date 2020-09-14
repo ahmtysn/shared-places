@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 
 import './HomePage.css';
 
-import MainHeader from '../shared/components/Navigation/MainHeader';
 import Banner from './components/Banner';
 import Features from './components/Features';
 import Gallery from './components/Gallery';

@@ -1,16 +1,16 @@
-import React, { useContext, Fragment, useState } from "react";
+import React, { useContext, Fragment, useState } from 'react';
 
-import LoadingSpinner from "./../../shared/components/UIElements/LoadingSpinner";
-import ErrorModal from "./../../shared/components/UIElements/Modal/ErrorModal";
-import FormResetPassword from "../components/ResetPasswordForm/FormResetPassword";
-import AuthContext from "./../../shared/context/auth-context";
+import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
+import FormResetPassword from '../components/ResetPasswordForm/FormResetPassword';
+import AuthContext from './../../shared/context/auth-context';
 
-import useForm from "./../../shared/hooks/form-hook";
-import useHttpRequest from "../../shared/hooks/http-hook";
+import useForm from './../../shared/hooks/form-hook';
+import useHttpRequest from '../../shared/hooks/http-hook';
 
 const ResetPassword = ({ match }) => {
-  let x = 0;  
-  let y = document.height; 
+  let x = 0;
+  let y = document.height;
   window.scroll(x, y);
   const { login } = useContext(AuthContext);
   const [same, setSame] = useState(true);
@@ -18,11 +18,11 @@ const ResetPassword = ({ match }) => {
 
   const initInputs = {
     newPassword: {
-      value: "",
+      value: '',
       isValid: true,
     },
     retypePassword: {
-      value: "",
+      value: '',
       isValid: true,
     },
   };
@@ -36,7 +36,7 @@ const ResetPassword = ({ match }) => {
     if (newPassword.value !== retypePassword.value) {
       setSame(false);
       return (retypePassword.isValid = false);
-    } 
+    }
 
     const url = `/api/users/reset-password`;
 
@@ -46,11 +46,11 @@ const ResetPassword = ({ match }) => {
     };
 
     const headers = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     };
 
     const request = {
-      method: "PUT",
+      method: 'PUT',
       body: JSON.stringify(body),
       headers,
     };
@@ -62,6 +62,7 @@ const ResetPassword = ({ match }) => {
         request.body,
         request.headers
       );
+      localStorage.setItem('password', newPassword.value);
       login(responseData.userId, responseData.token);
     } catch (err) {
       console.log(err);

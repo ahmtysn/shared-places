@@ -34,8 +34,8 @@ const FormPassword = ({
       </div>
       {isSended && formState.inputs.email.value && (
         <div className='email-sended'>
-          Email has been sended to : <span>{formState.inputs.email.value}</span>{' '}
-          ...please follow the instructions
+          Email has been sent to : <span>{formState.inputs.email.value}</span> ,
+          Please follow the instructions
         </div>
       )}
     </form>

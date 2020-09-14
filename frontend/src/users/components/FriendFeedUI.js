@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Feed, Icon, Image } from 'semantic-ui-react';
+import { Feed, Image } from 'semantic-ui-react';
 import useHttpRequest from './../../shared/hooks/http-hook';
-import useAuth from '../../shared/hooks/auth-hook';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './../../shared/components/UIElements/LoadingSpinner';
 import ErrorModal from './../../shared/components/UIElements/Modal/ErrorModal';
@@ -101,13 +100,15 @@ const FriendFeedUI = ({ news }) => {
         <Feed>
           <Feed.Event>
             <Feed.Label>
-            <Link to={`/account/${u1.id}`}><Image src={u1.image} /></Link>
+              <Link to={`/account/${u1.id}`}>
+                <Image src={u1.image} />
+              </Link>
             </Feed.Label>
             <Feed.Content>
               <Feed.Summary>
                 {userId === news.userId ? (
                   <>
-                  {console.log(news)}
+                    {console.log(news)}
                     <Link to={`/account/${userId}`}> You </Link> and{' '}
                     <Link to={`/account/${u2.id}`}> {u2.name} </Link>
                   </>
