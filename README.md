@@ -1,5 +1,7 @@
 # Share Places Social App Project by Hack Your Future Class 26 Team members
 
+This repo created by Hack Your Future class26 team. Here you will see forked repo, if you want to see real repo please click [here](https://github.com/HackYourFuture/class26-project)
+
 <h2>App functions:</h2>
 <ul>
 <li>- You can sign-up, login and logout also with using facebook or google account</li>
