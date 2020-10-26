@@ -18,7 +18,7 @@ This repo created by Hack Your Future class26 team. Here you will see forked rep
 
 <h2>Deployment: </h2>
 Now the online deployment of the project is available; 
-Just click [here](https://hackyourplaces-c26.herokuapp.com/) in order to see todo-list app!
+Just click < https://hackyourplaces-c26.herokuapp.com > in order to see todo-list app!
 
 <h2>Getting Started with files</h2>
 
